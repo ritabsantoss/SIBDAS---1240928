@@ -10,7 +10,6 @@ body{
 }
 
 .navbar{
-
     background-color: white;
     display: flex;
     justify-content: space-between;
@@ -24,13 +23,11 @@ body{
 }
 
 .nav-links{
-
     display: flex;
     gap: 35px;
 }
 
 .nav-links a{
-
     text-decoration: none;
     color: #005b9a;
     font-weight: 500;
@@ -38,12 +35,10 @@ body{
 }
 
 .nav-links a:hover{
-
     color: #e58ea0;
 }
 
 .nav-login a{
-
     text-decoration: none;
     background-color: #005b9a;
     color: white;
@@ -53,12 +48,10 @@ body{
 }
 
 .nav-login a:hover{
-
     background-color: #e58ea0;
 }
 
 .hero{
-
     min-height: 85vh;
     display: flex;
     justify-content: space-between;
@@ -69,12 +62,10 @@ body{
 
 
 .hero-text{
-
     width: 50%;
 }
 
 .hero-text h1{
-
     font-size: 58px;
     color: #005b9a;
     margin-bottom: 25px;
@@ -82,7 +73,6 @@ body{
 }
 
 .hero-text p{
-
     font-size: 20px;
     color: #555;
     line-height: 1.7;
@@ -91,7 +81,6 @@ body{
 
 
 .hero-button{
-
     text-decoration: none;
     background-color: #005b9a;
     color: white;
@@ -101,24 +90,20 @@ body{
 }
 
 .hero-button:hover{
-
     background-color: #e58ea0;
 }
 
 .hero-image{
-
     width: 50%;
 }
 
 .hero-image img{
-
     width: 100%;
     border-radius: 20px;
     box-shadow: 0px 5px 20px rgba(0,0,0,0.15);
 }
 
 .estatisticas{
-
     background-color: white;
     display: flex;
     justify-content: center;
@@ -128,7 +113,6 @@ body{
 }
 
 .estatistica-card{
-
     background-color: #f4f7fa;
     width: 260px;
     padding: 40px 20px;
@@ -143,21 +127,18 @@ body{
 }
 
 .estatistica-card i{
-
     font-size: 42px;
     color: #e58ea0;
     margin-bottom: 20px;
 }
 
 .estatistica-card h2{
-
     font-size: 42px;
     color: #005b9a;
     margin-bottom: 10px;
 }
 
 .estatistica-card p{
-
     color: #555;
     font-size: 17px;
 }
@@ -168,26 +149,22 @@ body{
 }
 
 .sobre-titulo{
-
     text-align: center;
     margin-bottom: 60px;
 }
 
 .sobre-titulo h2{
-
     font-size: 42px;
     color: white;
     margin-bottom: 20px;
 }
 
 .sobre-titulo p{
-
     font-size: 18px;
     color: #dbe7f1;
 }
 
 .sobre-cards{
-
     display: flex;
     justify-content: center;
     gap: 30px;
@@ -195,7 +172,6 @@ body{
 }
 
 .sobre-card{
-
     background-color: white;
     width: 320px;
     padding: 40px 25px;
@@ -205,32 +181,27 @@ body{
 }
 
 .sobre-card:hover{
-
     transform: translateY(-8px);
 }
 
 .sobre-card i{
-
     font-size: 45px;
     color: #e58ea0;
     margin-bottom: 25px;
 }
 
 .sobre-card h3{
-
     font-size: 24px;
     color: #005b9a;
     margin-bottom: 20px;
 }
 
 .sobre-card p{
-
     color: #555;
     line-height: 1.7;
 }
 
 .footer{
-
     background-color: #003b66;
     color: white;
     display: flex;
@@ -240,39 +211,33 @@ body{
 }
 
 .footer-section{
-
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
 .footer-section h3{
-
     margin-bottom: 10px;
     font-size: 20px;
 }
 
 .footer-section p{
-
     color: #dbe7f1;
     line-height: 1.6;
 }
 
 .footer-section i{
-
     color: #e58ea0;
     margin-right: 8px;
 }
 
 .estado-sistema{
-
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
 .status-online{
-
     width: 12px;
     height: 12px;
     background-color: #4CAF50;
@@ -280,14 +245,53 @@ body{
 }
 
 .footer-bottom{
-
     background-color: #002944;
     text-align: center;
     padding: 18px;
 }
 
 .footer-bottom p{
-
     color: #dbe7f1;
     font-size: 14px;
+}
+
+.faq-section{
+    background-color: #f4f7fa;
+    padding: 100px 60px;
+}
+
+.faq-title{
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.faq-title h2{
+    font-size: 42px;
+    color: #005b9a;
+    margin-bottom: 15px;
+}
+
+.faq-title p{
+    color: #555;
+    font-size: 18px;
+}
+
+.faq-container{
+    max-width: 900px;
+    margin: auto;
+}
+
+.accordion-item{
+    margin-bottom: 15px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.accordion-button{
+    font-weight: 500;
+}
+
+.accordion-button:not(.collapsed){
+    background-color: #005b9a;
+    color: white;
 }
