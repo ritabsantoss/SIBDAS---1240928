@@ -116,3 +116,116 @@ body{
     border-radius: 20px;
     box-shadow: 0px 5px 20px rgba(0,0,0,0.15);
 }
+
+.estatisticas{
+
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 80px 60px;
+    flex-wrap: wrap;
+}
+
+.estatistica-card{
+
+    background-color: #f4f7fa;
+    width: 260px;
+    padding: 40px 20px;
+    text-align: center;
+    border-radius: 15px;
+    transition: 0.3s;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.08);
+}
+
+.estatistica-card:hover{
+    transform: translateY(-8px);
+}
+
+.estatistica-card i{
+
+    font-size: 42px;
+    color: #e58ea0;
+    margin-bottom: 20px;
+}
+
+.estatistica-card h2{
+
+    font-size: 42px;
+    color: #005b9a;
+    margin-bottom: 10px;
+}
+
+.estatistica-card p{
+
+    color: #555;
+    font-size: 17px;
+}
+
+.sobre{
+    background-color: #005b9a;
+    padding: 100px 60px;
+}
+
+.sobre-titulo{
+
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.sobre-titulo h2{
+
+    font-size: 42px;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.sobre-titulo p{
+
+    font-size: 18px;
+    color: #dbe7f1;
+}
+
+
+.sobre-cards{
+
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.sobre-card{
+
+    background-color: white;
+    width: 320px;
+    padding: 40px 25px;
+    text-align: center;
+    border-radius: 15px;
+    transition: 0.3s;
+}
+
+.sobre-card:hover{
+
+    transform: translateY(-8px);
+}
+
+.sobre-card i{
+
+    font-size: 45px;
+    color: #e58ea0;
+    margin-bottom: 25px;
+}
+
+.sobre-card h3{
+
+    font-size: 24px;
+    color: #005b9a;
+    margin-bottom: 20px;
+}
+
+.sobre-card p{
+
+    color: #555;
+    line-height: 1.7;
+}
