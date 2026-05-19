@@ -4,12 +4,29 @@
     box-sizing: border-box;
 }
 
+html{
+    scroll-behavior: smooth;
+}
+
+:root{
+    --azul-principal: #005b9a;
+    --azul-escuro: #003b66;
+    --rosa-principal: #e58ea0;
+    --fundo-claro: #f4f7fa;
+    --texto-principal: #555;
+    --texto-claro: #dbe7f1;
+}
+
+
 body{
     font-family: 'Roboto', sans-serif;
-    background-color: #f4f7fa;
+    background-color: var(--fundo-claro);
 }
 
 .navbar{
+    position: sticky;
+    top: 0;
+    z-index: 1000;
     background-color: white;
     display: flex;
     justify-content: space-between;
@@ -29,26 +46,26 @@ body{
 
 .nav-links a{
     text-decoration: none;
-    color: #005b9a;
+    color: var(--azul-principal);
     font-weight: 500;
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
 .nav-links a:hover{
-    color: #e58ea0;
+    color: var(--rosa-principal);
 }
 
 .nav-login a{
     text-decoration: none;
-    background-color: #005b9a;
+    background-color: var(--azul-principal);
     color: white;
     padding: 12px 20px;
     border-radius: 8px;
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
 .nav-login a:hover{
-    background-color: #e58ea0;
+    background-color: var(--rosa-principal);
 }
 
 .hero{
@@ -67,30 +84,29 @@ body{
 
 .hero-text h1{
     font-size: 58px;
-    color: #005b9a;
+    color: var(--azul-principal);
     margin-bottom: 25px;
     line-height: 1.1;
 }
 
 .hero-text p{
     font-size: 20px;
-    color: #555;
+    color: var(--texto-principal);
     line-height: 1.7;
     margin-bottom: 35px;
 }
 
-
 .hero-button{
     text-decoration: none;
-    background-color: #005b9a;
+    background-color: var(--azul-principal);
     color: white;
     padding: 14px 24px;
     border-radius: 8px;
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
 .hero-button:hover{
-    background-color: #e58ea0;
+    background-color: var(--rosa-principal);
 }
 
 .hero-image{
@@ -113,12 +129,12 @@ body{
 }
 
 .estatistica-card{
-    background-color: #f4f7fa;
+    background-color: var(--fundo-claro);
     width: 260px;
     padding: 40px 20px;
     text-align: center;
     border-radius: 15px;
-    transition: 0.3s;
+    transition: all 0.3s ease;
     box-shadow: 0px 4px 12px rgba(0,0,0,0.08);
 }
 
@@ -128,81 +144,122 @@ body{
 
 .estatistica-card i{
     font-size: 42px;
-    color: #e58ea0;
+    color: var(--rosa-principal);
     margin-bottom: 20px;
 }
 
 .estatistica-card h2{
     font-size: 42px;
-    color: #005b9a;
+    color: var(--azul-principal);
     margin-bottom: 10px;
 }
 
 .estatistica-card p{
-    color: #555;
+    color: var(--texto-principal);
     font-size: 17px;
 }
 
-.sobre{
-    background-color: #003b66;
+.servicos{
+    background-color: var(--azul-escuro);
     padding: 100px 60px;
 }
 
-.sobre-titulo{
+.servicos-titulo{
     text-align: center;
     margin-bottom: 60px;
 }
 
-.sobre-titulo h2{
+.servicos-titulo h2{
     font-size: 42px;
     color: white;
     margin-bottom: 20px;
 }
 
-.sobre-titulo p{
+.servicos-titulo p{
+    color: var(--texto-claro);
     font-size: 18px;
-    color: #dbe7f1;
 }
 
-.sobre-cards{
+.servicos-cards{
     display: flex;
     justify-content: center;
     gap: 30px;
     flex-wrap: wrap;
 }
 
-.sobre-card{
+.servico-card{
     background-color: white;
-    width: 320px;
-    padding: 40px 25px;
-    text-align: center;
+    width: 280px;
+    padding: 35px 25px;
     border-radius: 15px;
-    transition: 0.3s;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.08);
 }
 
-.sobre-card:hover{
+.servico-card:hover{
     transform: translateY(-8px);
 }
 
-.sobre-card i{
-    font-size: 45px;
-    color: #e58ea0;
-    margin-bottom: 25px;
-}
-
-.sobre-card h3{
-    font-size: 24px;
-    color: #005b9a;
+.servico-card i{
+    font-size: 42px;
+    color: var(--rosa-principal);
     margin-bottom: 20px;
 }
 
-.sobre-card p{
-    color: #555;
-    line-height: 1.7;
+.servico-card h3{
+    color: var(--azul-principal);
+    margin-bottom: 15px;
+}
+
+.servico-card p{
+    color: var(--texto-principal);
+    line-height: 1.6;
+}
+
+.faq-section{
+    background-color: white;
+    padding: 100px 60px;
+}
+
+.faq-title{
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.faq-title h2{
+    font-size: 42px;
+    color: var(--azul-principal);
+    margin-bottom: 15px;
+}
+
+.faq-title p{
+    color: var(--texto-principal);
+    font-size: 18px;
+}
+
+.faq-container{
+    max-width: 900px;
+    margin: auto;
+}
+
+.accordion-item{
+    margin-bottom: 15px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.accordion-button{
+    font-weight: 500;
+}
+
+.accordion-button:not(.collapsed){
+    background-color: var(--azul-principal);
+    color: white;
 }
 
 .footer{
-    background-color: #003b66;
+    background-color: var(--azul-escuro);
     color: white;
     display: flex;
     justify-content: space-around;
@@ -222,12 +279,12 @@ body{
 }
 
 .footer-section p{
-    color: #dbe7f1;
+    color: var(--texto-claro);
     line-height: 1.6;
 }
 
 .footer-section i{
-    color: #e58ea0;
+    color: var(--rosa-principal);
     margin-right: 8px;
 }
 
@@ -251,47 +308,60 @@ body{
 }
 
 .footer-bottom p{
-    color: #dbe7f1;
+    color: var(--texto-claro);
     font-size: 14px;
 }
 
-.faq-section{
-    background-color: #f4f7fa;
-    padding: 100px 60px;
+@media (max-width: 992px){
+    .navbar{
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .nav-links{
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .hero{
+        flex-direction: column;
+        text-align: center;
+        padding: 50px 25px;
+    }
+
+    .hero-text,
+    .hero-image{
+        width: 100%;
+    }
+
+    .hero-text h1{
+        font-size: 40px;
+    }
+
+    .hero-text p{
+        font-size: 18px;
+    }
+
+    .estatisticas,
+    .servicos,
+    .faq-section{
+        padding: 70px 25px;
+    }
 }
 
-.faq-title{
-    text-align: center;
-    margin-bottom: 50px;
+@media (max-width: 576px){
+    .hero-text h1{
+        font-size: 32px;
+    }
+
+    .estatistica-card,
+    .servico-card{
+        width: 100%;
+    }
+
+    .nav-links{
+        gap: 15px;
+    }
 }
 
-.faq-title h2{
-    font-size: 42px;
-    color: #005b9a;
-    margin-bottom: 15px;
-}
-
-.faq-title p{
-    color: #555;
-    font-size: 18px;
-}
-
-.faq-container{
-    max-width: 900px;
-    margin: auto;
-}
-
-.accordion-item{
-    margin-bottom: 15px;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.accordion-button{
-    font-weight: 500;
-}
-
-.accordion-button:not(.collapsed){
-    background-color: #005b9a;
-    color: white;
-}
