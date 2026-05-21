@@ -667,3 +667,18 @@ body {
         font-size: 14px;
     }
 }
+
+/* Equipamentos - Lista */
+.private-main h2 {
+    color: var(--azul-principal);
+}
+
+.table thead th {
+    background-color: var(--azul-principal);
+    color: white;
+}
+
+.table thead th {
+    background-color: var(--azul-principal);
+    color: white;
+}

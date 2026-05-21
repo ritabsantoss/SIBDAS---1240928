@@ -70,10 +70,226 @@
                 <i class="fa-solid fa-magnifying-glass"></i> Consulta | Pesquisa | Filtragem</a>
         </aside>
 
-        <!-- CONTEÚDO DA PÁGINA -->
+        <!-- Conteúdo -->
         <main class="private-main">
 
-            <!-- X -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <div>
+                    <h2 class="mb-1">
+                        <i class="fa-solid fa-laptop-medical"></i>
+                        Lista de Equipamentos
+                    </h2>
+                    <p class="text-muted mb-0">
+                        Gestão e consulta de equipamentos hospitalares.</p>
+                </div>
+
+                <a href="novo.html" class="btn btn-success">
+                    <i class="fa-solid fa-plus me-2"></i>Novo Equipamento</a>
+
+            </div>
+
+            <div class="card shadow-sm border-0 rounded-4">
+
+                <div class="card-body">
+
+                    <div class="row mb-4">
+
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" placeholder="Pesquisar equipamento...">
+                        </div>
+
+                        <div class="col-md-3">
+                            <select class="form-select">
+                                <option selected>Estado</option>
+                                <option>Ativo</option>
+                                <option>Em manutenção</option>
+                                <option>Inativo</option>
+                                <option>Em calibração</option>
+                                <option>Em quarentena</option>
+                                <option>Abatido</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover align-middle">
+
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Equipamento</th>
+                                    <th>Marca</th>
+                                    <th>Localização</th>
+                                    <th>Estado</th>
+                                    <th class="text-center">Ações</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>EQ-0001</td>
+                                    <td>Monitor Multiparamétrico</td>
+                                    <td>Philips</td>
+                                    <td>Unidade de Cuidados Intensivos</td>
+                                    <td>
+                                        <span class="badge bg-success">
+                                            Ativo
+                                        </span>
+                                    </td>
+
+                                    <td class="text-center">
+
+                                        <a href="detalhes.html" class="btn btn-sm btn-outline-primary me-1">
+                                            <i class="fa-solid fa-circle-info"></i></a>
+
+                                        <a href="editar.html" class="btn btn-sm btn-outline-warning me-1">
+                                            <i class="fa-regular fa-pen-to-square"></i></a>
+
+                                        <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                                            data-bs-target="#modalArquivar">
+                                            <i class="fa-solid fa-box-archive"></i>
+                                        </button>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td>EQ-0002</td>
+                                    <td>Ventilador Pulmonar</td>
+                                    <td>Dräger</td>
+                                    <td>Unidade de Cuidados Intensivos </td>
+                                    <td>
+                                        <span class="badge bg-danger">
+                                            Em quarentena
+                                        </span>
+                                    </td>
+
+                                    <td class="text-center">
+
+                                        <a href="detalhes.html" class="btn btn-sm btn-outline-primary me-1">
+                                            <i class="fa-solid fa-circle-info"></i></a>
+
+                                        <a href="editar.html" class="btn btn-sm btn-outline-warning me-1">
+                                            <i class="fa-regular fa-pen-to-square"></i></a>
+
+                                        <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                                            data-bs-target="#modalArquivar">
+                                            <i class="fa-solid fa-box-archive"></i>
+                                        </button>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td>EQ-0003</td>
+                                    <td>Bomba de Infusão</td>
+                                    <td>B. Braun</td>
+                                    <td>Serviço de Medicina</td>
+                                    <td>
+                                        <span class="badge bg-warning text-dark">
+                                            Em manutenção
+                                        </span>
+                                    </td>
+
+                                    <td class="text-center">
+
+                                        <a href="detalhes.html" class="btn btn-sm btn-outline-primary me-1">
+                                            <i class="fa-solid fa-circle-info"></i></a>
+
+                                        <a href="editar.html" class="btn btn-sm btn-outline-warning me-1">
+                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        </a>
+
+                                        <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                                            data-bs-target="#modalArquivar">
+                                            <i class="fa-solid fa-box-archive"></i>
+
+                                        </button>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td>EQ-0004</td>
+                                    <td>Desfribilhador</td>
+                                    <td>Zoll</td>
+                                    <td>Urgência</td>
+                                    <td>
+                                        <span class="badge bg-secondary">
+                                            Inativo
+                                        </span>
+                                    </td>
+
+                                    <td class="text-center">
+
+                                        <a href="detalhes.html" class="btn btn-sm btn-outline-primary me-1">
+                                            <i class="fa-solid fa-circle-info"></i></a>
+
+                                        <a href="editar.html" class="btn btn-sm btn-outline-warning me-1">
+                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        </a>
+
+                                        <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                                            data-bs-target="#modalArquivar">
+                                            <i class="fa-solid fa-box-archive"></i>
+                                        </button>
+
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="modal fade" id="modalArquivar" tabindex="-1">
+
+                <div class="modal-dialog modal-dialog-centered">
+
+                    <div class="modal-content border-0 rounded-4">
+
+                        <div class="modal-body text-center p-5">
+
+                            <div class="text-warning mb-4">
+
+                                <i class="fa-solid fa-triangle-exclamation fa-4x"></i>
+
+                            </div>
+
+                            <h4 class="mb-3">Gestão do Equipamento</h4>
+
+                            <p class="text-muted mb-4">
+                                Pretende arquivar ou eliminar o equipamento selecionado?</p>
+
+                            <div class="d-flex justify-content-center gap-3 flex-wrap">
+
+                                <button class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
+                                    Cancelar
+                                </button>
+
+                                <button class="btn btn-warning px-4">
+                                    <i class="fa-solid fa-box-archive me-2"></i>
+                                    Arquivar
+                                </button>
+
+                                <button class="btn btn-danger px-4">
+                                    <i class="fa-solid fa-trash-can me-2"></i>
+                                    Eliminar
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </main>
 
