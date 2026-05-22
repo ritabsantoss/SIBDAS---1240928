@@ -318,12 +318,13 @@ body {
 .footer-bottom {
     background-color: #002944;
     text-align: center;
-    padding: 18px;
+    padding: 10px 0;
 }
 
 .footer-bottom p {
     color: var(--texto-claro);
     font-size: 14px;
+    margin: 0;
 }
 
 /* Login (private) */
@@ -668,7 +669,7 @@ body {
     }
 }
 
-/* Equipamentos - Lista */
+/* Equipamentos */
 .private-main h2 {
     color: var(--azul-principal);
 }
