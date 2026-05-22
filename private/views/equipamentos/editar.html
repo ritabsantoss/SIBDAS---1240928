@@ -70,13 +70,203 @@
                 <i class="fa-solid fa-magnifying-glass"></i> Consulta | Pesquisa | Filtragem</a>
         </aside>
 
-        <!-- CONTEÚDO DA PÁGINA -->
         <main class="private-main">
+        
+            <div class="mb-4">
+                <h2 class="mb-1">
+                    <i class="fa-regular fa-pen-to-square me-2"></i>
+                    Atualização de Dados
+                </h2>
+        
+                <p class="text-muted mb-0">
+                    Atualize as informações do equipamento selecionado.
+                </p>
+            </div>
+        
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-4">
+        
+                    <form action="#" method="post" novalidate>
+        
+                        <h5 class="mb-3">
+                            Identificação</h5>
+        
+                        <div class="row mb-3">
+        
+                            <div class="col-md-4">
+                                <label for="codigo" class="form-label">Código interno</label>
+                                <input type="text" class="form-control" id="codigo" name="codigo" value="EQ-0001" required>
+                            </div>
+        
+                            <div class="col-md-5">
+                                <label for="designacao" class="form-label">Designação do equipamento</label>
+                                <input type="text" class="form-control" id="designacao" name="designacao"
+                                    value="Monitor multiparamétrico de Sinais Vitais" required>
+                            </div>
+        
+                            <div class="col-md-3">
+                                <label for="categoria" class="form-label">Categoria</label>
+                                <select class="form-select" id="categoria" name="categoria" required>
+                                    <option selected>Monitorização</option>
+                                    <option>Suporte de vida</option>
+                                    <option>Diagnóstico</option>
+                                    <option>Cirurgia</option>
+                                    <option>Laboratório</option>
+                                    <option>Neonatologia</option>
+                                    <option>Reabilitação</option>
+                                    <option>Imagem médica</option>
+                                    <option>Terapia</option>
+                                    <option>Anestesia</option>
+                                    <option>Emergência</option>
+                                    <option>Odontologia</option>
+                                    <option>Cardiologia</option>
+                                    <option>Fisioterapia</option>
+                                    <option>Esterilização</option>
+                                    <option>Transporte hospitalar</option>
+                                    <option>Equipamento auxiliar</option>
+                                </select>
+                            </div>
+        
+                        </div>
+        
+                        <hr>
+        
+                        <h5 class="mb-3">
+                            Informação Técnica</h5>
+        
+                        <div class="row mb-3">
+        
+                            <div class="col-md-3">
+                                <label for="marca" class="form-label">Marca</label>
+                                <input type="text" class="form-control" id="marca" name="marca" value="Philips" required>
+                            </div>
+        
+                            <div class="col-md-3">
+                                <label for="modelo" class="form-label">Modelo</label>
+                                <input type="text" class="form-control" id="modelo" name="modelo" value="IntelliVue MP5"
+                                    required>
+                            </div>
+        
+                            <div class="col-md-3">
+                                <label for="numero_serie" class="form-label">Número de série</label>
+                                <input type="text" class="form-control" id="numero_serie" name="numero_serie"
+                                    value="MP5-2022-45873" required>
+                            </div>
+        
+                            <div class="col-md-3">
+                                <label for="fabricante" class="form-label">Fabricante</label>
+                                <input type="text" class="form-control" id="fabricante" name="fabricante"
+                                    value="Philips Healthcare" required>
+                            </div>
+        
+                        </div>
+        
+                        <hr>
+        
+                        <h5 class="mb-3">Aquisição</h5>
+        
+                        <div class="row mb-3">
+        
+                            <div class="col-md-3">
+                                <label for="data_aquisicao" class="form-label">Data de aquisição</label>
+                                <input type="date" class="form-control" id="data_aquisicao" name="data_aquisicao"
+                                    value="2023-01-31" required>
+                            </div>
+        
+                            <div class="col-md-3">
+                                <label for="ano_fabrico" class="form-label">Ano de fabrico</label>
+                                <input type="number" class="form-control" id="ano_fabrico" name="ano_fabrico" value="2022"
+                                    min="1990" max="2026" required>
+                            </div>
+        
+                            <div class="col-md-3">
+                                <label for="custo" class="form-label">Custo de aquisição</label>
+                                <input type="number" class="form-control" id="custo" name="custo" value="1200.00" min="0"
+                                    step="0.01" required>
+                            </div>
+        
+                            <div class="col-md-3">
+                                <label for="tipo_entrada" class="form-label">Tipo de entrada</label>
+                                <select class="form-select" id="tipo_entrada" name="tipo_entrada" required>
+                                    <option selected>Compra</option>
+                                    <option>Doação</option>
+                                    <option>Aluguer</option>
+                                    <option>Empréstimo</option>
+                                </select>
+                            </div>
+        
+                        </div>
+        
+                        <hr>
+    
+                        <h5 class="mb-3">
+                            Localização | Estado | Criticidade</h5>
+        
+                        <div class="row mb-3">
 
-            <!-- X -->
+                            <div class="col-md-4">
+                                <label for="localizacao" class="form-label">Localização</label>
+                                <select class="form-select" id="localizacao" name="localizacao" required>
+                                    <option>Urgência</option>
+                                    <option selected>Unidade de Cuidados Intensivos</option>
+                                    <option>Bloco Operatório</option>
+                                    <option>Radiologia</option>
+                                    <option>Laboratório</option>
+                                    <option>Consulta Externa</option>
+                                    <option>Internamento</option>
+                                    <option>Farmácia Hospitalar</option>
+                                    <option>Armazém Clínico</option>
+                                </select>
+                            </div>
+        
+                            <div class="col-md-4">
+                                <label for="estado" class="form-label">Estado atual</label>
+                                <select class="form-select" id="estado" name="estado" required>
+                                    <option selected>Ativo</option>
+                                    <option>Em manutenção</option>
+                                    <option>Inativo</option>
+                                    <option>Em calibração</option>
+                                    <option>Em quarentena</option>
+                                    <option>Abatido</option>
+                                </select>
+                            </div>
+        
+                            <div class="col-md-4">
+                                <label for="criticidade" class="form-label">Criticidade</label>
+                                <select class="form-select" id="criticidade" name="criticidade" required>
+                                    <option>Baixa</option>
+                                    <option>Média</option>
+                                    <option>Alta</option>
+                                    <option selected>Suporte de vida</option>
+                                </select>
+                            </div>
+        
+                        </div>
+        
+                        <hr>
+        
+                        <h5 class="mb-3">Observações</h5>
+        
+                        <textarea class="form-control mb-4" id="observacoes" name="observacoes" rows="4">Equipamento pode possuir associados os seguintes componentes: sensor SpO₂, cabo ECG, manguito NIBP, sensor de temperatura, bateria.
+                         </textarea>
+        
+                        <div class="d-flex justify-content-end gap-2">
 
+                            <a href="lista.html" class="btn btn-outline-secondary">
+                                <i class="fa-solid fa-xmark me-1"></i>
+                                Cancelar
+                            </a>
+
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-regular fa-floppy-disk me-1"></i>
+                                Guardar alterações
+                            </button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
         </main>
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

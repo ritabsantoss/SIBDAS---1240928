@@ -72,15 +72,14 @@
 
         <main class="private-main">
 
-            <!-- TOPO DA PÁGINA -->
             <div class="mb-4">
                 <h2 class="mb-1">
                     <i class="fa-solid fa-plus me-2"></i>
-                    Inserir Novo Equipamento
+                    Inserir Equipamento
                 </h2>
 
                 <p class="text-muted mb-0">
-                    Preencha os dados principais do equipamento médico.
+                    Preencha as principais informações do equipamento médico.
                 </p>
             </div>
 
@@ -162,9 +161,7 @@
 
                         <hr>
 
-                        <h5 class="mb-3">
-                            Aquisição
-                        </h5>
+                        <h5 class="mb-3">Aquisição</h5>
 
                         <div class="row mb-3">
 
@@ -202,10 +199,26 @@
                         <hr>
 
                         <h5 class="mb-3">
-                            Estado | Criticidade
+                            Localização | Estado | Criticidade
                         </h5>
 
                         <div class="row mb-3">
+
+                            <div class="col-md-4">
+                                <label for="localizacao" class="form-label">Localização</label>
+                                <select class="form-select" id="localizacao" name="localizacao" required>
+                                    <option selected disabled>Escolha...</option>
+                                    <option>Urgência</option>
+                                    <option>Unidade de Cuidados Intensivos</option>
+                                    <option>Bloco Operatório</option>
+                                    <option>Radiologia</option>
+                                    <option>Laboratório</option>
+                                    <option>Consulta Externa</option>
+                                    <option>Internamento</option>
+                                    <option>Farmácia Hospitalar</option>
+                                    <option>Armazém Clínico</option>
+                                </select>
+                            </div>
 
                             <div class="col-md-4">
                                 <label for="estado" class="form-label">Estado atual</label>
