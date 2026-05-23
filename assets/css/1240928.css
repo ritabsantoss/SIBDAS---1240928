@@ -684,3 +684,14 @@ body {
     color: white;
 }
 
+.btn-pink{
+    background-color: var(--rosa-principal);
+    border: none;
+    color: white;
+}
+
+.btn-pink:hover{
+    background-color: #d97b90;
+    color: white;
+}
+
