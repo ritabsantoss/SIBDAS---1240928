@@ -72,8 +72,138 @@
 
         <!-- CONTEÚDO PRINCIPAL -->
         <main class="private-main">
-        </main>
 
+            <div class="mb-4">
+                <h2 class="mb-1">
+                    <i class="fa-regular fa-pen-to-square me-2"></i>
+                    Atualização de Documentos
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Atualize as informações do documento selecionado.
+                </p>
+            </div>
+
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-4">
+
+                    <form action="#" method="post" novalidate>
+
+                        <h5 class="mb-3">
+                            Informação</h5>
+
+                        <div class="row mb-3">
+
+                            <div class="col-md-3">
+
+                                <label for="codigo_documento" class="form-label">Código</label>
+                                <input type="text" class="form-control" id="codigo_documento" name="codigo_documento"
+                                    value="MAN-0928" required>
+                            </div>
+
+                            <div class="col-md-5">
+                                <label for="tipo_documento" class="form-label">Tipo de documento</label>
+                                <select class="form-select" id="tipo_documento" name="tipo_documento" required>
+                                    <option>Manual de Instalação</option>
+                                    <option>Certificado de Conformidade</option>
+                                    <option>Ficha Técnica</option>
+                                    <option selected>Manual do Utilizador</option>
+                                    <option>Protocolos de Segurança</option>
+                                    <option>Registo de Ativos</option>
+                                    <option>Certificados de Calibração e Qualificação</option>
+                                    <option>Autorização de Introdução no Mercado</option>
+                                    <option>Registo de Incidentes</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="nome_documento" class="form-label">Nome do documento</label>
+                                <input type="text" class="form-control" id="nome_documento" name="nome_documento"
+                                    value="Manual Técnico Evita V500" required>
+                            </div>
+
+                        </div>
+
+                        <div class="row mb-3">
+
+                            <div class="col-md-4">
+                                <label for="data_documento" class="form-label">Data do documento</label>
+                                <input type="date" class="form-control" id="data_documento" name="data_documento"
+                                    value="2023-01-31" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="validade" class="form-label">Data de validade</label>
+                                <input type="date" class="form-control" id="validade" name="validade"
+                                    value="2028-12-31">
+                            </div>
+
+                        </div>
+
+                        <div class="row mb-3">
+
+                            <div class="col-md-4">
+                                <label for="equipamento" class="form-label">Equipamento associado</label>
+                                <select class="form-select" id="equipamento" name="equipamento" required>
+                                    <option selected>Ventilador Pulmonar</option>
+                                    <option>Bomba de Infusão</option>
+                                    <option>Monitor Multiparamétrico</option>
+                                    <option>Desfibrilhador</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="fornecedor" class="form-label">Fornecedor associado</label>
+                                <select class="form-select" id="fornecedor" name="fornecedor">
+                                    <option selected>Dräger</option>
+                                    <option>B. Braun</option>
+                                    <option>Zoll</option>
+                                    <option>Philips</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="row mb-3">
+
+                            <div class="col-md-6">
+                                <label for="nome_ficheiro" class="form-label">Nome do ficheiro</label>
+                                <input type="text" class="form-control" id="nome_ficheiro" name="nome_ficheiro"
+                                    value="MAN-0928_Evita V500.pdf">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="loc_ficheiro" class="form-label">Localização do ficheiro</label>
+                                <input type="text" class="form-control" id="loc_ficheiro" name="loc_ficheiro"
+                                    value="Docs/MAN/Ventiladores" required>
+                            </div>
+
+                        </div>
+
+                        <hr>
+
+                        <h5 class="mb-3">Observações</h5>
+
+                        <textarea class="form-control mb-4" id="observacoes" name="observacoes"
+                            rows="4">Versão mais recente.</textarea>
+
+                        <div class="d-flex justify-content-end gap-2">
+
+                            <a href="lista.html" class="btn btn-outline-secondary">
+                                <i class="fa-solid fa-xmark me-1"></i>
+                                Cancelar
+                            </a>
+
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-regular fa-floppy-disk me-1"></i>
+                                Guardar alterações
+                            </button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
     </div>
 
     <!-- Rodapé Final -->
