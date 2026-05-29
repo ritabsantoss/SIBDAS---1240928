@@ -58,16 +58,14 @@
                 <i class="fa-solid fa-chart-line"></i> Dashboard</a>
             <a href="../equipamentos/lista.html" class="sidebar-link">
                 <i class="fa-solid fa-stethoscope"></i> Equipamentos</a>
-            <a href="../localizacoes/lista.html" class="sidebar-link">
-                <i class="fa-solid fa-location-dot"></i>Localizações </a>
             <a href="lista.html" class="sidebar-link active">
                 <i class="fa-solid fa-truck"></i> Fornecedores</a>
+            <a href="../localizacoes/lista.html" class="sidebar-link">
+                <i class="fa-solid fa-location-dot"></i>Localizações </a>
             <a href="../documentos/lista.html" class="sidebar-link">
                 <i class="fa-solid fa-file-pdf"></i> Documentação</a>
             <a href="../garantias/lista.html" class="sidebar-link">
                 <i class="fa-solid fa-file-contract"></i> Garantias | Contratos</a>
-            <a href="#" class="sidebar-link">
-                <i class="fa-solid fa-magnifying-glass"></i> Consulta | Pesquisa | Filtragem</a>
         </aside>
 
         <main class="private-main">
@@ -86,7 +84,7 @@
             <div class="card shadow-sm border-0 rounded-4">
                 <div class="card-body p-4">
 
-                    <form action="#" method="post" novalidate>
+                    <form action="#" method="post" >
 
                         <h5 class="mb-3">
                             Identificação</h5>
@@ -94,17 +92,17 @@
                         <div class="row mb-3">
                             <div class="col-md-4">
                                 <label for="nome_empresa" class="form-label">Nome da empresa</label>
-                                <input type="text" class="form-control" id="nome_empresa" name="nome_empresa" required>
+                                <input type="text" class="form-control" id="nome_empresa" name="nome_empresa">
                             </div>
 
                             <div class="col-md-4">
                                 <label for="nif" class="form-label">NIF</label>
-                                <input type="text" class="form-control" id="nif" name="nif" required>
+                                <input type="text" class="form-control" id="nif" name="nif">
                             </div>
 
                             <div class="col-md-4">
                                 <label for="tipo_fornecedor" class="form-label">Tipo de fornecedor</label>
-                                <select class="form-select" id="tipo_fornecedor" name="tipo_fornecedor" required>
+                                <select class="form-select" id="tipo_fornecedor" name="tipo_fornecedor">
                                     <option selected disabled>Escolha...</option>
                                     <option>Fabricante</option>
                                     <option>Distribuidor ou Fornecedor Comercial</option>
@@ -124,12 +122,12 @@
 
                             <div class="col-md-4">
                                 <label for="telefone" class="form-label">Contacto telefónico</label>
-                                <input type="text" class="form-control" id="telefone" name="telefone" required>
+                                <input type="text" class="form-control" id="telefone" name="telefone">
                             </div>
 
                             <div class="col-md-4">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
+                                <input type="email" class="form-control" id="email" name="email">
                             </div>
 
                             <div class="col-md-4">
@@ -143,7 +141,7 @@
 
                             <div class="col-12">
                                 <label for="morada" class="form-label">Morada</label>
-                                <input type="text" class="form-control" id="morada" name="morada" required>
+                                <input type="text" class="form-control" id="morada" name="morada">
                             </div>
 
                         </div>
@@ -157,14 +155,12 @@
 
                             <div class="col-md-6">
                                 <label for="pessoa_contacto" class="form-label">Pessoa de contacto</label>
-                                <input type="text" class="form-control" id="pessoa_contacto" name="pessoa_contacto"
-                                    required>
+                                <input type="text" class="form-control" id="pessoa_contacto" name="pessoa_contacto">
                             </div>
 
                             <div class="col-md-6">
                                 <label for="telefone_contacto" class="form-label">Telefone da pessoa de contacto</label>
-                                <input type="text" class="form-control" id="telefone_contacto" name="telefone_contacto"
-                                    required>
+                                <input type="text" class="form-control" id="telefone_contacto" name="telefone_contacto">
                             </div>
 
                         </div>

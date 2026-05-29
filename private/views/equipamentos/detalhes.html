@@ -58,16 +58,14 @@
                 <i class="fa-solid fa-chart-line"></i> Dashboard</a>
             <a href="lista.html" class="sidebar-link active">
                 <i class="fa-solid fa-stethoscope"></i> Equipamentos</a>
-            <a href="../localizacoes/lista.html" class="sidebar-link">
-                <i class="fa-solid fa-location-dot"></i>Localizações </a>
             <a href="../fornecedores/lista.html" class="sidebar-link">
                 <i class="fa-solid fa-truck"></i> Fornecedores</a>
+            <a href="../localizacoes/lista.html" class="sidebar-link">
+                <i class="fa-solid fa-location-dot"></i>Localizações </a>
             <a href="../documentos/lista.html" class="sidebar-link">
                 <i class="fa-solid fa-file-pdf"></i> Documentação</a>
             <a href="../garantias/lista.html" class="sidebar-link">
                 <i class="fa-solid fa-file-contract"></i> Garantias | Contratos</a>
-            <a href="#" class="sidebar-link">
-                <i class="fa-solid fa-magnifying-glass"></i> Consulta | Pesquisa | Filtragem</a>
         </aside>
 
         <main class="private-main">
@@ -84,167 +82,605 @@
                         </h2>
                         <hr>
 
-                        <div class="row mb-3">
+                        <!-- Separadores -->
+                        <ul class="nav nav-tabs mb-4">
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#equipamento"
+                                    type="button">
+                                    <i class="fa-solid fa-stethoscope me-1"></i>Equipamento
+                                </button>
+                            </li>
 
-                            <div class="col-md-4">
-                                <label class="form-label fw-bold">
-                                    Código interno
-                                </label>
-                                <p class="form-control-plaintext">
-                                    EQ-0001
-                                </p>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#fornecedor"
+                                    type="button">
+                                    <i class="fa-solid fa-truck me-1"></i>Fornecedor
+                                </button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#localizacao"
+                                    type="button">
+                                    <i class="fa-solid fa-location-dot me-1"></i>Localização
+                                </button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#documentacao"
+                                    type="button">
+                                    <i class="fa-solid fa-file-pdf me-1"></i>Documentação
+                                </button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#garantia" type="button">
+                                    <i class="fa-solid fa-file-contract me-1"></i>Garantia
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+
+                            <!-- principal - equipamentos -->
+                            <div class="tab-pane fade show active" id="equipamento">
+
+                                <div class="row mb-3">
+
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold">
+                                            Código interno
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            EQ-0001
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <label class="form-label fw-bold">
+                                            Designação
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            Monitor Multiparamétrico de Sinais Vitais
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">
+                                            Categoria
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            Monitorização
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <hr>
+
+                                <div class="row mb-3">
+
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">
+                                            Marca
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            Philips
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">
+                                            Modelo
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            IntelliVue MP5
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">
+                                            Número de série
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            MP5-2022-45873
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">
+                                            Fabricante
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            Philips Healthcare
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <hr>
+
+                                <div class="row mb-3">
+
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">
+                                            Data de aquisição
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            31/01/2023
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">
+                                            Ano de fabrico
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            2022
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">
+                                            Custo de aquisição
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            1200€
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">
+                                            Tipo de entrada
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            Compra
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <hr>
+
+                                <div class="row mb-3">
+
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold">
+                                            Localização
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            Unidade de Cuidados Intensivos
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold">
+                                            Estado atual
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            Ativo
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold">
+                                            Criticidade
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            Suporte de Vida
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <hr>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">
+                                        Observações
+                                    </label>
+                                    <p class="form-control-plaintext">
+                                        Equipamento pode possuir associados os seguintes componentes: sensor SpO₂, cabo
+                                        ECG, manguito NIBP, sensor de temperatura, bateria.
+                                    </p>
+                                </div>
+
                             </div>
 
-                            <div class="col-md-5">
-                                <label class="form-label fw-bold">
-                                    Designação
-                                </label>
-                                <p class="form-control-plaintext">
-                                    Monitor Multiparamétrico de Sinais Vitais
-                                </p>
+                            <!-- fornecedor -->
+                            <div class="tab-pane fade" id="fornecedor">
+
+                                <h5 class="mb-3">
+                                    <i class="fa-solid fa-truck me-2"></i>
+                                    Fornecedor Associado
+                                </h5>
+
+                                <div class="row mb-3">
+
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold">
+                                            Nome da empresa
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            Philips Healthcare Portugal
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold">
+                                            NIF
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            500216843
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold">
+                                            Tipo de fornecedor
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            Fabricante
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <hr>
+
+                                <div class="row mb-3">
+
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold">
+                                            Contacto telefónico
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            800 201 766
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold">
+                                            Email
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            healthcare.portugal@philips.com
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold">
+                                            Website
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            https://www.usa.philips.com
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <div class="mb-3">
+
+                                    <label class="form-label fw-bold">
+                                        Morada
+                                    </label>
+                                    <p class="form-control-plaintext">
+                                        Lagoas Park, Edif. 14. 2740-262 Porto Salvo, Portugal
+                                    </p>
+
+                                </div>
+
+                                <hr>
+
+                                <div class="row mb-3">
+
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">
+                                            Pessoa de contacto
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            Mário Silva
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">
+                                            Telefone da pessoa de contacto
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            918 888 888
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <hr>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">
+                                        Observações do fornecedor
+                                    </label>
+                                    <p class="form-control-plaintext">
+                                        Último contacto a 29/05/26.
+                                    </p>
+                                </div>
+
                             </div>
 
-                            <div class="col-md-3">
-                                <label class="form-label fw-bold">
-                                    Categoria
-                                </label>
-                                <p class="form-control-plaintext">
-                                    Monitorização
-                                </p>
+                            <!-- localização -->
+                            <div class="tab-pane fade" id="localizacao">
+
+                                <h5 class="mb-3">
+                                    <i class="fa-solid fa-location-dot me-2"></i>
+                                    Localização Associada
+                                </h5>
+
+                                <div class="row mb-3">
+
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">
+                                            Edifício
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            Edifício Principal
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">
+                                            Piso
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            2º
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">
+                                            Serviço
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            Unidade de Cuidados Intensivos
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">
+                                            Sala
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            Sala UCI 07
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <hr>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">
+                                        Observações da localização
+                                    </label>
+                                    <p class="form-control-plaintext">
+                                        Equipamento localizado na zona de monitorização de doentes críticos.
+                                    </p>
+                                </div>
+
+                            </div>
+
+                            <!-- documentos -->
+                            <div class="tab-pane fade" id="documentacao">
+
+                                <h5 class="mb-3">
+                                    <i class="fa-solid fa-file-pdf me-2"></i>
+                                    Documentação Associada
+                                </h5>
+
+                                <div class="row mb-3">
+
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold">
+                                            Código
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            MAN-0344
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold">
+                                            Tipo de documento
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            Manual de utilizador
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold">
+                                            Título
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            Manual Técnico IntelliVue MP5
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <hr>
+
+                                <div class="row mb-3">
+
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold">
+                                            Data do documento
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            2023-03-27
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold">
+                                            Data de validade
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            2030-03-31
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold">
+                                            Estado
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            Ativo
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="row mb-3">
+
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold">
+                                            Nome do ficheiro
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            MAN-0344_IntelliVue MP5.pdf
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <label class="form-label fw-bold">
+                                            Localização do ficheiro
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            Docs/MAN/Monitores/Multiparametro
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <hr>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">
+                                        Observações
+                                    </label>
+                                    <p class="form-control-plaintext">
+                                        Versão mais recente.
+                                    </p>
+                                </div>
+
+                            </div>
+
+                            <!-- garantia -->
+                            <div class="tab-pane fade" id="garantia">
+
+                                <h5 class="mb-3">
+                                    <i class="fa-solid fa-file-contract me-2"></i>
+                                    Garantia | Contrato Associado
+                                </h5>
+
+                                <div class="row mb-3">
+
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">
+                                            Código
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            GC-0773
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">
+                                            Tipo de contrato
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            Garantia do fabricante
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">
+                                            Entidade responsável
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            Philips Healthcare Portugal
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">
+                                            Contrato de manutenção
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            Não
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <hr>
+
+                                <div class="row mb-3">
+
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">
+                                            Data de início
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            31/01/2026
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">
+                                            Data de fim
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            31/01/2027
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">
+                                            Estado
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            Ativa
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">
+                                            Periodicidade
+                                        </label>
+                                        <p class="form-control-plaintext">
+                                            Anual
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <hr>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">
+                                        Observações da garantia
+                                    </label>
+                                    <p class="form-control-plaintext">
+                                        Garantia associada ao equipamento no momento da aquisição.
+                                    </p>
+                                </div>
+
                             </div>
 
                         </div>
 
                         <hr>
-
-                        <div class="row mb-3">
-
-                            <div class="col-md-3">
-                                <label class="form-label fw-bold">
-                                    Marca
-                                </label>
-                                <p class="form-control-plaintext">
-                                    Philips
-                                </p>
-                            </div>
-
-                            <div class="col-md-3">
-                                <label class="form-label fw-bold">
-                                    Modelo
-                                </label>
-                                <p class="form-control-plaintext">
-                                    IntelliVue MP5
-                                </p>
-                            </div>
-
-                            <div class="col-md-3">
-                                <label class="form-label fw-bold">
-                                    Número de série
-                                </label>
-                                <p class="form-control-plaintext">
-                                    MP5-2022-45873
-                                </p>
-                            </div>
-
-                            <div class="col-md-3">
-                                <label class="form-label fw-bold">
-                                    Fabricante
-                                </label>
-                                <p class="form-control-plaintext">
-                                    Philips Healthcare
-                                </p>
-                            </div>
-
-                        </div>
-
-                        <hr>
-
-                        <div class="row mb-3">
-
-                            <div class="col-md-3">
-                                <label class="form-label fw-bold">
-                                    Data de aquisição
-                                </label>
-                                <p class="form-control-plaintext">
-                                    31/01/2023
-                                </p>
-                            </div>
-
-                            <div class="col-md-3">
-                                <label class="form-label fw-bold">
-                                    Ano de fabrico
-                                </label>
-                                <p class="form-control-plaintext">
-                                    2022
-                                </p>
-                            </div>
-
-                            <div class="col-md-3">
-                                <label class="form-label fw-bold">
-                                    Custo de aquisição
-                                </label>
-                                <p class="form-control-plaintext">
-                                    1200€
-                                </p>
-                            </div>
-
-                            <div class="col-md-3">
-                                <label class="form-label fw-bold">
-                                    Tipo de entrada
-                                </label>
-                                <p class="form-control-plaintext">
-                                    Compra
-                                </p>
-                            </div>
-
-                        </div>
-
-                        <hr>
-
-                        <div class="row mb-3">
-
-                            <div class="col-md-4">
-                                <label class="form-label fw-bold">
-                                    Localização
-                                </label>
-                                <p class="form-control-plaintext">
-                                    Unidade de Cuidados Intensivos
-                                </p>
-                            </div>
-
-                            <div class="col-md-4">
-                                <label class="form-label fw-bold">
-                                    Estado atual
-                                </label>
-                                <p class="form-control-plaintext">
-                                    Ativo
-                                </p>
-                            </div>
-
-                            <div class="col-md-4">
-                                <label class="form-label fw-bold">
-                                    Criticidade
-                                </label>
-                                <p class="form-control-plaintext">
-                                    Suporte de Vida
-                                </p>
-                            </div>
-
-                        </div>
-
-                        <hr>
-
-                        <div class="mb-4">
-
-                            <label class="form-label fw-bold">
-                                Observações
-                            </label>
-
-                            <p class="form-control-plaintext">
-                                Equipamento pode possuir associados os seguintes componentes: sensor SpO₂, cabo ECG, manguito NIBP, sensor de temperatura, bateria.
-                            </p>
-
-                        </div>
 
                         <div class="d-flex justify-content-end">
 
@@ -261,14 +697,14 @@
     </div>
 
     <!-- Rodapé Final -->
-        <div class="footer-bottom">
+    <div class="footer-bottom">
 
-            <p>
-                © 2026 SIHEM — Sistema de Inventário Hospitalar.
-                Todos os direitos reservados.
-            </p>
+        <p>
+            © 2026 SIHEM — Sistema de Inventário Hospitalar.
+            Todos os direitos reservados.
+        </p>
 
-        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 

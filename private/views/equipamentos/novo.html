@@ -58,16 +58,14 @@
                 <i class="fa-solid fa-chart-line"></i> Dashboard</a>
             <a href="lista.html" class="sidebar-link active">
                 <i class="fa-solid fa-stethoscope"></i> Equipamentos</a>
-            <a href="../localizacoes/lista.html" class="sidebar-link">
-                <i class="fa-solid fa-location-dot"></i>Localizações </a>
             <a href="../fornecedores/lista.html" class="sidebar-link">
                 <i class="fa-solid fa-truck"></i> Fornecedores</a>
+            <a href="../localizacoes/lista.html" class="sidebar-link">
+                <i class="fa-solid fa-location-dot"></i>Localizações </a>
             <a href="../documentos/lista.html" class="sidebar-link">
                 <i class="fa-solid fa-file-pdf"></i> Documentação</a>
             <a href="../garantias/lista.html" class="sidebar-link">
                 <i class="fa-solid fa-file-contract"></i> Garantias | Contratos</a>
-            <a href="#" class="sidebar-link">
-                <i class="fa-solid fa-magnifying-glass"></i> Consulta | Pesquisa | Filtragem</a>
         </aside>
 
         <main class="private-main">
@@ -86,7 +84,7 @@
             <div class="card shadow-sm border-0 rounded-4">
                 <div class="card-body p-4">
 
-                    <form action="#" method="post" novalidate>
+                    <form action="#" method="post" >
 
                         <h5 class="mb-3">
                             Identificação</h5>
@@ -95,17 +93,17 @@
 
                             <div class="col-md-4">
                                 <label for="codigo" class="form-label">Código interno</label>
-                                <input type="text" class="form-control" id="codigo" name="codigo" required>
+                                <input type="text" class="form-control" id="codigo" name="codigo">
                             </div>
 
                             <div class="col-md-5">
                                 <label for="designacao" class="form-label">Designação do equipamento</label>
-                                <input type="text" class="form-control" id="designacao" name="designacao" required>
+                                <input type="text" class="form-control" id="designacao" name="designacao">
                             </div>
 
                             <div class="col-md-3">
                                 <label for="categoria" class="form-label">Categoria</label>
-                                <select class="form-select" id="categoria" name="categoria" required>
+                                <select class="form-select" id="categoria" name="categoria">
                                     <option selected disabled>Escolha...</option>
                                     <option>Monitorização</option>
                                     <option>Suporte de vida</option>
@@ -139,22 +137,22 @@
 
                             <div class="col-md-3">
                                 <label for="marca" class="form-label">Marca</label>
-                                <input type="text" class="form-control" id="marca" name="marca" required>
+                                <input type="text" class="form-control" id="marca" name="marca">
                             </div>
 
                             <div class="col-md-3">
                                 <label for="modelo" class="form-label">Modelo</label>
-                                <input type="text" class="form-control" id="modelo" name="modelo" required>
+                                <input type="text" class="form-control" id="modelo" name="modelo">
                             </div>
 
                             <div class="col-md-3">
                                 <label for="numero_serie" class="form-label">Número de série</label>
-                                <input type="text" class="form-control" id="numero_serie" name="numero_serie" required>
+                                <input type="text" class="form-control" id="numero_serie" name="numero_serie">
                             </div>
 
                             <div class="col-md-3">
                                 <label for="fabricante" class="form-label">Fabricante</label>
-                                <input type="text" class="form-control" id="fabricante" name="fabricante" required>
+                                <input type="text" class="form-control" id="fabricante" name="fabricante">
                             </div>
 
                         </div>
@@ -167,20 +165,17 @@
 
                             <div class="col-md-3">
                                 <label for="data_aquisicao" class="form-label">Data de aquisição</label>
-                                <input type="date" class="form-control" id="data_aquisicao" name="data_aquisicao"
-                                    required>
+                                <input type="date" class="form-control" id="data_aquisicao" name="data_aquisicao">
                             </div>
 
                             <div class="col-md-3">
                                 <label for="ano_fabrico" class="form-label">Ano de fabrico</label>
-                                <input type="number" class="form-control" id="ano_fabrico" name="ano_fabrico" min="1950"
-                                    max="2026" required>
+                                <input type="number" class="form-control" id="ano_fabrico" name="ano_fabrico">
                             </div>
 
                             <div class="col-md-3">
                                 <label for="custo" class="form-label">Custo de aquisição</label>
-                                <input type="number" class="form-control" id="custo" name="custo" min="0" step="0.01"
-                                    required>
+                                <input type="number" class="form-control" id="custo" name="custo">
                             </div>
 
                             <div class="col-md-3">
@@ -206,7 +201,7 @@
 
                             <div class="col-md-4">
                                 <label for="localizacao" class="form-label">Localização</label>
-                                <select class="form-select" id="localizacao" name="localizacao" required>
+                                <select class="form-select" id="localizacao" name="localizacao">
                                     <option selected disabled>Escolha...</option>
                                     <option>Urgência</option>
                                     <option>Unidade de Cuidados Intensivos</option>
@@ -222,7 +217,7 @@
 
                             <div class="col-md-4">
                                 <label for="estado" class="form-label">Estado atual</label>
-                                <select class="form-select" id="estado" name="estado" required>
+                                <select class="form-select" id="estado" name="estado">
                                     <option selected disabled>Escolha...</option>
                                     <option>Ativo</option>
                                     <option>Em manutenção</option>
@@ -235,7 +230,7 @@
 
                             <div class="col-md-4">
                                 <label for="criticidade" class="form-label">Criticidade</label>
-                                <select class="form-select" id="criticidade" name="criticidade" required>
+                                <select class="form-select" id="criticidade" name="criticidade">
                                     <option selected disabled>Escolha...</option>
                                     <option>Baixa</option>
                                     <option>Média</option>

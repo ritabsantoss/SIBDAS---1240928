@@ -58,16 +58,14 @@
                 <i class="fa-solid fa-chart-line"></i> Dashboard</a>
             <a href="lista.html" class="sidebar-link active">
                 <i class="fa-solid fa-stethoscope"></i> Equipamentos</a>
+             <a href="../fornecedores/lista.html" class="sidebar-link">
+                <i class="fa-solid fa-truck"></i> Fornecedores</a>
             <a href="../localizacoes/lista.html" class="sidebar-link">
                 <i class="fa-solid fa-location-dot"></i>Localizações </a>
-            <a href="../fornecedores/lista.html" class="sidebar-link">
-                <i class="fa-solid fa-truck"></i> Fornecedores</a>
             <a href="../documentos/lista.html" class="sidebar-link">
                 <i class="fa-solid fa-file-pdf"></i> Documentação</a>
             <a href="../garantias/lista.html" class="sidebar-link">
                 <i class="fa-solid fa-file-contract"></i> Garantias | Contratos</a>
-            <a href="#" class="sidebar-link">
-                <i class="fa-solid fa-magnifying-glass"></i> Consulta | Pesquisa | Filtragem</a>
         </aside>
 
         <main class="private-main">
@@ -86,7 +84,7 @@
             <div class="card shadow-sm border-0 rounded-4">
                 <div class="card-body p-4">
         
-                    <form action="#" method="post" novalidate>
+                    <form action="#" method="post" >
         
                         <h5 class="mb-3">
                             Identificação</h5>
@@ -95,18 +93,18 @@
         
                             <div class="col-md-4">
                                 <label for="codigo" class="form-label">Código interno</label>
-                                <input type="text" class="form-control" id="codigo" name="codigo" value="EQ-0001" required>
+                                <input type="text" class="form-control" id="codigo" name="codigo" value="EQ-0001">
                             </div>
         
                             <div class="col-md-5">
                                 <label for="designacao" class="form-label">Designação do equipamento</label>
                                 <input type="text" class="form-control" id="designacao" name="designacao"
-                                    value="Monitor Multiparamétrico de Sinais Vitais" required>
+                                    value="Monitor Multiparamétrico de Sinais Vitais">
                             </div>
         
                             <div class="col-md-3">
                                 <label for="categoria" class="form-label">Categoria</label>
-                                <select class="form-select" id="categoria" name="categoria" required>
+                                <select class="form-select" id="categoria" name="categoria">
                                     <option selected>Monitorização</option>
                                     <option>Suporte de vida</option>
                                     <option>Diagnóstico</option>
@@ -138,25 +136,24 @@
         
                             <div class="col-md-3">
                                 <label for="marca" class="form-label">Marca</label>
-                                <input type="text" class="form-control" id="marca" name="marca" value="Philips" required>
+                                <input type="text" class="form-control" id="marca" name="marca" value="Philips">
                             </div>
         
                             <div class="col-md-3">
                                 <label for="modelo" class="form-label">Modelo</label>
-                                <input type="text" class="form-control" id="modelo" name="modelo" value="IntelliVue MP5"
-                                    required>
+                                <input type="text" class="form-control" id="modelo" name="modelo" value="IntelliVue MP5">
                             </div>
         
                             <div class="col-md-3">
                                 <label for="numero_serie" class="form-label">Número de série</label>
                                 <input type="text" class="form-control" id="numero_serie" name="numero_serie"
-                                    value="MP5-2022-45873" required>
+                                    value="MP5-2022-45873">
                             </div>
         
                             <div class="col-md-3">
                                 <label for="fabricante" class="form-label">Fabricante</label>
                                 <input type="text" class="form-control" id="fabricante" name="fabricante"
-                                    value="Philips Healthcare" required>
+                                    value="Philips Healthcare">
                             </div>
         
                         </div>
@@ -170,24 +167,24 @@
                             <div class="col-md-3">
                                 <label for="data_aquisicao" class="form-label">Data de aquisição</label>
                                 <input type="date" class="form-control" id="data_aquisicao" name="data_aquisicao"
-                                    value="2023-01-31" required>
+                                    value="2023-01-31">
                             </div>
         
                             <div class="col-md-3">
                                 <label for="ano_fabrico" class="form-label">Ano de fabrico</label>
                                 <input type="number" class="form-control" id="ano_fabrico" name="ano_fabrico" value="2022"
-                                    min="1990" max="2026" required>
+                                    min="1990" max="2026">
                             </div>
         
                             <div class="col-md-3">
                                 <label for="custo" class="form-label">Custo de aquisição</label>
                                 <input type="number" class="form-control" id="custo" name="custo" value="1200.00" min="0"
-                                    step="0.01" required>
+                                    step="0.01">
                             </div>
         
                             <div class="col-md-3">
                                 <label for="tipo_entrada" class="form-label">Tipo de entrada</label>
-                                <select class="form-select" id="tipo_entrada" name="tipo_entrada" required>
+                                <select class="form-select" id="tipo_entrada" name="tipo_entrada">
                                     <option selected>Compra</option>
                                     <option>Doação</option>
                                     <option>Aluguer</option>
@@ -206,7 +203,7 @@
 
                             <div class="col-md-4">
                                 <label for="localizacao" class="form-label">Localização</label>
-                                <select class="form-select" id="localizacao" name="localizacao" required>
+                                <select class="form-select" id="localizacao" name="localizacao">
                                     <option>Urgência</option>
                                     <option selected>Unidade de Cuidados Intensivos</option>
                                     <option>Bloco Operatório</option>
@@ -221,7 +218,7 @@
         
                             <div class="col-md-4">
                                 <label for="estado" class="form-label">Estado atual</label>
-                                <select class="form-select" id="estado" name="estado" required>
+                                <select class="form-select" id="estado" name="estado">
                                     <option selected>Ativo</option>
                                     <option>Em manutenção</option>
                                     <option>Inativo</option>
@@ -233,7 +230,7 @@
         
                             <div class="col-md-4">
                                 <label for="criticidade" class="form-label">Criticidade</label>
-                                <select class="form-select" id="criticidade" name="criticidade" required>
+                                <select class="form-select" id="criticidade" name="criticidade">
                                     <option>Baixa</option>
                                     <option>Média</option>
                                     <option>Alta</option>

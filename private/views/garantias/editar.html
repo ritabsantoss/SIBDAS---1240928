@@ -58,16 +58,14 @@
                 <i class="fa-solid fa-chart-line"></i> Dashboard</a>
             <a href="../equipamentos/lista.html" class="sidebar-link">
                 <i class="fa-solid fa-stethoscope"></i> Equipamentos</a>
+             <a href="../fornecedores/lista.html" class="sidebar-link">
+                <i class="fa-solid fa-truck"></i> Fornecedores</a>
             <a href="../localizacoes/lista.html" class="sidebar-link">
                 <i class="fa-solid fa-location-dot"></i>Localizações </a>
-            <a href="../fornecedores/lista.html" class="sidebar-link">
-                <i class="fa-solid fa-truck"></i> Fornecedores</a>
             <a href="../documentos/lista.html" class="sidebar-link">
                 <i class="fa-solid fa-file-pdf"></i> Documentação</a>
             <a href="lista.html" class="sidebar-link active">
                 <i class="fa-solid fa-file-contract"></i> Garantias | Contratos</a>
-            <a href="#" class="sidebar-link">
-                <i class="fa-solid fa-magnifying-glass"></i> Consulta | Pesquisa | Filtragem</a>
         </aside>
 
         <!-- Conteúdo -->
@@ -78,14 +76,14 @@
                     Atualização de Registos
                 </h2>
                 <p class="text-muted mb-0">
-                    Atualize as informações da garantia/contrato selecionado.
+                    Atualize as informações da garantia ou contrato selecionado.
                 </p>
             </div>
 
             <div class="card shadow-sm border-0 rounded-4">
                 <div class="card-body p-4">
 
-                    <form action="#" method="post" novalidate>
+                    <form action="#" method="post" >
 
                         <h5 class="mb-3">
                             Informação da Garantia</h5>
@@ -94,12 +92,12 @@
 
                             <div class="col-md-3">
                                 <label for="codigo" class="form-label">Código</label>
-                                <input type="text" class="form-control" id="codigo" name="codigo" value="GC-0122" required>
+                                <input type="text" class="form-control" id="codigo" name="codigo" value="GC-0122">
                             </div>
 
                             <div class="col-md-5">
                                 <label for="equipamento" class="form-label">Equipamento associado</label>
-                                <select class="form-select" id="equipamento" name="equipamento" required>
+                                <select class="form-select" id="equipamento" name="equipamento">
                                     <option>Ventilador Pulmonar</option>
                                     <option selected>Bomba de Infusão</option>
                                     <option>Monitor Multiparamétrico</option>
@@ -109,7 +107,7 @@
 
                             <div class="col-md-4">
                                 <label for="fornecedor" class="form-label">Entidade responsável</label>
-                                <select class="form-select" id="fornecedor" name="fornecedor" required>
+                                <select class="form-select" id="fornecedor" name="fornecedor">
                                     <option>Dräger</option>
                                     <option selected>B. Braun</option>
                                     <option>Zoll</option>
@@ -123,17 +121,17 @@
                       
                             <div class="col-md-4">
                                 <label for="data_inicio" class="form-label">Data de início</label>
-                                <input type="date" class="form-control" id="data_inicio" name="data_inicio" value="2023-12-13" required>
+                                <input type="date" class="form-control" id="data_inicio" name="data_inicio" value="2023-12-13">
                             </div>
 
                             <div class="col-md-4">
                                 <label for="data_fim" class="form-label">Data de fim</label>
-                                <input type="date" class="form-control" id="data_fim" name="data_fim" value="2025-12-31" required>
+                                <input type="date" class="form-control" id="data_fim" name="data_fim" value="2025-12-31">
                             </div>
 
                             <div class="col-md-4">
                                 <label for="estado" class="form-label">Estado</label>
-                                <select class="form-select" id="estado" name="estado" required>
+                                <select class="form-select" id="estado" name="estado">
                                     <option>Ativa/o</option>
                                     <OPtion>Prestes a Expirar</OPtion>
                                     <option selected>Expirada/o</option>
@@ -150,7 +148,7 @@
 
                             <div class="col-md-4">
                                 <label for="contrato" class="form-label">Contrato de manutenção</label>
-                                <select class="form-select" id="contrato" name="contrato" required>
+                                <select class="form-select" id="contrato" name="contrato">
                                     <option selected>Sim</option>
                                     <option>Não</option>
                                 </select>
@@ -158,7 +156,7 @@
 
                             <div class="col-md-4">
                                 <label for="tipo_contrato" class="form-label">Tipo de contrato</label>
-                                <select class="form-select" id="tipo_contrato" name="tipo_contrato" required>
+                                <select class="form-select" id="tipo_contrato" name="tipo_contrato">
                                     <option>Garantia do Fabricante</option>
                                     <option selected>Garantia do Fornecedor</option>
                                     <option>Contrato de Manutenção</option>
@@ -170,7 +168,7 @@
 
                             <div class="col-md-4">
                                 <label for="periodicidade" class="form-label">Periodicidade</label>
-                                <select class="form-select" id="periodicidade" name="periodicidade" required>
+                                <select class="form-select" id="periodicidade" name="periodicidade">
                                     <option>Mensal</option>
                                     <option>Trimestral</option>
                                     <option>Semestral</option>

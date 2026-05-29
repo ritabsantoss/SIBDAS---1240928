@@ -58,16 +58,14 @@
                 <i class="fa-solid fa-chart-line"></i> Dashboard</a>
             <a href="../equipamentos/lista.html" class="sidebar-link">
                 <i class="fa-solid fa-stethoscope"></i> Equipamentos</a>
-            <a href="../localizacoes/lista.html" class="sidebar-link">
-                <i class="fa-solid fa-location-dot"></i>Localizações </a>
             <a href="../fornecedores/lista.html" class="sidebar-link">
                 <i class="fa-solid fa-truck"></i> Fornecedores</a>
+            <a href="../localizacoes/lista.html" class="sidebar-link">
+                <i class="fa-solid fa-location-dot"></i>Localizações </a>
             <a href="lista.html" class="sidebar-link active">
                 <i class="fa-solid fa-file-pdf"></i> Documentação</a>
             <a href="../garantias/lista.html" class="sidebar-link">
                 <i class="fa-solid fa-file-contract"></i> Garantias | Contratos</a>
-            <a href="#" class="sidebar-link">
-                <i class="fa-solid fa-magnifying-glass"></i> Consulta | Pesquisa | Filtragem</a>
         </aside>
 
         <!-- CONTEÚDO PRINCIPAL -->
@@ -88,7 +86,7 @@
             <div class="card shadow-sm border-0 rounded-4">
                 <div class="card-body p-4">
 
-                    <form action="#" method="post" novalidate>
+                    <form action="#" method="post" >
 
                         <h5 class="mb-3">
                             Informação do Documento</h5>
@@ -98,13 +96,12 @@
                             <div class="col-md-3">
 
                                 <label for="codigo" class="form-label">Código</label>
-                                <input type="text" class="form-control" id="codigo" name="codigo"
-                                    required>
+                                <input type="text" class="form-control" id="codigo" name="codigo">
                             </div>
 
                             <div class="col-md-5">
                                 <label for="equipamento" class="form-label">Equipamento associado</label>
-                                <select class="form-select" id="equipamento" name="equipamento" required>
+                                <select class="form-select" id="equipamento" name="equipamento">
                                     <option selected disabled>Escolha...</option>
                                     <option>Ventilador Pulmonar</option>
                                     <option>Bomba de Infusão</option>
@@ -130,8 +127,7 @@
 
                             <div class="col-md-4">
                                 <label for="data_documento" class="form-label">Data do documento</label>
-                                <input type="date" class="form-control" id="data_documento" name="data_documento"
-                                    required>
+                                <input type="date" class="form-control" id="data_documento" name="data_documento">
                             </div>
 
                             <div class="col-md-4">
@@ -141,7 +137,7 @@
 
                             <div class="col-md-4">
                                 <label for="estado" class="form-label">Estado</label>
-                                <select class="form-select" id="estado" name="estado" required>
+                                <select class="form-select" id="estado" name="estado">
                                     <option selected disabled>Escolha...</option>
                                     <option>Ativo</option>
                                     <OPtion>Prestes a Expirar</OPtion>
@@ -159,7 +155,7 @@
 
                             <div class="col-md-6">
                                 <label for="tipo" class="form-label">Tipo de documento</label>
-                                <select class="form-select" id="tipo" name="tipo" required>
+                                <select class="form-select" id="tipo" name="tipo">
                                     <option selected disabled>Escolha...</option>
                                     <option>Manual de Instalação</option>
                                     <option>Certificado de Conformidade</option>
@@ -175,8 +171,7 @@
 
                             <div class="col-md-6">
                                 <label for="nome_documento" class="form-label">Nome do documento</label>
-                                <input type="text" class="form-control" id="nome_documento" name="nome_documento"
-                                    required>
+                                <input type="text" class="form-control" id="nome_documento" name="nome_documento">
                             </div>
 
                         </div>
@@ -185,12 +180,12 @@
 
                             <div class="col-md-6">
                                 <label for="nome_ficheiro" class="form-label">Nome do ficheiro</label>
-                                <input type="text" class="form-control" id="nome_ficheiro" name="nome_ficheiro" required>
+                                <input type="text" class="form-control" id="nome_ficheiro" name="nome_ficheiro">
                             </div>
 
                             <div class="col-md-6">
                                 <label for="loc_ficheiro" class="form-label">Localização do ficheiro</label>
-                                <input type="text" class="form-control" id="loc_ficheiro" name="loc_ficheiro" required>
+                                <input type="text" class="form-control" id="loc_ficheiro" name="loc_ficheiro">
                             </div>
 
                         </div>

@@ -695,3 +695,18 @@ body {
     color: white;
 }
 
+.nav-tabs .nav-link {
+    color: var(--azul-principal);
+    font-weight: 700;
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--rosa-principal);
+    font-weight: 700;
+    background-color: #fff5f7;
+}
+
+.form-label {
+    color: var(--azul-principal);
+}
+
