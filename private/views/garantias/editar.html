@@ -70,10 +70,140 @@
                 <i class="fa-solid fa-magnifying-glass"></i> Consulta | Pesquisa | Filtragem</a>
         </aside>
 
-        <!-- CONTEÚDO PRINCIPAL -->
+        <!-- Conteúdo -->
         <main class="private-main">
-        </main>
+            <div class="mb-4">
+                <h2 class="mb-1">
+                    <i class="fa-regular fa-pen-to-square me-2"></i>
+                    Atualização de Registos
+                </h2>
+                <p class="text-muted mb-0">
+                    Atualize as informações da garantia/contrato selecionado.
+                </p>
+            </div>
 
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-4">
+
+                    <form action="#" method="post" novalidate>
+
+                        <h5 class="mb-3">
+                            Informação da Garantia</h5>
+
+                        <div class="row mb-3">
+
+                            <div class="col-md-3">
+                                <label for="codigo" class="form-label">Código</label>
+                                <input type="text" class="form-control" id="codigo" name="codigo" value="GC-0122" required>
+                            </div>
+
+                            <div class="col-md-5">
+                                <label for="equipamento" class="form-label">Equipamento associado</label>
+                                <select class="form-select" id="equipamento" name="equipamento" required>
+                                    <option>Ventilador Pulmonar</option>
+                                    <option selected>Bomba de Infusão</option>
+                                    <option>Monitor Multiparamétrico</option>
+                                    <option>Desfibrilhador</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="fornecedor" class="form-label">Entidade responsável</label>
+                                <select class="form-select" id="fornecedor" name="fornecedor" required>
+                                    <option>Dräger</option>
+                                    <option selected>B. Braun</option>
+                                    <option>Zoll</option>
+                                    <option>Philips</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="row mb-3">
+                      
+                            <div class="col-md-4">
+                                <label for="data_inicio" class="form-label">Data de início</label>
+                                <input type="date" class="form-control" id="data_inicio" name="data_inicio" value="2023-12-13" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="data_fim" class="form-label">Data de fim</label>
+                                <input type="date" class="form-control" id="data_fim" name="data_fim" value="2025-12-31" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="estado" class="form-label">Estado</label>
+                                <select class="form-select" id="estado" name="estado" required>
+                                    <option>Ativa/o</option>
+                                    <OPtion>Prestes a Expirar</OPtion>
+                                    <option selected>Expirada/o</option>
+                                    <option>Pendente</option>
+                                    <option>Anulada/o</option>
+                                    <option>Estendida/o</option>
+                                    <option>Não disponível</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="row mb-3">
+
+                            <div class="col-md-4">
+                                <label for="contrato" class="form-label">Contrato de manutenção</label>
+                                <select class="form-select" id="contrato" name="contrato" required>
+                                    <option>Sim</option>
+                                    <option selected>Não</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="tipo_contrato" class="form-label">Tipo de contrato</label>
+                                <select class="form-select" id="tipo_contrato" name="tipo_contrato" required>
+                                    <option>Garantia do Fabricante</option>
+                                    <option selected>Contrato de Manutenção</option>
+                                    <option>Manutenção Preventiva</option>
+                                    <option>Manutenção Corretiva</option>
+                                    <option>Contrato de Assistência Técnica</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="periodicidade" class="form-label">Periodicidade</label>
+                                <select class="form-select" id="periodicidade" name="periodicidade" required>
+                                    <option>Mensal</option>
+                                    <option>Trimestral</option>
+                                    <option>Semestral</option>
+                                    <option>Anual</option>
+                                    <option selected>Bianual</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <hr>
+
+                        <h5 class="mb-3">Observações</h5>
+
+                        <textarea class="form-control mb-4" id="observacoes" name="observacoes"
+                            rows="4">Contactar apoio.</textarea>
+
+                        <div class="d-flex justify-content-end gap-2">
+
+                            <a href="lista.html" class="btn btn-outline-secondary">
+                                <i class="fa-solid fa-xmark me-1"></i>
+                                Cancelar
+                            </a>
+
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-regular fa-floppy-disk me-1"></i>
+                                Guardar alterações
+                            </button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
     </div>
 
     <!-- Rodapé Final -->
