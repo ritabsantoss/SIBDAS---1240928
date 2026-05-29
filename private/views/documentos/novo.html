@@ -91,59 +91,18 @@
                     <form action="#" method="post" novalidate>
 
                         <h5 class="mb-3">
-                            Informação</h5>
+                            Informação do Documento</h5>
 
                         <div class="row mb-3">
 
                             <div class="col-md-3">
 
-                                <label for="codigo_documento" class="form-label">Código</label>
-                                <input type="text" class="form-control" id="codigo_documento" name="codigo_documento"
+                                <label for="codigo" class="form-label">Código</label>
+                                <input type="text" class="form-control" id="codigo" name="codigo"
                                     required>
                             </div>
 
                             <div class="col-md-5">
-                                <label for="tipo_documento" class="form-label">Tipo de documento</label>
-                                <select class="form-select" id="tipo_documento" name="tipo_documento" required>
-                                    <option selected disabled>Escolha...</option>
-                                    <option>Manual de Instalação</option>
-                                    <option>Certificado de Conformidade</option>
-                                    <option>Ficha Técnica</option>
-                                    <option>Manual do Utilizador</option>
-                                    <option>Protocolos de Segurança</option>
-                                    <option>Registo de Ativos</option>
-                                    <option>Certificados de Calibração e Qualificação</option>
-                                    <option>Autorização de Introdução no Mercado</option>
-                                    <option>Registo de Incidentes</option>
-                                </select>
-                            </div>
-
-                            <div class="col-md-4">
-                                <label for="nome_documento" class="form-label">Nome do documento</label>
-                                <input type="text" class="form-control" id="nome_documento" name="nome_documento"
-                                    required>
-                            </div>
-
-                        </div>
-
-                        <div class="row mb-3">
-
-                            <div class="col-md-4">
-                                <label for="data_documento" class="form-label">Data do documento</label>
-                                <input type="date" class="form-control" id="data_documento" name="data_documento"
-                                    required>
-                            </div>
-
-                            <div class="col-md-4">
-                                <label for="validade" class="form-label">Data de validade</label>
-                                <input type="date" class="form-control" id="validade" name="validade">
-                            </div>
-
-                        </div>
-
-                        <div class="row mb-3">
-
-                            <div class="col-md-4">
                                 <label for="equipamento" class="form-label">Equipamento associado</label>
                                 <select class="form-select" id="equipamento" name="equipamento" required>
                                     <option selected disabled>Escolha...</option>
@@ -163,6 +122,61 @@
                                     <option>Zoll</option>
                                     <option>Philips</option>
                                 </select>
+                            </div>
+
+                        </div>
+
+                        <div class="row mb-3">
+
+                            <div class="col-md-4">
+                                <label for="data_documento" class="form-label">Data do documento</label>
+                                <input type="date" class="form-control" id="data_documento" name="data_documento"
+                                    required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="validade" class="form-label">Data de validade</label>
+                                <input type="date" class="form-control" id="validade" name="validade">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="estado" class="form-label">Estado</label>
+                                <select class="form-select" id="estado" name="estado" required>
+                                    <option selected disabled>Escolha...</option>
+                                    <option>Ativo</option>
+                                    <OPtion>Prestes a Expirar</OPtion>
+                                    <option>Expirado</option>
+                                    <option>Pendente</option>
+                                    <option>Anulado</option>
+                                    <option>Estendido</option>
+                                    <option>Não disponível</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="row mb-3">
+
+                            <div class="col-md-6">
+                                <label for="tipo" class="form-label">Tipo de documento</label>
+                                <select class="form-select" id="tipo" name="tipo" required>
+                                    <option selected disabled>Escolha...</option>
+                                    <option>Manual de Instalação</option>
+                                    <option>Certificado de Conformidade</option>
+                                    <option>Ficha Técnica</option>
+                                    <option>Manual do Utilizador</option>
+                                    <option>Protocolos de Segurança</option>
+                                    <option>Registo de Ativos</option>
+                                    <option>Certificados de Calibração e Qualificação</option>
+                                    <option>Autorização de Introdução no Mercado</option>
+                                    <option>Registo de Incidentes</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="nome_documento" class="form-label">Nome do documento</label>
+                                <input type="text" class="form-control" id="nome_documento" name="nome_documento"
+                                    required>
                             </div>
 
                         </div>

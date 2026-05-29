@@ -90,7 +90,7 @@
                     <form action="#" method="post" novalidate>
 
                         <h5 class="mb-3">
-                            Informação</h5>
+                            Informação do Documento</h5>
 
                         <div class="row mb-3">
 
@@ -102,24 +102,23 @@
                             </div>
 
                             <div class="col-md-5">
-                                <label for="tipo_documento" class="form-label">Tipo de documento</label>
-                                <select class="form-select" id="tipo_documento" name="tipo_documento" required>
-                                    <option>Manual de Instalação</option>
-                                    <option>Certificado de Conformidade</option>
-                                    <option>Ficha Técnica</option>
-                                    <option selected>Manual do Utilizador</option>
-                                    <option>Protocolos de Segurança</option>
-                                    <option>Registo de Ativos</option>
-                                    <option>Certificados de Calibração e Qualificação</option>
-                                    <option>Autorização de Introdução no Mercado</option>
-                                    <option>Registo de Incidentes</option>
+                                <label for="equipamento" class="form-label">Equipamento associado</label>
+                                <select class="form-select" id="equipamento" name="equipamento" required>
+                                    <option selected>Ventilador Pulmonar</option>
+                                    <option>Bomba de Infusão</option>
+                                    <option>Monitor Multiparamétrico</option>
+                                    <option>Desfibrilhador</option>
                                 </select>
                             </div>
 
                             <div class="col-md-4">
-                                <label for="nome_documento" class="form-label">Nome do documento</label>
-                                <input type="text" class="form-control" id="nome_documento" name="nome_documento"
-                                    value="Manual Técnico Evita V500" required>
+                                <label for="fornecedor" class="form-label">Fornecedor associado</label>
+                                <select class="form-select" id="fornecedor" name="fornecedor">
+                                    <option selected>Dräger</option>
+                                    <option>B. Braun</option>
+                                    <option>Zoll</option>
+                                    <option>Philips</option>
+                                </select>
                             </div>
 
                         </div>
@@ -138,28 +137,42 @@
                                     value="2028-12-31">
                             </div>
 
+                            <div class="col-md-4">
+                                <label for="estado" class="form-label">Estado</label>
+                                <select class="form-select" id="estado" name="estado" required>
+                                    <option selected>Ativo</option>
+                                    <OPtion>Prestes a Expirar</OPtion>
+                                    <option>Expirado</option>
+                                    <option>Pendente</option>
+                                    <option>Anulado</option>
+                                    <option>Estendido</option>
+                                    <option>Não disponível</option>
+                                </select>
+                            </div>
+
                         </div>
 
                         <div class="row mb-3">
 
-                            <div class="col-md-4">
-                                <label for="equipamento" class="form-label">Equipamento associado</label>
-                                <select class="form-select" id="equipamento" name="equipamento" required>
-                                    <option selected>Ventilador Pulmonar</option>
-                                    <option>Bomba de Infusão</option>
-                                    <option>Monitor Multiparamétrico</option>
-                                    <option>Desfibrilhador</option>
+                            <div class="col-md-6">
+                                <label for="tipo_documento" class="form-label">Tipo de documento</label>
+                                <select class="form-select" id="tipo_documento" name="tipo_documento" required>
+                                    <option>Manual de Instalação</option>
+                                    <option>Certificado de Conformidade</option>
+                                    <option>Ficha Técnica</option>
+                                    <option selected>Manual do Utilizador</option>
+                                    <option>Protocolos de Segurança</option>
+                                    <option>Registo de Ativos</option>
+                                    <option>Certificados de Calibração e Qualificação</option>
+                                    <option>Autorização de Introdução no Mercado</option>
+                                    <option>Registo de Incidentes</option>
                                 </select>
                             </div>
 
-                            <div class="col-md-4">
-                                <label for="fornecedor" class="form-label">Fornecedor associado</label>
-                                <select class="form-select" id="fornecedor" name="fornecedor">
-                                    <option selected>Dräger</option>
-                                    <option>B. Braun</option>
-                                    <option>Zoll</option>
-                                    <option>Philips</option>
-                                </select>
+                            <div class="col-md-6">
+                                <label for="nome_documento" class="form-label">Nome do documento</label>
+                                <input type="text" class="form-control" id="nome_documento" name="nome_documento"
+                                    value="Manual Técnico Evita V500" required>
                             </div>
 
                         </div>
