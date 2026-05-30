@@ -710,3 +710,70 @@ body {
     color: var(--azul-principal);
 }
 
+
+.page-header h2 {
+    color: var(--azul-principal);
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.page-header p {
+    color: var(--texto-principal);
+    margin-bottom: 0;
+}
+
+.dashboard-card,
+.dashboard-box {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-card {
+    padding: 22px;
+    text-align: center;
+    height: 100%;
+    transition: 0.3s;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+}
+
+.dashboard-card i {
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+.dashboard-card h3 {
+    color: var(--azul-principal);
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.dashboard-card p {
+    margin: 0;
+    color: var(--texto-principal);
+}
+
+.dashboard-box {
+    padding: 25px;
+}
+
+.dashboard-box h5 {
+    color: var(--azul-principal);
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+
+.badge-sihem {
+    background-color: var(--azul-principal);
+    color: white;
+}
+
+.badge-sihem-pink {
+    background-color: var(--rosa-principal);
+    color: white;
+}

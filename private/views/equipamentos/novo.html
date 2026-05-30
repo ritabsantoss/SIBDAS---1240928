@@ -54,7 +54,7 @@
 
             <a href="../../indexprivate.html" class="sidebar-link">
                 <i class="fa-solid fa-house"></i> Início</a>
-            <a href="#" class="sidebar-link">
+            <a href="../dashboard.html" class="sidebar-link">
                 <i class="fa-solid fa-chart-line"></i> Dashboard</a>
             <a href="lista.html" class="sidebar-link active">
                 <i class="fa-solid fa-stethoscope"></i> Equipamentos</a>
@@ -317,7 +317,7 @@
                                         <select class="form-select" id="tipo_fornecedor" name="tipo_fornecedor">
                                             <option selected disabled>Escolha...</option>
                                             <option>Fabricante</option>
-                                            <option>Distribuidor / fornecedor comercial</option>
+                                            <option>Distribuidor ou fornecedor comercial</option>
                                             <option>Empresa de assistência técnica</option>
                                             <option>Fornecedor de consumíveis ou acessórios</option>
                                         </select>
@@ -413,8 +413,18 @@
                                     </div>
 
                                     <div class="col-md-4">
-                                        <label for="servico" class="form-label">Serviço</label>
-                                        <input type="text" class="form-control" id="servico" name="servico">
+                                        <label for="departamento" class="form-label">Serviço | Departamento</label>
+                                        <select class="form-select" id="departamento" name="departamento">
+                                            <option selected disabled>Escolha...</option>
+                                            <option>Urgência</option>
+                                            <option>Unidade de Cuidados Intensivos</option>
+                                            <option>Bloco Operatório</option>
+                                            <option>Radiologia</option>
+                                            <option>Laboratório</option>
+                                            <option>Consulta Externa</option>
+                                            <option>Internamento</option>
+                                            <option>Pediatria</option>
+                                        </select>
                                     </div>
 
                                     <div class="col-md-3">
@@ -577,14 +587,26 @@
 
                                     <div class="col-md-3">
                                         <label for="tipo_contrato" class="form-label">Tipo de contrato</label>
-                                        <input type="text" class="form-control" id="tipo_contrato" name="tipo_contrato">
+                                        <select class="form-select" id="tipo_contrato" name="tipo_contrato">
+                                            <option selected disabled>Escolha...</option>
+                                            <option>Garantia do Fabricante</option>
+                                            <option>Garantia do Fornecedor</option>
+                                            <option>Contrato de Manutenção</option>
+                                            <option>Manutenção Preventiva</option>
+                                            <option>Contrato de Assistência Técnica</option>
+                                            <option>Sem Garantia</option>
+                                        </select>
                                     </div>
 
                                     <div class="col-md-3">
-                                        <label for="entidade_responsavel" class="form-label">Entidade
-                                            responsável</label>
-                                        <input type="text" class="form-control" id="entidade_responsavel"
-                                            name="entidade_responsavel">
+                                        <label for="fornecedor" class="form-label">Entidade responsável</label>
+                                        <select class="form-select" id="fornecedor" name="fornecedor">
+                                            <option selected disabled>Escolha...</option>
+                                            <option>Dräger</option>
+                                            <option>B. Braun</option>
+                                            <option>Zoll</option>
+                                            <option>Philips Healthcare</option>
+                                        </select>
                                     </div>
 
                                     <div class="col-md-3">
@@ -617,15 +639,26 @@
                                         <label for="estado_garantia" class="form-label">Estado</label>
                                         <select class="form-select" id="estado_garantia" name="estado_garantia">
                                             <option selected disabled>Escolha...</option>
-                                            <option>Ativa</option>
-                                            <option>Expirada</option>
-                                            <option>Cancelada</option>
+                                            <option>Ativa/o</option>
+                                            <OPtion>Prestes a Expirar</OPtion>
+                                            <option>Expirada/o</option>
+                                            <option>Pendente</option>
+                                            <option>Anulada/o</option>
+                                            <option>Estendida/o</option>
+                                            <option>Não disponível</option>
                                         </select>
                                     </div>
 
                                     <div class="col-md-3">
                                         <label for="periodicidade" class="form-label">Periodicidade</label>
-                                        <input type="text" class="form-control" id="periodicidade" name="periodicidade">
+                                        <select class="form-select" id="periodicidade" name="periodicidade">
+                                            <option selected disabled>Escolha...</option>
+                                            <option>Mensal</option>
+                                            <option>Trimestral</option>
+                                            <option>Semestral</option>
+                                            <option>Anual</option>
+                                            <option>Bianual</option>
+                                        </select>
                                     </div>
 
                                 </div>
