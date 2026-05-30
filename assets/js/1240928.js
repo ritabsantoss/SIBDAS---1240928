@@ -143,3 +143,14 @@ new Chart(document.getElementById("graficoCategoria"), {
         }
     }
 });
+
+
+const botoesGestao = document.querySelectorAll(".btn-gestao");
+const itemSelecionado = document.getElementById("itemSelecionado");
+
+botoesGestao.forEach(botao => {
+    botao.addEventListener("click", function () {
+        const nome = this.getAttribute("data-nome");
+        itemSelecionado.textContent = nome;
+    });
+});

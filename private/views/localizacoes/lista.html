@@ -93,27 +93,59 @@
 
                 <div class="card-body">
 
-                    <div class="row mb-4">
+                    <form action="#" method="get">
 
-                        <div class="col-md-4">
-                            <input type="text" class="form-control" placeholder="Pesquisar localização...">
+                        <div class="row mb-4">
+
+                            <div class="col-md-5">
+                                <label class="form-label">Pesquisa rápida</label>
+                                <input type="text" class="form-control" name="pesquisa">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Serviço | Departamento</label>
+                                <select class="form-select" name="tipo">
+                                    <option value="">Todos</option>
+                                    <option>Urgência</option>
+                                    <option>Unidade de Cuidados Intensivos</option>
+                                    <option>Bloco Operatório</option>
+                                    <option>Radiologia</option>
+                                    <option>Laboratório</option>
+                                    <option>Consulta Externa</option>
+                                    <option>Internamento</option>
+                                    <option>Pediatria</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3 d-flex align-items-end">
+                                <button type="submit" class="btn btn-pink w-100">
+                                    <i class="fa-solid fa-magnifying-glass me-1"></i>
+                                    Pesquisar
+                                </button>
+                            </div>
+
                         </div>
 
-                        <div class="col-md-3">
-                            <select class="form-select">
-                                <option selected>Serviço</option>
-                                <option>Urgência</option>
-                                <option>Unidade de Cuidados Intensivos</option>
-                                <option>Bloco Operatório</option>
-                                <option>Radiologia</option>
-                                <option>Laboratório</option>
-                                <option>Consulta Externa</option>
-                                <option>Internamento</option>
-                                <option>Pediatria</option>
-                            </select>
+                        <div class="row mb-4">
+
+                            <div class="col-md-3">
+                                <label class="form-label">Ordenar por</label>
+                                <select class="form-select" name="ordenar">
+                                    <option selected>Serviço | Departamento</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Sentido</label>
+                                <select class="form-select" name="sentido">
+                                    <option selected>Ascendente</option>
+                                    <option>Descendente</option>
+                                </select>
+                            </div>
+
                         </div>
 
-                    </div>
+                    </form>
 
                     <div class="table-responsive">
 
@@ -146,8 +178,8 @@
                                         <a href="editar.html" class="btn btn-sm btn-outline-warning me-1">
                                             <i class="fa-regular fa-pen-to-square"></i></a>
 
-                                        <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-                                            data-bs-target="#modalArquivar">
+                                        <button class="btn btn-sm btn-outline-danger btn-gestao" data-bs-toggle="modal"
+                                            data-bs-target="#modalArquivar" data-nome="Sala UCI 07">
                                             <i class="fa-solid fa-box-archive"></i>
                                         </button>
 
@@ -169,8 +201,8 @@
                                         <a href="editar.html" class="btn btn-sm btn-outline-warning me-1">
                                             <i class="fa-regular fa-pen-to-square"></i></a>
 
-                                        <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-                                            data-bs-target="#modalArquivar">
+                                        <button class="btn btn-sm btn-outline-danger btn-gestao" data-bs-toggle="modal"
+                                            data-bs-target="#modalArquivar" data-nome="Bloco 05">
                                             <i class="fa-solid fa-box-archive"></i>
                                         </button>
 
@@ -192,8 +224,8 @@
                                         <a href="editar.html" class="btn btn-sm btn-outline-warning me-1">
                                             <i class="fa-regular fa-pen-to-square"></i></a>
 
-                                        <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-                                            data-bs-target="#modalArquivar">
+                                        <button class="btn btn-sm btn-outline-danger btn-gestao" data-bs-toggle="modal"
+                                            data-bs-target="#modalArquivar" data-nome="Sala 03">
                                             <i class="fa-solid fa-box-archive"></i>
                                         </button>
 
@@ -222,8 +254,16 @@
 
                             <h4 class="mb-3">Gestão da Localização</h4>
 
+                            <p class="text-muted mb-2">
+                                Localização selecionada:
+                            </p>
+
+                            <h5 id="itemSelecionado" class="mb-4 text-primary">
+                                —
+                            </h5>
+
                             <p class="text-muted mb-4">
-                                Pretende arquivar ou eliminar a localização selecionada?
+                                Pretende arquivar ou eliminar esta localização?
                             </p>
 
                             <div class="d-flex justify-content-center gap-3 flex-wrap">
@@ -261,6 +301,16 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const botoesGestao = document.querySelectorAll(".btn-gestao");
+        const itemSelecionado = document.getElementById("itemSelecionado");
+
+        botoesGestao.forEach(botao => {
+            botao.addEventListener("click", function () {
+                itemSelecionado.textContent = this.dataset.nome;
+            });
+        });
+    </script>
 
 </body>
 
