@@ -58,7 +58,7 @@
                 <i class="fa-solid fa-chart-line"></i> Dashboard</a>
             <a href="../equipamentos/lista.html" class="sidebar-link">
                 <i class="fa-solid fa-stethoscope"></i> Equipamentos</a>
-             <a href="lista.html" class="sidebar-link active">
+            <a href="lista.html" class="sidebar-link active">
                 <i class="fa-solid fa-truck"></i> Fornecedores</a>
             <a href="../localizacoes/lista.html" class="sidebar-link">
                 <i class="fa-solid fa-location-dot"></i>Localizações </a>
@@ -102,15 +102,6 @@
                                 </label>
                                 <p class="form-control-plaintext">
                                     501506543
-                                </p>
-                            </div>
-
-                            <div class="col-md-4">
-                                <label class="form-label fw-bold">
-                                    Tipo de fornecedor
-                                </label>
-                                <p class="form-control-plaintext">
-                                    Distribuidor / Fornecedor Comercial
                                 </p>
                             </div>
 
@@ -187,13 +178,60 @@
 
                         <hr>
 
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">
-                                Equipamento associado
-                            </label>
-                            <p class="form-control-plaintext">
-                                Bomba de Infusão
-                            </p>
+                        <h5 class="mb-3">
+                            <i class="fa-solid fa-stethoscope me-2"></i>
+                            Equipamentos associados
+                        </h5>
+
+                        <div class="table-responsive mb-4">
+                            <table class="table table-hover align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Designação</th>
+                                        <th>Categoria</th>
+                                        <th>Estado</th>
+                                        <th>Criticidade</th>
+                                        <th class="text-end">Ações</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td>EQ-0003</td>
+                                        <td>Desfribilhador</td>
+                                        <td>Suporte de vida</td>
+                                        <td>
+                                            <span class="badge badge-sihem">Ativo</span>
+                                        </td>
+                                        <td>Média</td>
+                                        <td class="text-end">
+                                            <a href="../equipamentos/detalhes.html"
+                                                class="btn btn-sm btn-outline-primary">
+                                                <i class="fa-solid fa-eye me-1"></i>
+                                                Ver
+                                            </a>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>EQ-0007</td>
+                                        <td>Bomba de Infusão</td>
+                                        <td>Terapia</td>
+                                        <td>
+                                            <span class="badge badge-sihem-pink">Em manutenção</span>
+                                        </td>
+                                        <td>Alta</td>
+                                        <td class="text-end">
+                                            <a href="../equipamentos/detalhes.html"
+                                                class="btn btn-sm btn-outline-primary">
+                                                <i class="fa-solid fa-eye me-1"></i>
+                                                Ver
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
 
                         <hr>
@@ -208,11 +246,16 @@
                             </p>
                         </div>
 
-                        <div class="d-flex justify-content-end">
+                        <div class="d-flex justify-content-end gap-2">
 
                             <a href="lista.html" class="btn btn-outline-secondary">
                                 <i class="fa-solid fa-arrow-left me-1"></i>
                                 Voltar
+                            </a>
+
+                            <a href="editar.html" class="btn btn-pink">
+                                <i class="fa-regular fa-pen-to-square me-1"></i>
+                                Editar
                             </a>
 
                         </div>

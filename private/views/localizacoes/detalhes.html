@@ -58,7 +58,7 @@
                 <i class="fa-solid fa-chart-line"></i> Dashboard</a>
             <a href="../equipamentos/lista.html" class="sidebar-link">
                 <i class="fa-solid fa-stethoscope"></i> Equipamentos</a>
-             <a href="../fornecedores/lista.html" class="sidebar-link">
+            <a href="../fornecedores/lista.html" class="sidebar-link">
                 <i class="fa-solid fa-truck"></i> Fornecedores</a>
             <a href="lista.html" class="sidebar-link active">
                 <i class="fa-solid fa-location-dot"></i>Localizações </a>
@@ -128,16 +128,77 @@
                                 </p>
                             </div>
 
-                            <div class="col-md-8">
-                                <label class="form-label fw-bold">
-                                    Equipamento associado
-                                </label>
-                                <p class="form-control-plaintext">
-                                    Desfibrilhador
-                                </p>
-                            </div>
-
                         </div>
+
+                        <hr>
+
+                            <h5 class="mb-3">
+                                <i class="fa-solid fa-stethoscope me-2"></i>
+                                Equipamentos nesta localização
+                            </h5>
+
+                            <div class="table-responsive mb-4">
+
+                                <table class="table table-hover align-middle">
+
+                                    <thead>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Designação</th>
+                                            <th>Categoria</th>
+                                            <th>Estado</th>
+                                            <th>Criticidade</th>
+                                            <th class="text-end">Ações</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        <tr>
+                                            <td>EQ-0002</td>
+                                            <td>Desfibrilhador Zoll R Series</td>
+                                            <td>Emergência</td>
+                                            <td>
+                                                <span class="badge badge-sihem">
+                                                    Ativo
+                                                </span>
+                                            </td>
+                                            <td>Alta</td>
+
+                                            <td class="text-end">
+                                                <a href="../equipamentos/detalhes.html"
+                                                    class="btn btn-sm btn-outline-primary">
+                                                    <i class="fa-solid fa-eye me-1"></i>
+                                                    Ver
+                                                </a>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>EQ-0015</td>
+                                            <td>Monitor Multiparamétrico</td>
+                                            <td>Monitorização</td>
+                                            <td>
+                                                <span class="badge badge-sihem">
+                                                    Ativo
+                                                </span>
+                                            </td>
+                                            <td>Média</td>
+
+                                            <td class="text-end">
+                                                <a href="../equipamentos/detalhes.html"
+                                                    class="btn btn-sm btn-outline-primary">
+                                                    <i class="fa-solid fa-eye me-1"></i>
+                                                    Ver
+                                                </a>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
 
                         <hr>
 

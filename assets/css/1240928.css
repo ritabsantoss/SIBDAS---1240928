@@ -679,11 +679,6 @@ body {
     color: white;
 }
 
-.table thead th {
-    background-color: var(--azul-principal);
-    color: white;
-}
-
 .btn-pink{
     background-color: var(--rosa-principal);
     border: none;

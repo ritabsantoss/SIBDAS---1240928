@@ -75,19 +75,18 @@
             <div class="mb-4">
                 <h2 class="mb-1">
                     <i class="fa-solid fa-pen-to-square me-2"></i>
-                    Gestão de Conteúdos Públicos
+                    Gestão da Página Inicial
                 </h2>
                 <p class="text-muted mb-0">
-                    Atualização dos textos e informações apresentados na área pública do SIHEM.
+                    Atualização dos conteúdos apresentados na página pública do SIHEM.
                 </p>
             </div>
 
             <div class="card shadow-sm border-0 rounded-4">
                 <div class="card-body p-4">
 
-                    <form action="#" method="post">
+                    <form action="#" method="post" enctype="multipart/form-data">
 
-                        <!-- Separadores -->
                         <ul class="nav nav-tabs mb-4">
                             <li class="nav-item">
                                 <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#hero"
@@ -124,12 +123,10 @@
 
                         <div class="tab-content">
 
-                            <!-- hero section -->
+                            <!-- HERO -->
                             <div class="tab-pane fade show active" id="hero">
 
-                                <h5 class="mb-3">
-                                    Secção Principal
-                                </h5>
+                                <h5 class="mb-3">Secção Principal</h5>
 
                                 <div class="mb-3">
                                     <label for="hero_titulo" class="form-label">Título principal</label>
@@ -143,52 +140,64 @@
                                         rows="4">A SIHEM permite organizar, monitorizar e gerir o inventário hospitalar de equipamentos médicos de forma centralizada, segura e eficiente.</textarea>
                                 </div>
 
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="hero_botao" class="form-label">Texto do botão</label>
+                                        <input type="text" class="form-control" id="hero_botao" name="hero_botao"
+                                            value="Explore a nossa Plataforma">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="hero_link" class="form-label">Destino do botão</label>
+                                        <input type="text" class="form-control" id="hero_link" name="hero_link"
+                                            value="#servicos">
+                                    </div>
+                                </div>
+
+                                <div class="alert alert-light border rounded-4">
+                                    <strong>Imagem atual:</strong> sihem3.jpg
+                                </div>
+
                                 <div class="mb-4">
-                                    <label for="hero_botao" class="form-label">Texto do botão</label>
-                                    <input type="text" class="form-control" id="hero_botao" name="hero_botao"
-                                        value="Explore a nossa Plataforma">
+                                    <label for="hero_imagem" class="form-label">Substituir imagem principal</label>
+                                    <input type="file" class="form-control" id="hero_imagem" name="hero_imagem"
+                                        accept=".jpg,.jpeg,.png,.webp">
                                 </div>
 
                             </div>
 
-                            <!-- estatísticas -->
+                            <!-- ESTATÍSTICAS -->
                             <div class="tab-pane fade" id="estatisticas">
 
-                                <h5 class="mb-3">
-                                    Estatísticas da Área Pública
-                                </h5>
+                                <h5 class="mb-3">Estatísticas da Área Pública</h5>
 
                                 <div class="row mb-3">
                                     <div class="col-md-3">
-                                        <label for="estat_equipamentos" class="form-label">Equipamentos
-                                            registados</label>
+                                        <label for="estat_equipamentos" class="form-label">Valor 1</label>
                                         <input type="text" class="form-control" id="estat_equipamentos"
                                             name="estat_equipamentos" value="1500+">
                                     </div>
 
                                     <div class="col-md-3">
-                                        <label for="estat_hospitais" class="form-label">Hospitais associados</label>
+                                        <label for="estat_hospitais" class="form-label">Valor 2</label>
                                         <input type="text" class="form-control" id="estat_hospitais"
                                             name="estat_hospitais" value="45">
                                     </div>
 
                                     <div class="col-md-3">
-                                        <label for="estat_tecnicos" class="form-label">Técnicos especializados</label>
+                                        <label for="estat_tecnicos" class="form-label">Valor 3</label>
                                         <input type="text" class="form-control" id="estat_tecnicos"
                                             name="estat_tecnicos" value="120">
                                     </div>
 
                                     <div class="col-md-3">
-                                        <label for="estat_monitorizacao" class="form-label">Monitorização
-                                            contínua</label>
+                                        <label for="estat_monitorizacao" class="form-label">Valor 4</label>
                                         <input type="text" class="form-control" id="estat_monitorizacao"
                                             name="estat_monitorizacao" value="24/7">
                                     </div>
-
                                 </div>
 
-                                <div class="row mb-4">
-
+                                <div class="row mb-3">
                                     <div class="col-md-3">
                                         <label for="label_equipamentos" class="form-label">Legenda 1</label>
                                         <input type="text" class="form-control" id="label_equipamentos"
@@ -212,17 +221,14 @@
                                         <input type="text" class="form-control" id="label_monitorizacao"
                                             name="label_monitorizacao" value="Monitorização Contínua">
                                     </div>
-
                                 </div>
 
                             </div>
 
-                            <!-- serviços -->
+                            <!-- SERVIÇOS -->
                             <div class="tab-pane fade" id="servicos">
 
-                                <h5 class="mb-3">
-                                    Serviços da Plataforma
-                                </h5>
+                                <h5 class="mb-3">Serviços da Plataforma</h5>
 
                                 <div class="mb-3">
                                     <label for="servicos_titulo" class="form-label">Título da secção</label>
@@ -233,73 +239,105 @@
                                 <div class="mb-4">
                                     <label for="servicos_texto" class="form-label">Texto introdutório</label>
                                     <textarea class="form-control" id="servicos_texto" name="servicos_texto"
-                                        rows="4">Funcionalidades desenvolvidas para apoiar a gestão hospitalar de equipamentos médicos.</textarea>
+                                        rows="3">Funcionalidades desenvolvidas para apoiar a gestão hospitalar de equipamentos médicos.</textarea>
                                 </div>
 
                                 <hr>
 
-                                <div class="row mb-3">
+                                <div class="border rounded-4 p-3 mb-3">
+                                    <h6>Serviço 1</h6>
 
-                                    <div class="col-md-6">
-                                        <label for="servico1_titulo" class="form-label">Serviço 1 - título</label>
-                                        <input type="text" class="form-control" id="servico1_titulo"
-                                            name="servico1_titulo" value="Gestão de Equipamentos">
+                                    <div class="row mb-3">
+                                        <div class="col-md-4">
+                                            <label class="form-label">Ícone</label>
+                                            <input type="text" class="form-control" name="servico1_icone"
+                                                value="fa-solid fa-laptop-file">
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label class="form-label">Título</label>
+                                            <input type="text" class="form-control" name="servico1_titulo"
+                                                value="Gestão de Equipamentos">
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label class="form-label">Descrição</label>
+                                            <textarea class="form-control" name="servico1_texto"
+                                                rows="2">Registo e consulta de equipamentos médicos com informação técnica detalhada.</textarea>
+                                        </div>
                                     </div>
-
-                                    <div class="col-md-6">
-                                        <label for="servico1_texto" class="form-label">Serviço 1 - descrição</label>
-                                        <textarea class="form-control" id="servico1_texto" name="servico1_texto"
-                                            rows="4">Registo e consulta de equipamentos médicos com informação técnica detalhada.</textarea>
-                                    </div>
-
                                 </div>
 
-                                <div class="row mb-3">
+                                <div class="border rounded-4 p-3 mb-3">
+                                    <h6>Serviço 2</h6>
 
-                                    <div class="col-md-6">
-                                        <label for="servico2_titulo" class="form-label">Serviço 2 - título</label>
-                                        <input type="text" class="form-control" id="servico2_titulo"
-                                            name="servico2_titulo" value="Documentação Técnica">
+                                    <div class="row mb-3">
+                                        <div class="col-md-4">
+                                            <label class="form-label">Ícone</label>
+                                            <input type="text" class="form-control" name="servico2_icone"
+                                                value="fa-solid fa-file-medical">
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label class="form-label">Título</label>
+                                            <input type="text" class="form-control" name="servico2_titulo"
+                                                value="Documentação Técnica">
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label class="form-label">Descrição</label>
+                                            <textarea class="form-control" name="servico2_texto"
+                                                rows="2">Armazenamento de manuais, garantias, relatórios e documentação associada.</textarea>
+                                        </div>
                                     </div>
-
-                                    <div class="col-md-6">
-                                        <label for="servico2_texto" class="form-label">Serviço 2 - descrição</label>
-                                        <textarea class="form-control" id="servico2_texto" name="servico2_texto"
-                                            rows="4">Armazenamento de manuais, garantias, relatórios e documentação associada.</textarea>
-                                    </div>
-
                                 </div>
 
-                                <div class="row mb-3">
+                                <div class="border rounded-4 p-3 mb-3">
+                                    <h6>Serviço 3</h6>
 
-                                    <div class="col-md-6">
-                                        <label for="servico3_titulo" class="form-label">Serviço 3 - título</label>
-                                        <input type="text" class="form-control" id="servico3_titulo"
-                                            name="servico3_titulo" value="Localização Hospitalar">
+                                    <div class="row mb-3">
+                                        <div class="col-md-4">
+                                            <label class="form-label">Ícone</label>
+                                            <input type="text" class="form-control" name="servico3_icone"
+                                                value="fa-solid fa-location-dot">
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label class="form-label">Título</label>
+                                            <input type="text" class="form-control" name="servico3_titulo"
+                                                value="Localização Hospitalar">
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label class="form-label">Descrição</label>
+                                            <textarea class="form-control" name="servico3_texto"
+                                                rows="2">Monitorização da localização física dos equipamentos hospitalares.</textarea>
+                                        </div>
                                     </div>
-
-                                    <div class="col-md-6">
-                                        <label for="servico3_texto" class="form-label">Serviço 3 - descrição</label>
-                                        <textarea class="form-control" id="servico3_texto" name="servico3_texto"
-                                            rows="4">Monitorização da localização física dos equipamentos hospitalares.</textarea>
-                                    </div>
-
                                 </div>
 
-                                <div class="row mb-4">
+                                <div class="border rounded-4 p-3 mb-4">
+                                    <h6>Serviço 4</h6>
 
-                                    <div class="col-md-6">
-                                        <label for="servico4_titulo" class="form-label">Serviço 4 - título</label>
-                                        <input type="text" class="form-control" id="servico4_titulo"
-                                            name="servico4_titulo" value="Dashboard Estatístico">
+                                    <div class="row mb-3">
+                                        <div class="col-md-4">
+                                            <label class="form-label">Ícone</label>
+                                            <input type="text" class="form-control" name="servico4_icone"
+                                                value="fa-solid fa-chart-pie">
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label class="form-label">Título</label>
+                                            <input type="text" class="form-control" name="servico4_titulo"
+                                                value="Dashboard Estatístico">
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label class="form-label">Descrição</label>
+                                            <textarea class="form-control" name="servico4_texto"
+                                                rows="2">Visualização rápida de indicadores e estatísticas do inventário hospitalar.</textarea>
+                                        </div>
                                     </div>
-
-                                    <div class="col-md-6">
-                                        <label for="servico4_texto" class="form-label">Serviço 4 - descrição</label>
-                                        <textarea class="form-control" id="servico4_texto" name="servico4_texto"
-                                            rows="3">Visualização rápida de indicadores e estatísticas do inventário hospitalar.</textarea>
-                                    </div>
-
                                 </div>
 
                             </div>
@@ -307,81 +345,71 @@
                             <!-- FAQ -->
                             <div class="tab-pane fade" id="faq">
 
-                                <h5 class="mb-3">
-                                    Perguntas Frequentes
-                                </h5>
+                                <h5 class="mb-3">Perguntas Frequentes</h5>
 
-                                <div class="mb-3">
-                                    <label for="faq1_pergunta" class="form-label">Pergunta 1</label>
-                                    <input type="text" class="form-control" id="faq1_pergunta" name="faq1_pergunta"
+                                <div class="border rounded-4 p-3 mb-3">
+                                    <h6>FAQ 1</h6>
+                                    <label class="form-label">Pergunta</label>
+                                    <input type="text" class="form-control mb-3" name="faq1_pergunta"
                                         value="O que é a plataforma SIHEM?">
+
+                                    <label class="form-label">Resposta</label>
+                                    <textarea class="form-control" name="faq1_resposta"
+                                        rows="3">A SIHEM é uma plataforma de gestão de inventário hospitalar desenvolvida para organizar equipamentos médicos e documentação técnica.</textarea>
                                 </div>
 
-                                <div class="mb-3">
-                                    <label for="faq1_resposta" class="form-label">Resposta 1</label>
-                                    <textarea class="form-control" id="faq1_resposta" name="faq1_resposta"
-                                        rows="4">A SIHEM é uma plataforma de gestão de inventário hospitalar desenvolvida para organizar equipamentos médicos e documentação técnica.</textarea>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="faq2_pergunta" class="form-label">Pergunta 2</label>
-                                    <input type="text" class="form-control" id="faq2_pergunta" name="faq2_pergunta"
+                                <div class="border rounded-4 p-3 mb-3">
+                                    <h6>FAQ 2</h6>
+                                    <label class="form-label">Pergunta</label>
+                                    <input type="text" class="form-control mb-3" name="faq2_pergunta"
                                         value="É possível localizar equipamentos hospitalares?">
+
+                                    <label class="form-label">Resposta</label>
+                                    <textarea class="form-control" name="faq2_resposta"
+                                        rows="3">Sim. O sistema permite acompanhar a localização dos equipamentos dentro das diferentes áreas hospitalares.</textarea>
                                 </div>
 
-                                <div class="mb-3">
-                                    <label for="faq2_resposta" class="form-label">Resposta 2</label>
-                                    <textarea class="form-control" id="faq2_resposta" name="faq2_resposta"
-                                        rows="4">Sim. O sistema permite acompanhar a localização dos equipamentos dentro das diferentes áreas hospitalares.</textarea>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="faq3_pergunta" class="form-label">Pergunta 3</label>
-                                    <input type="text" class="form-control" id="faq3_pergunta" name="faq3_pergunta"
+                                <div class="border rounded-4 p-3 mb-3">
+                                    <h6>FAQ 3</h6>
+                                    <label class="form-label">Pergunta</label>
+                                    <input type="text" class="form-control mb-3" name="faq3_pergunta"
                                         value="A plataforma armazena documentação técnica?">
+
+                                    <label class="form-label">Resposta</label>
+                                    <textarea class="form-control" name="faq3_resposta"
+                                        rows="3">A SIHEM permite guardar manuais, relatórios, garantias e histórico técnico dos equipamentos.</textarea>
                                 </div>
 
-                                <div class="mb-3">
-                                    <label for="faq3_resposta" class="form-label">Resposta 3</label>
-                                    <textarea class="form-control" id="faq3_resposta" name="faq3_resposta"
-                                        rows="4">A SIHEM permite guardar manuais, relatórios, garantias e histórico técnico dos equipamentos.</textarea>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="faq4_pergunta" class="form-label">Pergunta 4</label>
-                                    <input type="text" class="form-control" id="faq4_pergunta" name="faq4_pergunta"
+                                <div class="border rounded-4 p-3 mb-3">
+                                    <h6>FAQ 4</h6>
+                                    <label class="form-label">Pergunta</label>
+                                    <input type="text" class="form-control mb-3" name="faq4_pergunta"
                                         value="O sistema apresenta estatísticas e dashboards?">
+
+                                    <label class="form-label">Resposta</label>
+                                    <textarea class="form-control" name="faq4_resposta"
+                                        rows="3">Sim. A plataforma inclui dashboards com indicadores estatísticos relacionados com os equipamentos registados.</textarea>
                                 </div>
 
-                                <div class="mb-3">
-                                    <label for="faq4_resposta" class="form-label">Resposta 4</label>
-                                    <textarea class="form-control" id="faq4_resposta" name="faq4_resposta"
-                                        rows="4">Sim. A plataforma inclui dashboards com indicadores estatísticos relacionados com os equipamentos registados.</textarea>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="faq5_pergunta" class="form-label">Pergunta 5</label>
-                                    <input type="text" class="form-control" id="faq5_pergunta" name="faq5_pergunta"
+                                <div class="border rounded-4 p-3 mb-4">
+                                    <h6>FAQ 5</h6>
+                                    <label class="form-label">Pergunta</label>
+                                    <input type="text" class="form-control mb-3" name="faq5_pergunta"
                                         value="Quem pode utilizar a plataforma?">
-                                </div>
 
-                                <div class="mb-3">
-                                    <label for="faq5_resposta" class="form-label">Resposta 5</label>
-                                    <textarea class="form-control" id="faq5_resposta" name="faq5_resposta"
-                                        rows="4">A plataforma destina-se a hospitais, clínicas e técnicos responsáveis pela gestão de equipamentos médicos.</textarea>
+                                    <label class="form-label">Resposta</label>
+                                    <textarea class="form-control" name="faq5_resposta"
+                                        rows="3">A plataforma destina-se a hospitais, clínicas e técnicos responsáveis pela gestão de equipamentos médicos.</textarea>
                                 </div>
 
                             </div>
 
-                            <!-- contactos -->
+                            <!-- CONTACTOS -->
                             <div class="tab-pane fade" id="contactos">
 
-                                <h5 class="mb-3">
-                                    Contactos e Informação da Plataforma
-                                </h5>
+                                <h5 class="mb-3">Contactos e Informação da Plataforma</h5>
 
                                 <div class="row mb-3">
-
                                     <div class="col-md-4">
                                         <label for="email_contacto" class="form-label">Email</label>
                                         <input type="email" class="form-control" id="email_contacto"
@@ -399,13 +427,11 @@
                                         <input type="text" class="form-control" id="localizacao_contacto"
                                             name="localizacao_contacto" value="Porto, Portugal">
                                     </div>
-
                                 </div>
 
                                 <hr>
 
                                 <div class="row mb-4">
-
                                     <div class="col-md-4">
                                         <label for="versao" class="form-label">Versão da plataforma</label>
                                         <input type="text" class="form-control" id="versao" name="versao" value="v1.0">
@@ -425,7 +451,6 @@
                                             <option>Sistema indisponível</option>
                                         </select>
                                     </div>
-
                                 </div>
 
                             </div>
@@ -435,7 +460,6 @@
                         <hr>
 
                         <div class="d-flex justify-content-end gap-2">
-
                             <a href="../indexprivate.html" class="btn btn-outline-secondary">
                                 <i class="fa-solid fa-xmark me-1"></i>
                                 Cancelar
@@ -445,11 +469,12 @@
                                 <i class="fa-regular fa-floppy-disk me-1"></i>
                                 Guardar Alterações
                             </button>
-
                         </div>
+
                     </form>
                 </div>
             </div>
+
         </main>
     </div>
 
