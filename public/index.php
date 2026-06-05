@@ -1,10 +1,12 @@
+<?php require_once __DIR__ . '/../config/config.php'; ?>
+
 <!DOCTYPE html>
 <html lang="pt">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIHEM</title>
+    <title><?php echo APP_NAME; ?></title>
 
     <!-- favicon -->
     <link rel="shortcut icon" href="../assets/img/sihem2.png" type="image/png">
@@ -297,7 +299,7 @@
 
             <h3>PLATAFORMA</h3>
             <p>
-                Versão da plataforma: v1.0
+                Versão da plataforma: v<?php echo APP_VERSION; ?>
             </p>
             <p>
                 Última atualização: Junho 2026
@@ -316,8 +318,7 @@
     <div class="footer-bottom">
 
         <p>
-            © 2026 SIHEM — Sistema de Inventário Hospitalar.
-            Todos os direitos reservados.
+            <?php echo APP_COPYRIGHT; ?>
         </p>
 
     </div>
