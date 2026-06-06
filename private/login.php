@@ -1,5 +1,21 @@
-<?php require_once __DIR__ . '/../config/config.php'; ?>
+<?php
+require_once '../config/config.php';
+session_start();
 
+// Recupera erros de validação guardados na sessão (e limpa-os)
+$validation_errors = [];
+if (!empty($_SESSION['validation_errors'])) {
+    $validation_errors = $_SESSION['validation_errors'];
+    unset($_SESSION['validation_errors']);
+}
+
+// Recupera erro de servidor guardado na sessão (e limpa-o)
+$server_error = '';
+if (!empty($_SESSION['server_error'])) {
+    $server_error = $_SESSION['server_error'];
+    unset($_SESSION['server_error']);
+}
+?>
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -55,6 +71,20 @@
                             </button>
                         </div>
                     </form>
+                    <!-- Mensagens de erro (validação e servidor) -->
+                    <?php if (!empty($validation_errors)) : ?>
+                        <div class="alert alert-danger p-2 text-center mt-3">
+                            <?php foreach ($validation_errors as $error) : ?>
+                                <div><?= htmlspecialchars($error) ?></div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (!empty($server_error)) : ?>
+                        <div class="alert alert-danger p-2 text-center mt-3">
+                            <div><?= htmlspecialchars($server_error) ?></div>
+                        </div>
+                    <?php endif; ?>
 
                     <div class="text-center mt-3">
                         <a href="../public/index.php" class="login-voltar">
