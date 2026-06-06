@@ -246,24 +246,24 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (indice === 2) {
-    const fornecedoresSelecionados = document.querySelectorAll(
-        'select[name^="fornecedores"][name$="[id_fornecedor]"]'
-    );
+            const fornecedoresSelecionados = document.querySelectorAll(
+                'select[name^="fornecedores"][name$="[id_fornecedor]"]'
+            );
 
-    if (fornecedoresSelecionados.length === 0) {
-        mostrarAviso("Adicione pelo menos um fornecedor antes de avançar.");
-        return false;
-    }
+            if (fornecedoresSelecionados.length === 0) {
+                mostrarAviso("Adicione pelo menos um fornecedor antes de avançar.");
+                return false;
+            }
 
-    for (const fornecedor of fornecedoresSelecionados) {
-        const opcaoSelecionada = fornecedor.options[fornecedor.selectedIndex];
+            for (const fornecedor of fornecedoresSelecionados) {
+                const opcaoSelecionada = fornecedor.options[fornecedor.selectedIndex];
 
-        if (!opcaoSelecionada || opcaoSelecionada.disabled || fornecedor.value.trim() === "") {
-            mostrarAviso("Selecione o fornecedor em todos os blocos adicionados.");
-            return false;
+                if (!opcaoSelecionada || opcaoSelecionada.disabled || fornecedor.value.trim() === "") {
+                    mostrarAviso("Selecione o fornecedor em todos os blocos adicionados.");
+                    return false;
+                }
+            }
         }
-    }
-}
 
         if (indice === 3) {
             if (!campoPreenchido("localizacao_associada")) {
@@ -296,7 +296,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    if (tabsEquipamento.length > 0) {
+    const formularioEquipamento = document.getElementById("form-equipamento");
+
+    if (tabsEquipamento.length > 0 && formularioEquipamento) {
         tabsEquipamento.forEach((tab, indice) => {
             tab.addEventListener("show.bs.tab", function (event) {
                 const tabAtiva = document.querySelector("#equipamentoTabs .nav-link.active");
@@ -429,43 +431,43 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // EQUIPAMENTOS - ADICIONAR / REMOVER FORNECEDORES
-const botaoAdicionarFornecedor = document.getElementById("adicionar-fornecedor");
+    const botaoAdicionarFornecedor = document.getElementById("adicionar-fornecedor");
 
-if (botaoAdicionarFornecedor) {
+    if (botaoAdicionarFornecedor) {
 
-    let contadorFornecedores = 1;
+        let contadorFornecedores = 1;
 
-    botaoAdicionarFornecedor.addEventListener("click", function () {
+        botaoAdicionarFornecedor.addEventListener("click", function () {
 
-        const container = document.getElementById("fornecedores-container");
-        const primeiroFornecedor = container.querySelector(".fornecedor-bloco");
-        const novoFornecedor = primeiroFornecedor.cloneNode(true);
+            const container = document.getElementById("fornecedores-container");
+            const primeiroFornecedor = container.querySelector(".fornecedor-bloco");
+            const novoFornecedor = primeiroFornecedor.cloneNode(true);
 
-        novoFornecedor.querySelectorAll("input, select").forEach(function (campo) {
+            novoFornecedor.querySelectorAll("input, select").forEach(function (campo) {
 
-            campo.value = "";
+                campo.value = "";
 
-            if (campo.name) {
-                campo.name = campo.name.replace(
-                    /fornecedores\[\d+\]/,
-                    "fornecedores[" + contadorFornecedores + "]"
-                );
-            }
+                if (campo.name) {
+                    campo.name = campo.name.replace(
+                        /fornecedores\[\d+\]/,
+                        "fornecedores[" + contadorFornecedores + "]"
+                    );
+                }
 
+            });
+
+            const botaoRemover = novoFornecedor.querySelector(".remover-fornecedor");
+
+            botaoRemover.classList.remove("d-none");
+
+            botaoRemover.addEventListener("click", function () {
+                novoFornecedor.remove();
+            });
+
+            container.appendChild(novoFornecedor);
+
+            contadorFornecedores++;
         });
-
-        const botaoRemover = novoFornecedor.querySelector(".remover-fornecedor");
-
-        botaoRemover.classList.remove("d-none");
-
-        botaoRemover.addEventListener("click", function () {
-            novoFornecedor.remove();
-        });
-
-        container.appendChild(novoFornecedor);
-
-        contadorFornecedores++;
-    });
-}
+    }
 
 });

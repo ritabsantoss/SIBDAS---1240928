@@ -1,75 +1,10 @@
-<!DOCTYPE html>
-<html lang="pt">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIHEM | Área Privada</title>
-
-    <!-- favicon -->
-    <link rel="shortcut icon" href="../../../assets/img/sihem2.png" type="image/png">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../../../assets/bootstrap/bootstrap.min.css">
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="../../../assets/css/1240928.css">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="../../../assets/fontawesome/all.min.css">
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-</head>
-
-<body>
-    <!-- NAVBAR -->
-    <header class="private-navbar">
-        <div class="d-flex align-items-center">
-            <img src="../../../assets/img/sihem1.png" class="private-logo" alt="Logo SIHEM">
-        </div>
-
-        <div class="dropdown">
-            <button class="btn btn-user dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                <i class="fa-regular fa-user me-2"></i> Utilizador
-            </button>
-
-            <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="../password.html"><i class="fa-solid fa-key me-2"></i>Alterar password</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="../../../public/index.html"><i
-                            class="fa-solid fa-right-from-bracket me-2"></i>Sair</a></li>
-            </ul>
-        </div>
-    </header>
+<?php $pagina_ativa = 'localizacoes'; ?>
+<?php include '../../includes/header.php'; ?>
+<?php include '../../includes/navbar.php'; ?>
 
     <div class="private-container">
 
-        <!-- SIDEBAR -->
-        <aside class="private-sidebar">
-            <h5>MENU</h5>
-
-            <a href="../../indexprivate.html" class="sidebar-link">
-                <i class="fa-solid fa-house"></i> Início</a>
-            <a href="../dashboard.html" class="sidebar-link">
-                <i class="fa-solid fa-chart-line"></i> Dashboard</a>
-            <a href="../equipamentos/lista.html" class="sidebar-link">
-                <i class="fa-solid fa-stethoscope"></i> Equipamentos</a>
-            <a href="../fornecedores/lista.html" class="sidebar-link">
-                <i class="fa-solid fa-truck"></i> Fornecedores</a>
-            <a href="lista.html" class="sidebar-link active">
-                <i class="fa-solid fa-location-dot"></i>Localizações </a>
-            <a href="../documentos/lista.html" class="sidebar-link">
-                <i class="fa-solid fa-file-pdf"></i> Documentação</a>
-            <a href="../garantias/lista.html" class="sidebar-link">
-                <i class="fa-solid fa-file-contract"></i> Garantias | Contratos</a>
-            <a href="../conteudos.html" class="sidebar-link">
-                <i class="fa-solid fa-pen-to-square"></i> Conteúdos Públicos</a>
-        </aside>
+        <?php include '../../includes/sidebar.php'; ?>
 
         <!-- Conteúdo -->
         <main class="private-main">
@@ -86,7 +21,7 @@
                     </p>
                 </div>
 
-                <a href="novo.html" class="btn btn-pink">
+                <a href="novo.php" class="btn btn-pink">
                     <i class="fa-solid fa-plus me-2"></i>Nova Localização
                 </a>
 
@@ -175,10 +110,10 @@
 
                                     <td class="text-center">
 
-                                        <a href="detalhes.html" class="btn btn-sm btn-outline-primary me-1">
+                                        <a href="detalhes.php" class="btn btn-sm btn-outline-primary me-1">
                                             <i class="fa-solid fa-circle-info"></i></a>
 
-                                        <a href="editar.html" class="btn btn-sm btn-outline-warning me-1">
+                                        <a href="editar.php" class="btn btn-sm btn-outline-warning me-1">
                                             <i class="fa-regular fa-pen-to-square"></i></a>
 
                                         <button class="btn btn-sm btn-outline-danger btn-gestao" data-bs-toggle="modal"
@@ -198,10 +133,10 @@
 
                                     <td class="text-center">
 
-                                        <a href="detalhes.html" class="btn btn-sm btn-outline-primary me-1">
+                                        <a href="detalhes.php" class="btn btn-sm btn-outline-primary me-1">
                                             <i class="fa-solid fa-circle-info"></i></a>
 
-                                        <a href="editar.html" class="btn btn-sm btn-outline-warning me-1">
+                                        <a href="editar.php" class="btn btn-sm btn-outline-warning me-1">
                                             <i class="fa-regular fa-pen-to-square"></i></a>
 
                                         <button class="btn btn-sm btn-outline-danger btn-gestao" data-bs-toggle="modal"
@@ -221,10 +156,10 @@
 
                                     <td class="text-center">
 
-                                        <a href="detalhes.html" class="btn btn-sm btn-outline-primary me-1">
+                                        <a href="detalhes.php" class="btn btn-sm btn-outline-primary me-1">
                                             <i class="fa-solid fa-circle-info"></i></a>
 
-                                        <a href="editar.html" class="btn btn-sm btn-outline-warning me-1">
+                                        <a href="editar.php" class="btn btn-sm btn-outline-warning me-1">
                                             <i class="fa-regular fa-pen-to-square"></i></a>
 
                                         <button class="btn btn-sm btn-outline-danger btn-gestao" data-bs-toggle="modal"
@@ -293,19 +228,4 @@
         </main>
     </div>
 
-    <!-- Rodapé Final -->
-    <div class="footer-bottom">
-
-        <p>
-            © 2026 SIHEM — Sistema de Inventário Hospitalar.
-            Todos os direitos reservados.
-        </p>
-
-    </div>
-
-    <script src="../../../assets/bootstrap/bootstrap.bundle.min.js"></script>
-    <script src="../../../assets/js/1240928.js"></script>
-
-</body>
-
-</html>
+    <?php include '../../includes/footer.php'; ?>

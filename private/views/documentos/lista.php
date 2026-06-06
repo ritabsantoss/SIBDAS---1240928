@@ -1,75 +1,10 @@
-<!DOCTYPE html>
-<html lang="pt">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIHEM | Área Privada</title>
-
-    <!-- favicon -->
-    <link rel="shortcut icon" href="../../../assets/img/sihem2.png" type="image/png">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../../../assets/bootstrap/bootstrap.min.css">
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="../../../assets/css/1240928.css">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="../../../assets/fontawesome/all.min.css">
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-</head>
-
-<body>
-    <!-- NAVBAR -->
-    <header class="private-navbar">
-        <div class="d-flex align-items-center">
-            <img src="../../../assets/img/sihem1.png" class="private-logo" alt="Logo SIHEM">
-        </div>
-
-        <div class="dropdown">
-            <button class="btn btn-user dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                <i class="fa-regular fa-user me-2"></i> Utilizador
-            </button>
-
-            <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="../password.html"><i class="fa-solid fa-key me-2"></i>Alterar password</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="../../../public/index.html"><i
-                            class="fa-solid fa-right-from-bracket me-2"></i>Sair</a></li>
-            </ul>
-        </div>
-    </header>
+<?php $pagina_ativa = 'documentos'; ?>
+<?php include '../../includes/header.php'; ?>
+<?php include '../../includes/navbar.php'; ?>
 
     <div class="private-container">
 
-        <!-- SIDEBAR -->
-        <aside class="private-sidebar">
-            <h5>MENU</h5>
-
-            <a href="../../indexprivate.html" class="sidebar-link">
-                <i class="fa-solid fa-house"></i> Início</a>
-            <a href="../dashboard.html" class="sidebar-link">
-                <i class="fa-solid fa-chart-line"></i> Dashboard</a>
-            <a href="../equipamentos/lista.html" class="sidebar-link">
-                <i class="fa-solid fa-stethoscope"></i> Equipamentos</a>
-            <a href="../fornecedores/lista.html" class="sidebar-link">
-                <i class="fa-solid fa-truck"></i> Fornecedores</a>
-            <a href="../localizacoes/lista.html" class="sidebar-link">
-                <i class="fa-solid fa-location-dot"></i>Localizações </a>
-            <a href="../documentos/lista.html" class="sidebar-link">
-                <i class="fa-solid fa-file-pdf"></i> Documentação</a>
-            <a href="lista.html" class="sidebar-link active">
-                <i class="fa-solid fa-file-contract"></i> Garantias | Contratos</a>
-            <a href="../conteudos.html" class="sidebar-link">
-                <i class="fa-solid fa-pen-to-square"></i> Conteúdos Públicos</a>
-        </aside>
+        <?php include '../../includes/sidebar.php'; ?>
 
         <!-- Conteúdo -->
         <main class="private-main">
@@ -78,12 +13,13 @@
 
                 <div>
                     <h2 class="mb-1">
-                        <i class="fa-solid fa-file-contract"></i>
-                        Lista de Garantias e Contratos
+                        <i class="fa-solid fa-file-pdf"></i>
+                        Lista de Documentação
                     </h2>
                     <p class="text-muted mb-0">
-                        Gestão e consulta de garantias e contratos de manutenção.
+                        Gestão e consulta de documentação técnica hospitalar.
                     </p>
+
                 </div>
 
             </div>
@@ -96,9 +32,22 @@
 
                         <div class="row mb-4">
 
-                            <div class="col-md-9">
+                            <div class="col-md-5">
                                 <label class="form-label">Pesquisa rápida</label>
                                 <input type="text" class="form-control" name="pesquisa">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Tipo de Documento</label>
+                                <select class="form-select" name="tipo">
+                                    <option value="">Todos</option>
+                                    <option>Manual de Utilizador</option>
+                                    <option>Manual de Serviço</option>
+                                    <option>Certificado de Calibração</option>
+                                    <option>Fatura ou Guia de Aquisição</option>
+                                    <option>Declaração de Conformidade</option>
+                                    <option>Relatório Técnico</option>
+                                </select>
                             </div>
 
                             <div class="col-md-3 d-flex align-items-end">
@@ -115,16 +64,15 @@
                             <div class="col-md-3">
                                 <label class="form-label">Ordenar por</label>
                                 <select class="form-select" name="ordenar">
-                                    <option selected>Nome</option>
-                                    <option>Estado</option>
+                                    <option value="tipo_documento" selected>Tipo de Documento</option>
                                 </select>
                             </div>
 
                             <div class="col-md-3">
                                 <label class="form-label">Sentido</label>
                                 <select class="form-select" name="sentido">
-                                    <option selected>Ascendente</option>
-                                    <option>Descendente</option>
+                                    <option value="asc" selected>Ascendente</option>
+                                    <option value="desc">Descendente</option>
                                 </select>
                             </div>
 
@@ -139,80 +87,77 @@
                             <thead class="table-light">
                                 <tr>
                                     <th>Código</th>
+                                    <th>Documento</th>
+                                    <th>Tipo</th>
                                     <th>Equipamento</th>
-                                    <th>Tipo de Contrato</th>
-                                    <th>Entidade Responsável</th>
-                                    <th>Fim da Garantia</th>
-                                    <th>Estado atual</th>
+                                    <th>Fornecedor</th>
+                                    <th>Validade</th>
                                     <th class="text-center">Ações</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-
                                 <tr>
-                                    <td>GC-0091</td>
+                                    <td>MAN-0928</td>
+                                    <td>Manual Técnico Evita V500</td>
+                                    <td>Manual de Utilizador</td>
                                     <td>Ventilador Pulmonar</td>
-                                    <td>Garantia do Fabricante</td>
                                     <td>Dräger</td>
                                     <td>2028-12-31</td>
-                                    <td>
-                                        <span class="badge bg-success">Ativa</span>
-                                    </td>
 
                                     <td class="text-center">
-                                        <a href="detalhes.html" class="btn btn-sm btn-outline-primary me-1">
+
+                                        <a href="detalhes.php" class="btn btn-sm btn-outline-primary me-1">
                                             <i class="fa-solid fa-circle-info"></i></a>
 
                                         <button class="btn btn-sm btn-outline-danger btn-gestao" data-bs-toggle="modal"
-                                            data-bs-target="#modalArquivar" data-nome="GC-0091">
+                                            data-bs-target="#modalArquivar" data-nome="Manual Técnico Evita V500">
                                             <i class="fa-solid fa-box-archive"></i>
                                         </button>
+
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <td>GC-0122</td>
+                                    <td>AUT-0012</td>
+                                    <td>Autorização Infusomat Space</td>
+                                    <td>Manual de Serviço</td>
                                     <td>Bomba de Infusão</td>
-                                    <td>Garantia do Fornecedor</td>
                                     <td>B. Braun</td>
                                     <td>2025-12-31</td>
-                                    <td>
-                                        <span class="badge bg-danger">Expirada</span>
-                                    </td>
 
                                     <td class="text-center">
-                                        <a href="detalhes.html" class="btn btn-sm btn-outline-primary me-1">
+
+                                        <a href="detalhes.php" class="btn btn-sm btn-outline-primary me-1">
                                             <i class="fa-solid fa-circle-info"></i></a>
 
                                         <button class="btn btn-sm btn-outline-danger btn-gestao" data-bs-toggle="modal"
-                                            data-bs-target="#modalArquivar" data-nome="GC-0122">
+                                            data-bs-target="#modalArquivar" data-nome="Autorização Infusomat Space">
                                             <i class="fa-solid fa-box-archive"></i>
                                         </button>
+
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <td>GC-0661</td>
+                                    <td>FIC-0076</td>
+                                    <td>Ficha R Series </td>
+                                    <td>Certificado de Calibração</td>
                                     <td>Desfibrilhador</td>
-                                    <td>Contrato de Assistência Técnica</td>
                                     <td>Zoll</td>
-                                    <td>------------------</td>
-                                    <td>
-                                        <span class="badge bg-secondary">Não disponível</span>
-                                    </td>
+                                    <td>2026-10-01</td>
 
                                     <td class="text-center">
-                                        <a href="detalhes.html" class="btn btn-sm btn-outline-primary me-1">
+
+                                        <a href="detalhes.php" class="btn btn-sm btn-outline-primary me-1">
                                             <i class="fa-solid fa-circle-info"></i></a>
 
                                         <button class="btn btn-sm btn-outline-danger btn-gestao" data-bs-toggle="modal"
-                                            data-bs-target="#modalArquivar" data-nome="GC-0661">
+                                            data-bs-target="#modalArquivar" data-nome="Ficha R Series">
                                             <i class="fa-solid fa-box-archive"></i>
                                         </button>
 
                                     </td>
-
                                 </tr>
                             </tbody>
                         </table>
@@ -234,10 +179,10 @@
 
                             </div>
 
-                            <h4 class="mb-3">Gestão de Registos</h4>
+                            <h4 class="mb-3">Gestão do Documento</h4>
 
                             <p class="text-muted mb-2">
-                                Equipamento selecionado:
+                                Documento selecionado:
                             </p>
 
                             <h5 id="itemSelecionado" class="mb-4 text-primary">
@@ -245,7 +190,7 @@
                             </h5>
 
                             <p class="text-muted mb-4">
-                                Pretende arquivar ou eliminar este registo?
+                                Pretende arquivar ou eliminar este documento?
                             </p>
 
                             <div class="d-flex justify-content-center gap-3 flex-wrap">
@@ -272,20 +217,4 @@
         </main>
     </div>
 
-
-    <!-- Rodapé Final -->
-    <div class="footer-bottom">
-
-        <p>
-            © 2026 SIHEM — Sistema de Inventário Hospitalar.
-            Todos os direitos reservados.
-        </p>
-
-    </div>
-
-    <script src="../../../assets/bootstrap/bootstrap.bundle.min.js"></script>
-    <script src="../../../assets/js/1240928.js"></script>
-
-</body>
-
-</html>
+    <?php include '../../includes/footer.php'; ?>
