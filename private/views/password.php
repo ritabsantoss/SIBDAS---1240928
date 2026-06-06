@@ -1,22 +1,24 @@
+<?php require_once __DIR__ . '/../../config/config.php'; ?>
+
 <!DOCTYPE html>
 <html lang="pt">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIHEM | Alterar Password</title>
+    <title><?php echo APP_NAME; ?> | Alterar Password</title>
 
     <!-- favicon -->
-    <link rel="shortcut icon" href="../../assets/img/sihem2.png" type="image/png">
+    <link rel="shortcut icon" href="<?php echo BASE_URL; ?>/assets/img/sihem2.png" type="image/png">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../../assets/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/bootstrap/bootstrap.min.css">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="../../assets/css/1240928.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/1240928.css">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="../../assets/fontawesome/all.min.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/fontawesome/all.min.css">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,7 +37,7 @@
                 <div class="card p-4 login-card">
 
                     <div class="login-header">
-                        <img src="../../assets/img/sihem1.png" class="login-logo">
+                        <img src="<?php echo BASE_URL; ?>/assets/img/sihem1.png" class="login-logo">
                     </div>
 
                     <form action="#" method="post">
@@ -80,7 +82,7 @@
                     </form>
 
                     <div class="text-center mt-3">
-                        <a href="../indexprivate.html" class="login-voltar">
+                        <a href="../index.php" class="login-voltar">
                             <i class="fa-solid fa-arrow-left"></i>
                             Voltar à área privada
                         </a>
@@ -92,7 +94,7 @@
         </div>
     </div>
 
-    <script src="../../assets/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="<?php echo BASE_URL; ?>/assets/bootstrap/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

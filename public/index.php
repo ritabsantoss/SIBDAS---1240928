@@ -45,7 +45,7 @@
 
         <!-- Área Reservada-->
         <div class="nav-login">
-            <a href="../private/login.html">
+            <a href="../private/login.php">
                 Área Privada
             </a>
         </div>
