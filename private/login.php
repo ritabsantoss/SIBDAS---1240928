@@ -54,7 +54,7 @@ if (!empty($_SESSION['server_error'])) {
                         <img src="<?php echo BASE_URL; ?>/assets/img/sihem1.png" class="login-logo">
                     </div>
 
-                    <form action="index.php" method="post">
+                    <form action="processa_login.php" method="post">
                         <div class="mb-3">
                             <label for="email" class="form-label">Utilizador</label>
                             <input type="email" id="email" name="email" class="form-control" placeholder="exemplo@isep.ipp.pt">

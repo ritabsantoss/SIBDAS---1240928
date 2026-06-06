@@ -1,3 +1,4 @@
+<?php $nome = $_SESSION['nome'] ?? $_SESSION['email'] ?? 'Utilizador'; ?>
 <!-- NAVBAR -->
     <header class="private-navbar">
         <div class="d-flex align-items-center">
@@ -6,7 +7,7 @@
 
         <div class="dropdown">
             <button class="btn btn-user dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                <i class="fa-regular fa-user me-2"></i> Utilizador
+                <i class="fa-regular fa-user me-2"></i> <?= htmlspecialchars($nome) ?>
             </button>
 
             <ul class="dropdown-menu dropdown-menu-end">
@@ -14,7 +15,9 @@
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>/public/index.php"><i class="fa-solid fa-right-from-bracket me-2"></i>Sair</a></li>
+                <li>
+                    <a class="dropdown-item" href="<?php echo BASE_URL; ?>/private/logout.php"><i class="fa-solid fa-right-from-bracket me-2"></i>Sair</a>
+                </li>
             </ul>
         </div>
     </header>

@@ -1,5 +1,8 @@
-<?php require_once __DIR__ . '/../../config/config.php'; ?>
-
+<?php
+require_once __DIR__ . '/../../config/config.php';
+require_once __DIR__ . '/../includes/funcoes.php';
+redirect_if_not_logged();
+?>
 <!DOCTYPE html>
 <html lang="pt">
 

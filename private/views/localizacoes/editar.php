@@ -1,3 +1,7 @@
+<?php
+require_once '../../includes/funcoes.php';
+redirect_if_not_logged();
+?>
 <?php $pagina_ativa = 'localizacoes'; ?>
 <?php include '../../includes/header.php'; ?>
 <?php include '../../includes/navbar.php'; ?>
