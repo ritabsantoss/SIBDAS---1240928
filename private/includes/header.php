@@ -10,7 +10,7 @@
 
     <!-- favicon -->
     <link rel="shortcut icon" href="<?php echo BASE_URL; ?>/assets/img/sihem2.png" type="image/png">
-    
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/bootstrap/bootstrap.min.css">
 
@@ -25,6 +25,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 
+    <!-- jQuery -->
+    <script src="<?php echo BASE_URL; ?>/assets/jquery/jquery-3.6.0.min.js"></script>
+
+    <!-- DataTables CSS + JS -->
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/datatables/datatables.min.css">
+    <script src="<?php echo BASE_URL; ?>/assets/datatables/datatables.min.js"></script>
 </head>
 
 <body>
