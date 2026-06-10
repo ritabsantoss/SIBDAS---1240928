@@ -26,10 +26,6 @@
        class="sidebar-link <?php echo ($pagina_ativa ?? '') === 'documentos' ? 'active' : ''; ?>">
         <i class="fa-solid fa-file-pdf"></i> Documentação
     </a>
-    <a href="<?php echo BASE_URL; ?>/private/views/garantias/lista.php"
-       class="sidebar-link <?php echo ($pagina_ativa ?? '') === 'garantias' ? 'active' : ''; ?>">
-        <i class="fa-solid fa-file-contract"></i> Garantias | Contratos
-    </a>
     <a href="<?php echo BASE_URL; ?>/private/views/conteudos.php"
        class="sidebar-link <?php echo ($pagina_ativa ?? '') === 'conteudos' ? 'active' : ''; ?>">
         <i class="fa-solid fa-pen-to-square"></i> Conteúdos Públicos

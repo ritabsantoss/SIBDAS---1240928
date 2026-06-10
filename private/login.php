@@ -1,5 +1,5 @@
 <?php
-require_once '../config/config.php';
+require_once __DIR__ . '/../config/config.php';
 session_start();
 
 // Recupera erros de validação guardados na sessão (e limpa-os)

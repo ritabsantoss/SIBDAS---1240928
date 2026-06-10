@@ -1,14 +1,16 @@
 <?php
-require_once '../../includes/funcoes.php';
+require_once __DIR__ . '/../../includes/funcoes.php';
 redirect_if_not_logged();
+
+$pagina_ativa = 'localizacoes';
+
+include __DIR__ . '/../../includes/header.php';
+include __DIR__ . '/../../includes/navbar.php';
 ?>
-<?php $pagina_ativa = 'localizacoes'; ?>
-<?php include '../../includes/header.php'; ?>
-<?php include '../../includes/navbar.php'; ?>
 
     <div class="private-container">
 
-        <?php include '../../includes/sidebar.php'; ?>
+        <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
 
         <!-- Conteúdo -->
         <main class="private-main">
@@ -99,7 +101,6 @@ redirect_if_not_logged();
                                     <th>Piso</th>
                                     <th>Serviço | Departamento</th>
                                     <th>Sala | Gabinete</th>
-                                    <th>Equipamentos</th>
                                     <th class="text-center">Ações</th>
                                 </tr>
                             </thead>
@@ -110,8 +111,6 @@ redirect_if_not_logged();
                                     <td>2º</td>
                                     <td>Unidade de Cuidados Intensivos</td>
                                     <td>Sala UCI 07</td>
-                                    <td>Monitor Multiparamétrico de Sinais Vitais</td>
-
                                     <td class="text-center">
 
                                         <a href="detalhes.php" class="btn btn-sm btn-outline-primary me-1">
@@ -133,8 +132,6 @@ redirect_if_not_logged();
                                     <td>5º</td>
                                     <td>Bloco Operatório</td>
                                     <td>Bloco 05</td>
-                                    <td>Desfibrilhador</td>
-
                                     <td class="text-center">
 
                                         <a href="detalhes.php" class="btn btn-sm btn-outline-primary me-1">
@@ -156,8 +153,6 @@ redirect_if_not_logged();
                                     <td>1º</td>
                                     <td>Serviço de Medicina</td>
                                     <td>Sala 03</td>
-                                    <td>Bomba de Infusão</td>
-
                                     <td class="text-center">
 
                                         <a href="detalhes.php" class="btn btn-sm btn-outline-primary me-1">
@@ -232,4 +227,4 @@ redirect_if_not_logged();
         </main>
     </div>
 
-    <?php include '../../includes/footer.php'; ?>
+    <?php include __DIR__ . '/../../includes/footer.php'; ?>

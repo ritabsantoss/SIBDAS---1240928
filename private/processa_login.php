@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/funcoes.php';
+require_once __DIR__ . '/includes/funcoes.php';
 start_session();
 
 // Segurança: só por POST
@@ -26,7 +26,7 @@ if (strlen($password) < 8) {
 
 if (!empty($validation_errors)) {
     $_SESSION['validation_errors'] = $validation_errors;
-    header('Location: login.php');
+    header('Location: ' . BASE_URL . '/private/login.php');
     return;
 }
 
@@ -34,7 +34,7 @@ if (!empty($validation_errors)) {
 $result['status'] = 1;
 if (!$result['status']) {
     $_SESSION['server_error'] = 'Email ou palavra-passe incorretos.';
-    header('Location: login.php');
+    header('Location: ' . BASE_URL . '/private/login.php');
     return;
 }
 
@@ -43,5 +43,5 @@ $_SESSION['email'] = $email;
 // Com a BD: $_SESSION['nome'] = $row['nome'];
 
 // Vai para a área privada
-header('Location: index.php');
+header('Location: ' . BASE_URL . '/private/index.php');
 exit;

@@ -1,14 +1,16 @@
 <?php
-require_once '../../includes/funcoes.php';
+require_once __DIR__ . '/../../includes/funcoes.php';
 redirect_if_not_logged();
+
+$pagina_ativa = 'fornecedores';
+
+include __DIR__ . '/../../includes/header.php';
+include __DIR__ . '/../../includes/navbar.php';
 ?>
-<?php $pagina_ativa = 'fornecedores'; ?>
-<?php include '../../includes/header.php'; ?>
-<?php include '../../includes/navbar.php'; ?>
 
     <div class="private-container">
 
-        <?php include '../../includes/sidebar.php'; ?>
+        <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
 
         <!--Conteúdo-->
         <main class="private-main">
@@ -106,29 +108,6 @@ redirect_if_not_logged();
 
                         <hr>
 
-                        <h5 class="mb-3">Associação a equipamento</h5>
-
-                        <div class="row mb-3">
-
-                            <div class="col-md-6">
-                                <label for="equipamento_associado" class="form-label">Equipamento associado</label>
-                                <select class="form-select" id="equipamento_associado" name="equipamento_associado">
-                                    <option>Monitor Multiparamétrico de Sinais Vitais</option>
-                                    <option>Ventilador Pulmonar</option>
-                                    <option selected>Bomba de Infusão</option>
-                                    <option>Desfibrilhador</option>
-                                    <option>Eletrocardiógrafo</option>
-                                    <option>Endoscópio</option>
-                                    <option>Ecógrafo</option>
-                                    <option>Carrinho de emergência</option>
-                                    <option>Ressonância magnética</option>
-                                </select>
-                            </div>
-
-                        </div>
-
-                        <hr>
-
                         <h5 class="mb-3">Observações</h5>
 
                         <textarea class="form-control mb-4" id="observacoes" name="observacoes"
@@ -153,4 +132,4 @@ redirect_if_not_logged();
         </main>
     </div>
 
-    <?php include '../../includes/footer.php'; ?>
+    <?php include __DIR__ . '/../../includes/footer.php'; ?>

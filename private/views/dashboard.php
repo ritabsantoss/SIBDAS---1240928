@@ -1,14 +1,16 @@
 <?php
-require_once '../includes/funcoes.php';
+require_once __DIR__ . '/../includes/funcoes.php';
 redirect_if_not_logged();
+
+$pagina_ativa = 'dashboard';
+
+include __DIR__ . '/../includes/header.php';
+include __DIR__ . '/../includes/navbar.php';
 ?>
-<?php $pagina_ativa = 'dashboard'; ?>
-<?php include '../includes/header.php'; ?>
-<?php include '../includes/navbar.php'; ?>
 
     <div class="private-container">
 
-        <?php include '../includes/sidebar.php'; ?>
+        <?php include __DIR__ . '/../includes/sidebar.php'; ?>
 
         <!-- Conteúdo -->
         <main class="private-main">
@@ -147,4 +149,4 @@ redirect_if_not_logged();
     <!-- Chart.js antes do footer (o 1240928.js precisa dele para desenhar os gráficos) -->
     <script src="<?php echo BASE_URL; ?>/assets/chartjs/chart.umd.min.js"></script>
 
-<?php include '../includes/footer.php'; ?>
+<?php include __DIR__ . '/../includes/footer.php'; ?>

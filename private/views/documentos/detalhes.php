@@ -1,14 +1,16 @@
 <?php
-require_once '../../includes/funcoes.php';
+require_once __DIR__ . '/../../includes/funcoes.php';
 redirect_if_not_logged();
+
+$pagina_ativa = 'documentos';
+
+include __DIR__ . '/../../includes/header.php';
+include __DIR__ . '/../../includes/navbar.php';
 ?>
-<?php $pagina_ativa = 'documentos'; ?>
-<?php include '../../includes/header.php'; ?>
-<?php include '../../includes/navbar.php'; ?>
 
     <div class="private-container">
 
-        <?php include '../../includes/sidebar.php'; ?>
+        <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
 
         <!-- Conteúdo -->
         <main class="private-main">
@@ -162,4 +164,4 @@ redirect_if_not_logged();
         </main>
     </div>
 
-    <?php include '../../includes/footer.php'; ?>
+    <?php include __DIR__ . '/../../includes/footer.php'; ?>

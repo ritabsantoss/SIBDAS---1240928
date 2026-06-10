@@ -1,14 +1,16 @@
 <?php
-require_once '../../includes/funcoes.php';
+require_once __DIR__ . '/../../includes/funcoes.php';
 redirect_if_not_logged();
+
+$pagina_ativa = 'localizacoes';
+
+include __DIR__ . '/../../includes/header.php';
+include __DIR__ . '/../../includes/navbar.php';
 ?>
-<?php $pagina_ativa = 'localizacoes'; ?>
-<?php include '../../includes/header.php'; ?>
-<?php include '../../includes/navbar.php'; ?>
 
     <div class="private-container">
 
-        <?php include '../../includes/sidebar.php'; ?>
+        <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
 
         <!-- Conteúdo -->
         <main class="private-main">
@@ -69,22 +71,6 @@ redirect_if_not_logged();
                                 <input type="text" class="form-control" id="sala" name="sala">
                             </div>
 
-                            <div class="col-md-6">
-                                <label for="equipamento" class="form-label">Equipamento associado</label>
-                                <select class="form-select" id="equipamento" name="equipamento">
-                                    <option selected disabled>Escolha...</option>
-                                    <option>Monitor Multiparamétrico de Sinais Vitais</option>
-                                    <option>Ventilador Pulmonar</option>
-                                    <option>Bomba de Infusão</option>
-                                    <option>Desfibrilhador</option>
-                                    <option>Eletrocardiógrafo</option>
-                                    <option>Endoscópio</option>
-                                    <option>Ecógrafo</option>
-                                    <option>Carrinho de emergência</option>
-                                    <option>Ressonância magnética</option>
-                                </select>
-                            </div>
-
                         </div>
 
                         <hr>
@@ -113,4 +99,4 @@ redirect_if_not_logged();
         </main>
     </div>
 
-    <?php include '../../includes/footer.php'; ?>
+    <?php include __DIR__ . '/../../includes/footer.php'; ?>

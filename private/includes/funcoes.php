@@ -14,19 +14,23 @@ function check_session() {
 }
 
 // Reencaminha para o login se NÃO estiver autenticado
-function redirect_if_not_logged() {
+function redirect_if_not_logged($redirect_to = '/private/login.php')
+{
     start_session();
+
     if (!check_session()) {
-        header('Location: ' . BASE_URL . '/private/login.php');
+        header('Location: ' . BASE_URL . $redirect_to);
         exit;
     }
 }
 
 // Termina a sessão e volta ao login
-function logout_and_redirect() {
+function logout_and_redirect($redirect_to = '/private/login.php')
+{
     start_session();
     session_unset();
     session_destroy();
-    header('Location: ' . BASE_URL . '/private/login.php');
+
+    header('Location: ' . BASE_URL . $redirect_to);
     exit;
 }
