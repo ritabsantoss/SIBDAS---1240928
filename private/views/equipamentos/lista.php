@@ -22,12 +22,7 @@ $f_estado      = $_GET['estado'] ?? 'Todos';
 $f_criticidade = $_GET['criticidade'] ?? 'Todas';
 
 try {
-    $ligacao = new PDO(
-        "mysql:host=" . MYSQL_HOST . ";port=" . MYSQL_PORT . ";dbname=" . MYSQL_DATABASE . ";charset=utf8mb4",
-        MYSQL_USERNAME,
-        MYSQL_PASSWORD
-    );
-    $ligacao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $ligacao = liga_bd();
 
     // dropdowns dinâmicos
     $lista_categorias = $ligacao->query("SELECT nome FROM Categorias ORDER BY nome")->fetchAll(PDO::FETCH_COLUMN);
@@ -109,7 +104,6 @@ $ligacao = null;
 include __DIR__ . '/../../includes/header.php';
 include __DIR__ . '/../../includes/navbar.php';
 ?>
-
 <div class="private-container">
 
     <?php include __DIR__ . '/../../includes/sidebar.php'; ?>

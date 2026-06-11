@@ -34,3 +34,13 @@ function logout_and_redirect($redirect_to = '/private/login.php')
     header('Location: ' . BASE_URL . $redirect_to);
     exit;
 }
+
+// Abre e devolve uma ligação PDO à base de dados
+function liga_bd()
+{
+    $dsn = "mysql:host=" . MYSQL_HOST . ";port=" . MYSQL_PORT
+         . ";dbname=" . MYSQL_DATABASE . ";charset=utf8mb4";
+    $ligacao = new PDO($dsn, MYSQL_USERNAME, MYSQL_PASSWORD);
+    $ligacao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    return $ligacao;
+}
