@@ -4,24 +4,308 @@ redirect_if_not_logged();
 
 $pagina_ativa = 'equipamentos';
 
+$erros = [];
+$erro_sistema = '';
+$lista_categorias = [];
+$lista_localizacoes = [];
+$lista_fornecedores = [];
+
+// dropdowns das chaves estrangeiras (da BD)
+try {
+    $ligacao = liga_bd();
+    $lista_categorias   = $ligacao->query("SELECT idCategoria, nome FROM Categorias ORDER BY nome")->fetchAll(PDO::FETCH_OBJ);
+    $lista_localizacoes = $ligacao->query(
+        "SELECT l.idLocalizacao, l.sala, s.nome AS servico
+         FROM Localizacoes l JOIN Servicos s ON l.idServico = s.idServico
+         ORDER BY s.nome"
+    )->fetchAll(PDO::FETCH_OBJ);
+    $lista_fornecedores = $ligacao->query("SELECT idFornecedor, nome_empresa FROM Fornecedores ORDER BY nome_empresa")->fetchAll(PDO::FETCH_OBJ);
+    $ligacao = null;
+} catch (PDOException $err) {
+    $erro_sistema = "Erro ao carregar os dados do formulário.";
+}
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    // 1. Recolher dados do equipamento
+    $codigo_interno = trim($_POST['codigo_interno'] ?? '');
+    $designacao     = trim($_POST['designacao'] ?? '');
+    $idCategoria    = $_POST['categoria'] ?? '';
+    $idLocalizacao  = $_POST['localizacao_associada'] ?? '';
+    $marca          = trim($_POST['marca'] ?? '');
+    $modelo         = trim($_POST['modelo'] ?? '');
+    $numero_serie   = trim($_POST['numero_serie'] ?? '');
+    $fabricante     = trim($_POST['fabricante'] ?? '');
+    $data_aquisicao = trim($_POST['data_aquisicao'] ?? '');
+    $ano_fabrico    = trim($_POST['ano_fabrico'] ?? '');
+    $custo          = trim($_POST['custo'] ?? '');
+    $tipo_entrada   = $_POST['tipo_entrada'] ?? '';
+    $estado_atual   = $_POST['estado_atual'] ?? '';
+    $criticidade    = $_POST['criticidade'] ?? '';
+    $observacoes    = trim($_POST['observacoes_equipamento'] ?? '');
+
+    // Garantia
+    $codigo_garantia      = trim($_POST['codigo_garantia'] ?? '');
+    $entidade_garantia    = $_POST['entidade_garantia'] ?? '';
+    $data_inicio_garantia = trim($_POST['data_inicio_garantia'] ?? '');
+    $data_fim_garantia    = trim($_POST['data_fim_garantia'] ?? '');
+    $estado_garantia      = $_POST['estado_garantia'] ?? '';
+    $ficheiro_garantia    = trim($_POST['ficheiro_garantia'] ?? '');
+    $obs_garantia         = trim($_POST['observacoes_garantia'] ?? '');
+
+    // Contrato
+    $existe_contrato   = $_POST['existe_contrato'] ?? '';
+    $codigo_contrato   = trim($_POST['codigo_contrato'] ?? '');
+    $tipo_contrato     = $_POST['tipo_contrato'] ?? '';
+    $entidade_contrato = $_POST['entidade_contrato'] ?? '';
+    $periodicidade     = $_POST['periodicidade'] ?? '';
+    $ficheiro_contrato = trim($_POST['ficheiro_contrato'] ?? '');
+    $obs_contrato      = trim($_POST['observacoes_contrato'] ?? '');
+
+    // 2. Validar (obrigatórios + restrições de integridade)
+    if ($codigo_interno === '') $erros[] = "O código interno é obrigatório.";
+    if ($designacao === '')     $erros[] = "A designação é obrigatória.";
+    if (!ctype_digit((string)$idCategoria))   $erros[] = "A categoria é obrigatória.";
+    if (!ctype_digit((string)$idLocalizacao)) $erros[] = "A localização é obrigatória.";
+    if ($estado_atual === '' || $estado_atual === 'Escolha...') $erros[] = "O estado é obrigatório.";
+    if ($criticidade === '' || $criticidade === 'Escolha...')   $erros[] = "A criticidade é obrigatória.";
+
+    // RI3: custo >= 0
+    if ($custo !== '' && (!is_numeric($custo) || $custo < 0)) $erros[] = "O custo não pode ser negativo.";
+    // RI4: ano de fabrico entre 1950 e o ano atual
+    if ($ano_fabrico !== '' && (!ctype_digit($ano_fabrico) || $ano_fabrico < 1950 || $ano_fabrico > (int)date('Y')))
+        $erros[] = "O ano de fabrico deve estar entre 1950 e " . date('Y') . ".";
+    // RI5: data de aquisição não no futuro
+    if ($data_aquisicao !== '' && $data_aquisicao > date('Y-m-d')) $erros[] = "A data de aquisição não pode ser no futuro.";
+
+    // RI1: se há garantia com as duas datas, fim >= início
+    if ($codigo_garantia !== '' && $data_inicio_garantia !== '' && $data_fim_garantia !== '' && $data_fim_garantia < $data_inicio_garantia) {
+        $erros[] = "A data de fim da garantia não pode ser anterior à data de início.";
+    }
+
+    // Documentos: validar cada documento preenchido
+    if (!empty($_POST['documentos']) && is_array($_POST['documentos'])) {
+        $n = 0;
+        foreach ($_POST['documentos'] as $doc) {
+            $n++;
+            $cod = trim($doc['codigo_documento'] ?? '');
+            if ($cod === '') continue; // linha vazia, ignora
+            $tipo    = $doc['tipo_documento'] ?? '';
+            $dataDoc = trim($doc['data_documento'] ?? '');
+            $val     = trim($doc['validade'] ?? '');
+            if ($tipo === '' || $tipo === 'Escolha...') {
+                $erros[] = "Documento $n: o tipo é obrigatório.";
+            }
+            // RI2: validade não pode ser anterior à data do documento
+            if ($dataDoc !== '' && $val !== '' && $val < $dataDoc) {
+                $erros[] = "Documento $n: a validade não pode ser anterior à data do documento.";
+            }
+        }
+    }
+
+    // Componentes: validar cada componente preenchido
+    if (!empty($_POST['componentes']) && is_array($_POST['componentes'])) {
+        $n = 0;
+        foreach ($_POST['componentes'] as $comp) {
+            $n++;
+            $cod  = trim($comp['codigo_componente'] ?? '');
+            $nome = trim($comp['nome_componente'] ?? '');
+            if ($cod === '' && $nome === '') continue; // linha vazia
+            if ($cod === '')  $erros[] = "Componente $n: o código é obrigatório.";
+            if ($nome === '') $erros[] = "Componente $n: o nome é obrigatório.";
+        }
+    }
+
+    // 3. Inserir se não houver erros (transação: equipamento + fornecedores)
+    if (empty($erros)) {
+        try {
+            $ligacao = liga_bd();
+            $ligacao->beginTransaction();
+
+            // INSERT do equipamento
+            $sql = "INSERT INTO Equipamentos
+                    (codigo_interno, designacao, idCategoria, idLocalizacao, marca, modelo,
+                     numero_serie, fabricante, data_aquisicao, ano_fabrico, custo, tipo_entrada,
+                     estado_atual, criticidade, observacoes)
+                    VALUES
+                    (:codigo_interno, :designacao, :idCategoria, :idLocalizacao, :marca, :modelo,
+                     :numero_serie, :fabricante, :data_aquisicao, :ano_fabrico, :custo, :tipo_entrada,
+                     :estado_atual, :criticidade, :observacoes)";
+            $stmt = $ligacao->prepare($sql);
+            $stmt->execute([
+                ':codigo_interno' => $codigo_interno,
+                ':designacao'     => $designacao,
+                ':idCategoria'    => $idCategoria,
+                ':idLocalizacao'  => $idLocalizacao,
+                ':marca'          => $marca ?: null,
+                ':modelo'         => $modelo ?: null,
+                ':numero_serie'   => $numero_serie ?: null,
+                ':fabricante'     => $fabricante ?: null,
+                ':data_aquisicao' => $data_aquisicao ?: null,
+                ':ano_fabrico'    => $ano_fabrico !== '' ? $ano_fabrico : null,
+                ':custo'          => $custo !== '' ? $custo : null,
+                ':tipo_entrada'   => ($tipo_entrada && $tipo_entrada !== 'Escolha...') ? $tipo_entrada : null,
+                ':estado_atual'   => $estado_atual,
+                ':criticidade'    => $criticidade,
+                ':observacoes'    => $observacoes ?: null
+            ]);
+
+            // id do equipamento criado, para usar como chave estrangeira
+            $idEquipamento = $ligacao->lastInsertId();
+
+            // INSERT dos fornecedores associados (pode haver vários)
+            if (!empty($_POST['fornecedores']) && is_array($_POST['fornecedores'])) {
+                $sqlF = "INSERT INTO Equipamento_Fornecedor (idEquipamento, idFornecedor, tipo_relacao)
+                         VALUES (:idEquipamento, :idFornecedor, :tipo_relacao)";
+                $stmtF = $ligacao->prepare($sqlF);
+                foreach ($_POST['fornecedores'] as $f) {
+                    $idForn  = $f['id_fornecedor'] ?? '';
+                    $tipoRel = $f['tipo_relacao'] ?? '';
+                    // só insere as linhas realmente preenchidas
+                    if (ctype_digit((string)$idForn) && $tipoRel !== '') {
+                        $stmtF->execute([
+                            ':idEquipamento' => $idEquipamento,
+                            ':idFornecedor'  => $idForn,
+                            ':tipo_relacao'  => $tipoRel
+                        ]);
+                    }
+                }
+            }
+
+            // INSERT da garantia (só se foi preenchido o código)
+            if ($codigo_garantia !== '') {
+                $sqlG = "INSERT INTO Garantias
+                         (idEquipamento, idEntidade, codigo_garantia, data_inicio, data_fim, estado_garantia, ficheiro_garantia, observacoes)
+                         VALUES
+                         (:idEquipamento, :idEntidade, :codigo_garantia, :data_inicio, :data_fim, :estado_garantia, :ficheiro_garantia, :observacoes)";
+                $stmtG = $ligacao->prepare($sqlG);
+                $stmtG->execute([
+                    ':idEquipamento'     => $idEquipamento,
+                    ':idEntidade'        => ctype_digit((string)$entidade_garantia) ? $entidade_garantia : null,
+                    ':codigo_garantia'   => $codigo_garantia,
+                    ':data_inicio'       => $data_inicio_garantia ?: null,
+                    ':data_fim'          => $data_fim_garantia ?: null,
+                    ':estado_garantia'   => ($estado_garantia && $estado_garantia !== 'Escolha...') ? $estado_garantia : null,
+                    ':ficheiro_garantia' => $ficheiro_garantia ?: null,
+                    ':observacoes'       => $obs_garantia ?: null
+                ]);
+            }
+
+            // INSERT do contrato (só se existir contrato e tiver código)
+            if ($existe_contrato === 'Sim' && $codigo_contrato !== '') {
+                $tipoC = ($tipo_contrato && $tipo_contrato !== 'Escolha...' && $tipo_contrato !== 'Sem Contrato') ? $tipo_contrato : null;
+                $sqlC = "INSERT INTO Contratos
+                         (idEquipamento, idEntidade, codigo_contrato, tipo_contrato, periodicidade, ficheiro_contrato, observacoes)
+                         VALUES
+                         (:idEquipamento, :idEntidade, :codigo_contrato, :tipo_contrato, :periodicidade, :ficheiro_contrato, :observacoes)";
+                $stmtC = $ligacao->prepare($sqlC);
+                $stmtC->execute([
+                    ':idEquipamento'     => $idEquipamento,
+                    ':idEntidade'        => ctype_digit((string)$entidade_contrato) ? $entidade_contrato : null,
+                    ':codigo_contrato'   => $codigo_contrato,
+                    ':tipo_contrato'     => $tipoC,
+                    ':periodicidade'     => ($periodicidade && $periodicidade !== 'Escolha...') ? $periodicidade : null,
+                    ':ficheiro_contrato' => $ficheiro_contrato ?: null,
+                    ':observacoes'       => $obs_contrato ?: null
+                ]);
+            }
+
+            // INSERT dos documentos (os que têm código)
+            if (!empty($_POST['documentos']) && is_array($_POST['documentos'])) {
+                $sqlD = "INSERT INTO Documentos
+                         (idEquipamento, codigo_documento, tipo_documento, nome_documento,
+                          data_documento, validade, estado_documento, ficheiro, loc_ficheiro, observacoes)
+                         VALUES
+                         (:idEquipamento, :codigo_documento, :tipo_documento, :nome_documento,
+                          :data_documento, :validade, :estado_documento, :ficheiro, :loc_ficheiro, :observacoes)";
+                $stmtD = $ligacao->prepare($sqlD);
+                foreach ($_POST['documentos'] as $doc) {
+                    $cod = trim($doc['codigo_documento'] ?? '');
+                    if ($cod === '') continue;
+                    $tipo = $doc['tipo_documento'] ?? '';
+                    $stmtD->execute([
+                        ':idEquipamento'    => $idEquipamento,
+                        ':codigo_documento' => $cod,
+                        ':tipo_documento'   => ($tipo && $tipo !== 'Escolha...') ? $tipo : null,
+                        ':nome_documento'   => trim($doc['nome_documento'] ?? '') ?: null,
+                        ':data_documento'   => trim($doc['data_documento'] ?? '') ?: null,
+                        ':validade'         => trim($doc['validade'] ?? '') ?: null,
+                        ':estado_documento' => (!empty($doc['estado_documento']) && $doc['estado_documento'] !== 'Escolha...') ? $doc['estado_documento'] : null,
+                        ':ficheiro'         => trim($doc['ficheiro'] ?? '') ?: null,
+                        ':loc_ficheiro'     => trim($doc['loc_ficheiro'] ?? '') ?: null,
+                        ':observacoes'      => trim($doc['observacoes_documentacao'] ?? '') ?: null
+                    ]);
+                }
+            }
+
+            // INSERT dos componentes (os que têm código e nome)
+            if (!empty($_POST['componentes']) && is_array($_POST['componentes'])) {
+                $sqlComp = "INSERT INTO Componentes
+                            (idEquipamento, codigo_componente, nome_componente, estado_componente)
+                            VALUES (:idEquipamento, :codigo_componente, :nome_componente, :estado_componente)";
+                $stmtComp = $ligacao->prepare($sqlComp);
+                foreach ($_POST['componentes'] as $comp) {
+                    $cod  = trim($comp['codigo_componente'] ?? '');
+                    $nome = trim($comp['nome_componente'] ?? '');
+                    if ($cod === '' || $nome === '') continue;
+                    $est = $comp['estado_componente'] ?? '';
+                    $stmtComp->execute([
+                        ':idEquipamento'     => $idEquipamento,
+                        ':codigo_componente' => $cod,
+                        ':nome_componente'   => $nome,
+                        ':estado_componente' => ($est && $est !== 'Escolha...') ? $est : null
+                    ]);
+                }
+            }
+
+            $ligacao->commit();
+            header("Location: lista.php");
+            exit;
+        } catch (PDOException $err) {
+            if (isset($ligacao) && $ligacao->inTransaction()) $ligacao->rollBack();
+            $erro_sistema = "Erro ao gravar os dados: " . $err->getMessage();
+        }
+        $ligacao = null;
+    }
+}
+
 include __DIR__ . '/../../includes/header.php';
 include __DIR__ . '/../../includes/navbar.php';
 ?>
 
-    <div class="private-container">
+<div class="private-container">
 
-        <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
+    <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
 
-        <!-- Conteúdo -->
-        <main class="private-main">
+    <!-- Conteúdo -->
+    <main class="private-main">
 
-            <div class="mb-4">
-                <h2 class="mb-1"><i class="fa-solid fa-plus me-2"></i>Inserir Equipamento</h2>
-                <p class="text-muted mb-0">Preencha as informações do equipamento médico por etapas.</p>
-            </div>
+        <div class="mb-4">
+            <h2 class="mb-1"><i class="fa-solid fa-plus me-2"></i>Inserir Equipamento</h2>
+            <p class="text-muted mb-0">Preencha as informações do equipamento médico por etapas.</p>
+        </div>
 
-            <div class="card shadow-sm border-0 rounded-4">
+        <div class="card shadow-sm border-0 rounded-4">
+            <div class="card-body p-4">
+
                 <div class="card-body p-4">
+
+                    <?php if (!empty($erros)) : ?>
+                        <div class="alert alert-danger" role="alert">
+                            <strong>Foram encontrados os seguintes erros:</strong>
+                            <ul class="mb-0">
+                                <?php foreach ($erros as $e) : ?>
+                                    <li><?= htmlspecialchars($e) ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (!empty($erro_sistema)) : ?>
+                        <div class="alert alert-danger" role="alert">
+                            <strong>Erro:</strong> <?= htmlspecialchars($erro_sistema) ?>
+                        </div>
+                    <?php endif; ?>
 
                     <div id="aviso-passos" class="alert alert-warning d-none" role="alert"></div>
 
@@ -55,35 +339,21 @@ include __DIR__ . '/../../includes/navbar.php';
                                     <div class="col-md-3">
                                         <label for="codigo_interno" class="form-label">Código interno</label>
                                         <input type="text" class="form-control" id="codigo_interno"
-                                            name="codigo_interno">
+                                            name="codigo_interno" value="<?= htmlspecialchars($_POST['codigo_interno'] ?? '') ?>">
                                     </div>
 
                                     <div class="col-md-6">
                                         <label for="designacao" class="form-label">Designação do equipamento</label>
-                                        <input type="text" class="form-control" id="designacao" name="designacao">
+                                        <input type="text" class="form-control" id="designacao" name="designacao" value="<?= htmlspecialchars($_POST['designacao'] ?? '') ?>">
                                     </div>
 
                                     <div class="col-md-3">
                                         <label for="categoria" class="form-label">Categoria</label>
                                         <select class="form-select" id="categoria" name="categoria">
-                                            <option selected disabled>Escolha...</option>
-                                            <option>Monitorização</option>
-                                            <option>Suporte de vida</option>
-                                            <option>Diagnóstico</option>
-                                            <option>Cirurgia</option>
-                                            <option>Laboratório</option>
-                                            <option>Neonatologia</option>
-                                            <option>Reabilitação</option>
-                                            <option>Imagem médica</option>
-                                            <option>Terapia</option>
-                                            <option>Anestesia</option>
-                                            <option>Emergência</option>
-                                            <option>Odontologia</option>
-                                            <option>Cardiologia</option>
-                                            <option>Fisioterapia</option>
-                                            <option>Esterilização</option>
-                                            <option>Transporte hospitalar</option>
-                                            <option>Equipamento auxiliar</option>
+                                            <option value="" selected disabled>Escolha...</option>
+                                            <?php foreach ($lista_categorias as $cat) : ?>
+                                                <option value="<?= $cat->idCategoria ?>" <?= (($_POST['categoria'] ?? '') == $cat->idCategoria) ? 'selected' : '' ?>><?= htmlspecialchars($cat->nome) ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
@@ -95,22 +365,22 @@ include __DIR__ . '/../../includes/navbar.php';
                                 <div class="row mb-3">
                                     <div class="col-md-3">
                                         <label for="marca" class="form-label">Marca</label>
-                                        <input type="text" class="form-control" id="marca" name="marca">
+                                        <input type="text" class="form-control" id="marca" name="marca" value="<?= htmlspecialchars($_POST['marca'] ?? '') ?>">
                                     </div>
 
                                     <div class="col-md-3">
                                         <label for="modelo" class="form-label">Modelo</label>
-                                        <input type="text" class="form-control" id="modelo" name="modelo">
+                                        <input type="text" class="form-control" id="modelo" name="modelo" value="<?= htmlspecialchars($_POST['modelo'] ?? '') ?>">
                                     </div>
 
                                     <div class="col-md-3">
                                         <label for="numero_serie" class="form-label">Número de série</label>
-                                        <input type="text" class="form-control" id="numero_serie" name="numero_serie">
+                                        <input type="text" class="form-control" id="numero_serie" name="numero_serie" value="<?= htmlspecialchars($_POST['numero_serie'] ?? '') ?>">
                                     </div>
 
                                     <div class="col-md-3">
                                         <label for="fabricante" class="form-label">Fabricante</label>
-                                        <input type="text" class="form-control" id="fabricante" name="fabricante">
+                                        <input type="text" class="form-control" id="fabricante" name="fabricante" value="<?= htmlspecialchars($_POST['fabricante'] ?? '') ?>">
                                     </div>
                                 </div>
 
@@ -146,27 +416,26 @@ include __DIR__ . '/../../includes/navbar.php';
                                     <div class="col-md-3">
                                         <label for="data_aquisicao" class="form-label">Data de aquisição</label>
                                         <input type="date" class="form-control" id="data_aquisicao"
-                                            name="data_aquisicao">
+                                            name="data_aquisicao" value="<?= htmlspecialchars($_POST['data_aquisicao'] ?? '') ?>">
                                     </div>
 
                                     <div class="col-md-3">
                                         <label for="ano_fabrico" class="form-label">Ano de fabrico</label>
-                                        <input type="number" class="form-control" id="ano_fabrico" name="ano_fabrico">
+                                        <input type="number" class="form-control" id="ano_fabrico" name="ano_fabrico" value="<?= htmlspecialchars($_POST['ano_fabrico'] ?? '') ?>">
                                     </div>
 
                                     <div class="col-md-3">
                                         <label for="custo" class="form-label">Custo de aquisição</label>
-                                        <input type="number" class="form-control" id="custo" name="custo" step="0.01">
+                                        <input type="number" class="form-control" id="custo" name="custo" step="0.01" value="<?= htmlspecialchars($_POST['custo'] ?? '') ?>">
                                     </div>
 
                                     <div class="col-md-3">
                                         <label for="tipo_entrada" class="form-label">Tipo de entrada</label>
                                         <select class="form-select" id="tipo_entrada" name="tipo_entrada">
-                                            <option selected disabled>Escolha...</option>
-                                            <option>Compra</option>
-                                            <option>Doação</option>
-                                            <option>Aluguer</option>
-                                            <option>Empréstimo</option>
+                                            <option value="" selected disabled>Escolha...</option>
+                                            <?php foreach (['Compra', 'Doação', 'Aluguer', 'Empréstimo'] as $op) : ?>
+                                                <option <?= (($_POST['tipo_entrada'] ?? '') === $op) ? 'selected' : '' ?>><?= $op ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
@@ -179,24 +448,20 @@ include __DIR__ . '/../../includes/navbar.php';
                                     <div class="col-md-6">
                                         <label for="estado_atual" class="form-label">Estado atual</label>
                                         <select class="form-select" id="estado_atual" name="estado_atual">
-                                            <option selected disabled>Escolha...</option>
-                                            <option>Ativo</option>
-                                            <option>Em manutenção</option>
-                                            <option>Inativo</option>
-                                            <option>Em calibração</option>
-                                            <option>Em quarentena</option>
-                                            <option>Abatido</option>
+                                            <option value="" selected disabled>Escolha...</option>
+                                            <?php foreach (['Ativo', 'Em manutenção', 'Inativo', 'Em calibração', 'Em quarentena', 'Abatido'] as $op) : ?>
+                                                <option <?= (($_POST['estado_atual'] ?? '') === $op) ? 'selected' : '' ?>><?= $op ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
 
                                     <div class="col-md-6">
                                         <label for="criticidade" class="form-label">Criticidade</label>
                                         <select class="form-select" id="criticidade" name="criticidade">
-                                            <option selected disabled>Escolha...</option>
-                                            <option>Baixa</option>
-                                            <option>Média</option>
-                                            <option>Alta</option>
-                                            <option>Suporte de vida</option>
+                                            <option value="" selected disabled>Escolha...</option>
+                                            <?php foreach (['Baixa', 'Média', 'Alta', 'Suporte de vida'] as $op) : ?>
+                                                <option <?= (($_POST['criticidade'] ?? '') === $op) ? 'selected' : '' ?>><?= $op ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
@@ -205,7 +470,7 @@ include __DIR__ . '/../../includes/navbar.php';
 
                                 <h5 class="mb-3">Observações</h5>
                                 <textarea class="form-control mb-4" id="observacoes_equipamento"
-                                    name="observacoes_equipamento" rows="4"></textarea>
+                                    name="observacoes_equipamento" rows="4"><?= htmlspecialchars($_POST['observacoes_equipamento'] ?? '') ?></textarea>
 
                                 <div class="d-flex justify-content-between mt-4">
                                     <button type="button" class="btn btn-outline-secondary btn-anterior"
@@ -240,10 +505,9 @@ include __DIR__ . '/../../includes/navbar.php';
                                                 <label class="form-label">Fornecedor</label>
                                                 <select class="form-select" name="fornecedores[0][id_fornecedor]">
                                                     <option value="" selected disabled>Escolha...</option>
-                                                    <option value="1">Philips Healthcare Portugal</option>
-                                                    <option value="2">Dräger Portugal</option>
-                                                    <option value="3">B. Braun Medical</option>
-                                                    <option value="4">Zoll Medical</option>
+                                                    <?php foreach ($lista_fornecedores as $forn) : ?>
+                                                        <option value="<?= $forn->idFornecedor ?>"><?= htmlspecialchars($forn->nome_empresa) ?></option>
+                                                    <?php endforeach; ?>
                                                 </select>
                                             </div>
 
@@ -322,10 +586,10 @@ include __DIR__ . '/../../includes/navbar.php';
                                 <div class="mb-3">
                                     <label for="localizacao_associada" class="form-label">Selecionar localização</label>
                                     <select class="form-select" id="localizacao_associada" name="localizacao_associada">
-                                        <option selected disabled>Escolha...</option>
-                                        <option>Unidade de Cuidados Intensivos - Sala UCI 07</option>
-                                        <option>Bloco Operatório - Bloco 05</option>
-                                        <option>Serviço de Medicina - Sala 03</option>
+                                        <option value="" selected disabled>Escolha...</option>
+                                        <?php foreach ($lista_localizacoes as $loc) : ?>
+                                            <option value="<?= $loc->idLocalizacao ?>" <?= (($_POST['localizacao_associada'] ?? '') == $loc->idLocalizacao) ? 'selected' : '' ?>><?= htmlspecialchars($loc->servico) ?><?= $loc->sala ? ' — ' . htmlspecialchars($loc->sala) : '' ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
 
@@ -418,9 +682,9 @@ include __DIR__ . '/../../includes/navbar.php';
 
                                         <div class="row mb-3">
                                             <div class="col-md-6">
-                                                <label class="form-label">Ficheiro</label>
-                                                <input type="file" class="form-control" name="documentos[0][ficheiro]"
-                                                    accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
+                                                <label class="form-label">Ficheiro (nome ou caminho)</label>
+                                                <input type="text" class="form-control" name="documentos[0][ficheiro]"
+                                                    placeholder="Ex.: manual_ventilador.pdf">
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">Localização / hiperligação alternativa</label>
@@ -460,15 +724,15 @@ include __DIR__ . '/../../includes/navbar.php';
                                         <label for="codigo_garantia" class="form-label">Código da
                                             garantia</label>
                                         <input type="text" class="form-control" id="codigo_garantia"
-                                            name="codigo_garantia"></div>
+                                            name="codigo_garantia">
+                                    </div>
                                     <div class="col-md-3">
                                         <label for="entidade_garantia" class="form-label">Entidade responsável</label>
                                         <select class="form-select" id="entidade_garantia" name="entidade_garantia">
-                                            <option selected disabled>Escolha...</option>
-                                            <option>Dräger</option>
-                                            <option>B. Braun</option>
-                                            <option>Zoll</option>
-                                            <option>Philips Healthcare</option>
+                                            <option value="" selected disabled>Escolha...</option>
+                                            <?php foreach ($lista_fornecedores as $forn) : ?>
+                                                <option value="<?= $forn->idFornecedor ?>" <?= (($_POST['entidade_garantia'] ?? '') == $forn->idFornecedor) ? 'selected' : '' ?>><?= htmlspecialchars($forn->nome_empresa) ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                     <div class="col-md-3"><label for="data_inicio_garantia" class="form-label">Data de
@@ -495,8 +759,8 @@ include __DIR__ . '/../../includes/navbar.php';
                                     </div>
                                     <div class="col-md-8">
                                         <label for="ficheiro_garantia" class="form-label">Documento da garantia</label>
-                                        <input type="file" class="form-control" id="ficheiro_garantia"
-                                            name="ficheiro_garantia" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
+                                        <input type="text" class="form-control" id="ficheiro_garantia"
+                                            name="ficheiro_garantia" placeholder="Ex.: garantia_ventilador.pdf">
                                     </div>
                                 </div>
 
@@ -551,11 +815,10 @@ include __DIR__ . '/../../includes/navbar.php';
                                     <div class="col-md-3">
                                         <label for="entidade_contrato" class="form-label">Entidade responsável</label>
                                         <select class="form-select" id="entidade_contrato" name="entidade_contrato">
-                                            <option selected disabled>Escolha...</option>
-                                            <option>Dräger</option>
-                                            <option>B. Braun</option>
-                                            <option>Zoll</option>
-                                            <option>Philips Healthcare</option>
+                                            <option value="" selected disabled>Escolha...</option>
+                                            <?php foreach ($lista_fornecedores as $forn) : ?>
+                                                <option value="<?= $forn->idFornecedor ?>" <?= (($_POST['entidade_contrato'] ?? '') == $forn->idFornecedor) ? 'selected' : '' ?>><?= htmlspecialchars($forn->nome_empresa) ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
@@ -574,8 +837,8 @@ include __DIR__ . '/../../includes/navbar.php';
                                     </div>
                                     <div class="col-md-8">
                                         <label for="ficheiro_contrato" class="form-label">Ficheiro do contrato</label>
-                                        <input type="file" class="form-control" id="ficheiro_contrato"
-                                            name="ficheiro_contrato" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
+                                        <input type="text" class="form-control" id="ficheiro_contrato"
+                                            name="ficheiro_contrato" placeholder="Ex.: contrato_manutencao.pdf">
                                     </div>
                                 </div>
 
@@ -598,7 +861,7 @@ include __DIR__ . '/../../includes/navbar.php';
                     </form>
                 </div>
             </div>
-        </main>
-    </div>
+    </main>
+</div>
 
-    <?php include __DIR__ . '/../../includes/footer.php'; ?>
+<?php include __DIR__ . '/../../includes/footer.php'; ?>
