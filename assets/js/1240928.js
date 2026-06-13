@@ -256,10 +256,19 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             for (const fornecedor of fornecedoresSelecionados) {
-                const opcaoSelecionada = fornecedor.options[fornecedor.selectedIndex];
+                const bloco = fornecedor.closest(".fornecedor-bloco");
+                const tipoRelacao = bloco.querySelector('select[name^="fornecedores"][name$="[tipo_relacao]"]');
 
-                if (!opcaoSelecionada || opcaoSelecionada.disabled || fornecedor.value.trim() === "") {
+                const opcaoFornecedor = fornecedor.options[fornecedor.selectedIndex];
+                const opcaoRelacao = tipoRelacao.options[tipoRelacao.selectedIndex];
+
+                if (!opcaoFornecedor || opcaoFornecedor.disabled || fornecedor.value.trim() === "") {
                     mostrarAviso("Selecione o fornecedor em todos os blocos adicionados.");
+                    return false;
+                }
+
+                if (!opcaoRelacao || opcaoRelacao.disabled || tipoRelacao.value.trim() === "") {
+                    mostrarAviso("Selecione o tipo de relação em todos os fornecedores.");
                     return false;
                 }
             }
@@ -336,6 +345,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
 
+            // gerar o código do documento novo
+            const codDoc = novoDocumento.querySelector('input[name$="[codigo_documento]"]');
+            if (codDoc) {
+                const baseDoc = parseInt(document.getElementById("documentos-container").dataset.proximo) || 1;
+                codDoc.value = "DOC-" + String(baseDoc + contadorDocumentos).padStart(4, "0");
+            }
+
             const botaoRemover = novoDocumento.querySelector(".remover-documento");
 
             botaoRemover.classList.remove("d-none");
@@ -359,6 +375,7 @@ document.addEventListener("DOMContentLoaded", function () {
         botaoAdicionarComponente.addEventListener("click", function () {
 
             const container = document.getElementById("componentes-container");
+            const baseComp = parseInt(container.dataset.proximo) || 1;
 
             const novoComponente = document.createElement("div");
 
@@ -377,7 +394,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     <label class="form-label">Código</label>
                     <input type="text"
                            class="form-control"
-                           name="componentes[${contadorComponentes}][codigo_componente]">
+                           name="componentes[${contadorComponentes}][codigo_componente]"
+                           value="COMP-${String(baseComp + contadorComponentes).padStart(4, '0')}">
                 </div>
 
                 <div class="col-md-5">
@@ -469,5 +487,73 @@ document.addEventListener("DOMContentLoaded", function () {
             contadorFornecedores++;
         });
     }
+
+    // Preencher dados ao escolher fornecedor / localização
+    document.addEventListener("change", function (e) {
+
+        // Fornecedor (blocos dinâmicos)
+        if (e.target.matches('select[name^="fornecedores"][name$="[id_fornecedor]"]')) {
+            const opcao = e.target.selectedOptions[0];
+            const bloco = e.target.closest(".fornecedor-bloco");
+            if (bloco && opcao) {
+                const nif = bloco.querySelector('input[name$="[nif_fornecedor]"]');
+                const tel = bloco.querySelector('input[name$="[telefone_fornecedor]"]');
+                const mail = bloco.querySelector('input[name$="[email_fornecedor]"]');
+                if (nif) nif.value = opcao.dataset.nif || "";
+                if (tel) tel.value = opcao.dataset.telefone || "";
+                if (mail) mail.value = opcao.dataset.email || "";
+            }
+        }
+
+        // Localização (select único)
+        if (e.target.id === "localizacao_associada") {
+            const opcao = e.target.selectedOptions[0];
+            if (opcao) {
+                const edificio = document.getElementById("localizacao_edificio");
+                const piso = document.getElementById("localizacao_piso");
+                const servico = document.getElementById("localizacao_departamento");
+                const sala = document.getElementById("localizacao_sala");
+                if (edificio) edificio.value = opcao.dataset.edificio || "";
+                if (piso) piso.value = opcao.dataset.piso || "";
+                if (servico) servico.value = opcao.dataset.servico || "";
+                if (sala) sala.value = opcao.dataset.sala || "";
+            }
+        }
+
+    });
+
+    // Sugerir o estado a partir da data (garantia / documento)
+    function estadoPelaData(dataStr, valAtivo, valExpira, valExpirado) {
+        if (!dataStr) return "";
+        const data = new Date(dataStr + "T00:00:00");
+        if (isNaN(data)) return "";
+        const hoje = new Date();
+        hoje.setHours(0, 0, 0, 0);
+        const dias = Math.round((data - hoje) / (1000 * 60 * 60 * 24));
+        if (dias < 0) return valExpirado;   // já passou
+        if (dias <= 30) return valExpira;    // a menos de 30 dias
+        return valAtivo;                     // ainda válido
+    }
+
+    document.addEventListener("change", function (e) {
+
+        // Garantia: data de fim -> estado
+        if (e.target.name === "data_fim_garantia") {
+            const sugestao = estadoPelaData(e.target.value, "Ativa", "Prestes a Expirar", "Expirada");
+            const estado = document.getElementById("estado_garantia");
+            if (estado && sugestao) estado.value = sugestao;
+        }
+
+        // Documento: validade -> estado (blocos dinâmicos)
+        if (e.target.matches('input[name^="documentos"][name$="[validade]"]')) {
+            const bloco = e.target.closest(".documento-bloco");
+            if (bloco) {
+                const sugestao = estadoPelaData(e.target.value, "Ativo", "Prestes a Expirar", "Expirado");
+                const estado = bloco.querySelector('select[name$="[estado_documento]"]');
+                if (estado && sugestao) estado.value = sugestao;
+            }
+        }
+
+    });
 
 });

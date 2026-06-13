@@ -90,7 +90,6 @@ CREATE TABLE `Documentos` (
   `validade` date COMMENT 'Quando aplicável',
   `estado_documento` ENUM ('Ativo', 'Prestes a Expirar', 'Expirado', 'Pendente', 'Anulado', 'Estendido', 'Não disponível'),
   `ficheiro` varchar(255) COMMENT 'Nome/caminho do ficheiro',
-  `loc_ficheiro` varchar(100) COMMENT 'Hiperligação alternativa',
   `observacoes` text,
   CONSTRAINT `pkDocumentos` PRIMARY KEY (`idDocumento`)
 );
@@ -129,7 +128,7 @@ CREATE TABLE `Conteudos` (
   CONSTRAINT `pkConteudos` PRIMARY KEY (`idConteudo`)
 );
 
-CREATE UNIQUE INDEX `Equipamentos_index_0` ON `Equipamentos` (`fabricante`, `modelo`, `numero_serie`);
+CREATE UNIQUE INDEX `Equipamentos_index_0` ON `Equipamentos` (`marca`, `modelo`, `numero_serie`);
 
 CREATE UNIQUE INDEX `Equipamento_Fornecedor_index_1` ON `Equipamento_Fornecedor` (`idEquipamento`, `idFornecedor`, `tipo_relacao`);
 

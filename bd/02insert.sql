@@ -164,32 +164,31 @@ INSERT INTO `Equipamento_Fornecedor`
 
 -- 9. DOCUMENTOS  (idEquipamento -> Equipamentos; idFornecedor opcional)
 INSERT INTO `Documentos`
-(`idEquipamento`, `idFornecedor`, `codigo_documento`, `tipo_documento`, `nome_documento`, `data_documento`, `validade`, `estado_documento`, `ficheiro`, `loc_ficheiro`, `observacoes`) VALUES
-(1,  1,    'DOC-0001', 'Manual de Utilizador',        'Manual do utilizador IntelliVue MP5', '2022-03-15', NULL,         'Ativo',             'docs/mp5_manual_user.pdf',  NULL, NULL),
-(1,  1,    'DOC-0002', 'Certificado de Calibração',   'Certificado de calibração 2025',      '2025-03-20', '2026-03-20', 'Expirado',          'docs/mp5_cal_2025.pdf',     NULL, 'Calibração anual.'),
-(3,  2,    'DOC-0003', 'Manual de Serviço',           'Manual de serviço Evita V500',        '2021-01-20', NULL,         'Ativo',             'docs/evita_service.pdf',    NULL, NULL),
-(3,  2,    'DOC-0004', 'Declaração de Conformidade',  'Declaração CE Evita V500',            '2021-01-20', NULL,         'Ativo',             'docs/evita_ce.pdf',         NULL, NULL),
-(3,  NULL, 'DOC-0005', 'Relatório Técnico',           'Relatório de manutenção 2025',        '2025-11-10', NULL,         'Ativo',             'docs/evita_rt_2025.pdf',    NULL, NULL),
-(7,  4,    'DOC-0006', 'Manual de Utilizador',        'Manual ZOLL R Series',                '2021-02-28', NULL,         'Ativo',             'docs/zoll_user.pdf',        NULL, NULL),
-(7,  4,    'DOC-0007', 'Certificado de Calibração',   'Calibração desfibrilhador 2026',      '2026-02-15', '2027-02-15', 'Ativo',             'docs/zoll_cal.pdf',         NULL, NULL),
-(10, 5,    'DOC-0008', 'Fatura ou Guia de Aquisição', 'Fatura de aquisição Vivid E95',       '2023-01-18', NULL,         'Ativo',             'docs/vivid_fatura.pdf',     NULL, NULL),
-(10, 5,    'DOC-0009', 'Manual de Utilizador',        'Manual Vivid E95',                    '2023-01-18', NULL,         'Ativo',             'docs/vivid_user.pdf',       NULL, NULL),
-(11, 6,    'DOC-0010', 'Declaração de Conformidade',  'Declaração CE SOMATOM go.Top',        '2022-07-22', NULL,         'Ativo',             'docs/somatom_ce.pdf',       NULL, NULL),
-(11, 6,    'DOC-0011', 'Certificado de Calibração',   'Calibração TAC 2025',                 '2025-07-01', '2026-07-01', 'Prestes a Expirar', 'docs/somatom_cal.pdf',      NULL, 'A renovar brevemente.'),
-(14, 2,    'DOC-0012', 'Manual de Serviço',           'Manual de serviço Perseus A500',      '2021-03-30', NULL,         'Ativo',             'docs/perseus_service.pdf',  NULL, NULL),
-(14, 2,    'DOC-0013', 'Certificado de Calibração',   'Calibração anestesia 2025',           '2025-05-10', '2026-05-10', 'Expirado',          'docs/perseus_cal.pdf',      NULL, NULL),
-(17, 2,    'DOC-0014', 'Manual de Utilizador',        'Manual incubadora Caleo',             '2020-06-08', NULL,         'Ativo',             'docs/caleo_user.pdf',       NULL, NULL),
-(19, 6,    'DOC-0015', 'Manual de Serviço',           'Manual Atellica CH',                  '2022-11-02', NULL,         'Ativo',             'docs/atellica_service.pdf', NULL, NULL),
-(19, 6,    'DOC-0016', 'Certificado de Calibração',   'Calibração analisador 2026',          '2026-04-01', '2026-10-01', 'Ativo',             'docs/atellica_cal.pdf',     NULL, NULL),
-(5,  3,    'DOC-0017', 'Manual de Utilizador',        'Manual Infusomat Space',              '2020-04-12', NULL,         'Ativo',             'docs/infusomat_user.pdf',   NULL, NULL),
-(9,  5,    'DOC-0018', 'Manual de Utilizador',        'Manual MAC 2000',                     '2022-05-01', NULL,         'Ativo',             'docs/mac2000_user.pdf',     NULL, NULL),
-(13, 8,    'DOC-0019', 'Declaração de Conformidade',  'Declaração CE Valleylab FT10',        '2020-08-19', NULL,         'Ativo',             'docs/ft10_ce.pdf',          NULL, NULL),
-(16, 10,   'DOC-0020', 'Certificado de Calibração',   'Validação autoclave 2025',            '2025-09-15', '2026-09-15', 'Ativo',             'docs/autoclave_val.pdf',    NULL, 'Validação anual.'),
-(2,  1,    'DOC-0021', 'Manual de Utilizador',        'Manual IntelliVue MX450',             '2021-06-10', NULL,         'Ativo',             'docs/mx450_user.pdf',       NULL, NULL),
-(18, 5,    'DOC-0022', 'Manual de Utilizador',        'Manual Panda iRes',                   '2021-09-14', NULL,         'Ativo',             'docs/panda_user.pdf',       NULL, NULL),
-(23, 1,    'DOC-0023', 'Fatura ou Guia de Aquisição', 'Fatura IntelliVue X3',                '2023-04-19', NULL,         'Ativo',             'docs/x3_fatura.pdf',        NULL, NULL),
-(12, 7,    'DOC-0024', 'Manual de Utilizador',        'Manual uMEC12',                       '2021-10-03', NULL,         'Ativo',             'docs/umec_user.pdf',        NULL, NULL);
-
+(`idEquipamento`, `idFornecedor`, `codigo_documento`, `tipo_documento`, `nome_documento`, `data_documento`, `validade`, `estado_documento`, `ficheiro`, `observacoes`) VALUES
+(1, 1, 'DOC-0001', 'Manual de Utilizador', 'Manual do utilizador IntelliVue MP5', '2022-03-15', NULL, 'Ativo', 'docs/mp5_manual_user.pdf', NULL),
+(1, 1, 'DOC-0002', 'Certificado de Calibração', 'Certificado de calibração 2025', '2025-03-20', '2026-03-20', 'Expirado', 'docs/mp5_cal_2025.pdf', 'Calibração anual.'),
+(3, 2, 'DOC-0003', 'Manual de Serviço', 'Manual de serviço Evita V500', '2021-01-20', NULL, 'Ativo', 'docs/evita_service.pdf', NULL),
+(3, 2, 'DOC-0004', 'Declaração de Conformidade', 'Declaração CE Evita V500', '2021-01-20', NULL, 'Ativo', 'docs/evita_ce.pdf', NULL),
+(3, NULL, 'DOC-0005', 'Relatório Técnico', 'Relatório de manutenção 2025', '2025-11-10', NULL, 'Ativo', 'docs/evita_rt_2025.pdf', NULL),
+(7, 4, 'DOC-0006', 'Manual de Utilizador', 'Manual ZOLL R Series', '2021-02-28', NULL, 'Ativo', 'docs/zoll_user.pdf', NULL),
+(7, 4, 'DOC-0007', 'Certificado de Calibração', 'Calibração desfibrilhador 2026', '2026-02-15', '2027-02-15', 'Ativo', 'docs/zoll_cal.pdf', NULL),
+(10, 5, 'DOC-0008', 'Fatura ou Guia de Aquisição', 'Fatura de aquisição Vivid E95', '2023-01-18', NULL, 'Ativo', 'docs/vivid_fatura.pdf', NULL),
+(10, 5, 'DOC-0009', 'Manual de Utilizador', 'Manual Vivid E95', '2023-01-18', NULL, 'Ativo', 'docs/vivid_user.pdf', NULL),
+(11, 6, 'DOC-0010', 'Declaração de Conformidade', 'Declaração CE SOMATOM go.Top', '2022-07-22', NULL, 'Ativo', 'docs/somatom_ce.pdf', NULL),
+(11, 6, 'DOC-0011', 'Certificado de Calibração', 'Calibração TAC 2025', '2025-07-01', '2026-07-01', 'Prestes a Expirar', 'docs/somatom_cal.pdf', 'A renovar brevemente.'),
+(14, 2, 'DOC-0012', 'Manual de Serviço', 'Manual de serviço Perseus A500', '2021-03-30', NULL, 'Ativo', 'docs/perseus_service.pdf', NULL),
+(14, 2, 'DOC-0013', 'Certificado de Calibração', 'Calibração anestesia 2025', '2025-05-10', '2026-05-10', 'Expirado', 'docs/perseus_cal.pdf', NULL),
+(17, 2, 'DOC-0014', 'Manual de Utilizador', 'Manual incubadora Caleo', '2020-06-08', NULL, 'Ativo', 'docs/caleo_user.pdf', NULL),
+(19, 6, 'DOC-0015', 'Manual de Serviço', 'Manual Atellica CH', '2022-11-02', NULL, 'Ativo', 'docs/atellica_service.pdf', NULL),
+(19, 6, 'DOC-0016', 'Certificado de Calibração', 'Calibração analisador 2026', '2026-04-01', '2026-10-01', 'Ativo', 'docs/atellica_cal.pdf', NULL),
+(5, 3, 'DOC-0017', 'Manual de Utilizador', 'Manual Infusomat Space', '2020-04-12', NULL, 'Ativo', 'docs/infusomat_user.pdf', NULL),
+(9, 5, 'DOC-0018', 'Manual de Utilizador', 'Manual MAC 2000', '2022-05-01', NULL, 'Ativo', 'docs/mac2000_user.pdf', NULL),
+(13, 8, 'DOC-0019', 'Declaração de Conformidade', 'Declaração CE Valleylab FT10', '2020-08-19', NULL, 'Ativo', 'docs/ft10_ce.pdf', NULL),
+(16, 10, 'DOC-0020', 'Certificado de Calibração', 'Validação autoclave 2025', '2025-09-15', '2026-09-15', 'Ativo', 'docs/autoclave_val.pdf', 'Validação anual.'),
+(2, 1, 'DOC-0021', 'Manual de Utilizador', 'Manual IntelliVue MX450', '2021-06-10', NULL, 'Ativo', 'docs/mx450_user.pdf', NULL),
+(18, 5, 'DOC-0022', 'Manual de Utilizador', 'Manual Panda iRes', '2021-09-14', NULL, 'Ativo', 'docs/panda_user.pdf', NULL),
+(23, 1, 'DOC-0023', 'Fatura ou Guia de Aquisição', 'Fatura IntelliVue X3', '2023-04-19', NULL, 'Ativo', 'docs/x3_fatura.pdf', NULL),
+(12, 7, 'DOC-0024', 'Manual de Utilizador', 'Manual uMEC12', '2021-10-03', NULL, 'Ativo', 'docs/umec_user.pdf', NULL);
 
 -- 10. GARANTIAS  (idEquipamento -> Equipamentos; idEntidade -> Fornecedores)
 INSERT INTO `Garantias`
