@@ -361,6 +361,10 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             container.appendChild(novoDocumento);
+            // ativar flatpickr nas datas da nova linha de documento
+            if (typeof flatpickr !== "undefined") {
+                flatpickr(novoDocumento.querySelectorAll(".flatpickr-date"), { dateFormat: "Y-m-d", allowInput: true });
+            }
             contadorDocumentos++;
         });
     }
@@ -555,5 +559,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
     });
+
+    // Flatpickr nas datas (calendario uniforme)
+    if (typeof flatpickr !== "undefined") {
+        flatpickr(".flatpickr-date", { dateFormat: "Y-m-d", allowInput: true });
+    }
 
 });

@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../includes/funcoes.php';
 redirect_if_not_logged();
+require_once __DIR__ . '/../../includes/validacoes.php';
 
 $pagina_ativa = 'localizacoes';
 
@@ -20,20 +21,34 @@ try {
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // 1. Recolher dados
-    $edificio    = trim($_POST['edificio'] ?? '');
+    $edificio    = mb_convert_case(trim($_POST['edificio'] ?? ''), MB_CASE_TITLE, "UTF-8");
     $piso        = trim($_POST['piso'] ?? '');
     $idServico   = $_POST['idServico'] ?? '';
     $sala        = trim($_POST['sala'] ?? '');
     $observacoes = trim($_POST['observacoes'] ?? '');
 
+    /*
     // 2. Validar
     if (!ctype_digit((string)$idServico)) {
         $erros[] = "O serviço/departamento é obrigatório.";
+    }
+    // o piso, se preenchido, tem de ser um número inteiro (admite negativos, ex: -1 = cave)
+    if ($piso !== '' && !preg_match('/^-?\d+$/', $piso)) {
+        $erros[] = "O piso deve ser um número inteiro (ex: 0, 1, -1). Não pode conter letras.";
     }
     // pelo menos uma pista física da localização
     if ($edificio === '' && $piso === '' && $sala === '') {
         $erros[] = "Indique pelo menos o edifício, o piso ou a sala.";
     }
+    */
+
+    // 2. Validar (centralizado em validacoes.php)
+    $erros = validar_localizacao([
+        'edificio'  => $edificio,
+        'piso'      => $piso,
+        'idServico' => $idServico,
+        'sala'      => $sala,
+    ]);
 
     // 3. Inserir se não houver erros
     if (empty($erros)) {

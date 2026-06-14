@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../includes/funcoes.php';
 redirect_if_not_logged();
+require_once __DIR__ . '/../../includes/validacoes.php';
 
 $pagina_ativa = 'fornecedores';
 
@@ -11,15 +12,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // 1. Recolher dados
     $nome_empresa      = trim($_POST['nome_empresa'] ?? '');
-    $nif               = trim($_POST['nif'] ?? '');
+    $nif = preg_replace('/\s+/', '', trim($_POST['nif'] ?? ''));
     $telefone          = trim($_POST['telefone'] ?? '');
-    $email             = trim($_POST['email'] ?? '');
+    $email = strtolower(trim($_POST['email'] ?? ''));
     $website           = trim($_POST['website'] ?? '');
     $morada            = trim($_POST['morada'] ?? '');
-    $pessoa_contacto   = trim($_POST['pessoa_contacto'] ?? '');
+    $pessoa_contacto = ucwords(strtolower(trim($_POST['pessoa_contacto'] ?? '')));
     $telefone_contacto = trim($_POST['telefone_contacto'] ?? '');
     $observacoes       = trim($_POST['observacoes'] ?? '');
 
+    /*
     // 2. Validar
     if ($nome_empresa === '') {
         $erros[] = "O nome da empresa é obrigatório.";
@@ -38,6 +40,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($telefone_contacto !== '' && (!ctype_digit($tel2) || strlen($tel2) < 7 || strlen($tel2) > 15)) {
         $erros[] = "O telefone da pessoa de contacto não é válido.";
     }
+        */
+
+    // 2. Validar (centralizado em validacoes.php)
+    $erros = validar_fornecedor([
+        'nome_empresa'      => $nome_empresa,
+        'nif'               => $nif,
+        'email'             => $email,
+        'telefone'          => $telefone,
+        'telefone_contacto' => $telefone_contacto,
+    ]);
 
     // 3. Inserir se não houver erros
     if (empty($erros)) {

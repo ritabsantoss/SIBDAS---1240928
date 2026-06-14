@@ -31,6 +31,10 @@
     <!-- DataTables CSS + JS -->
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/datatables/datatables.min.css">
     <script src="<?php echo BASE_URL; ?>/assets/datatables/datatables.min.js"></script>
+
+    <!-- Flatpickr CSS + JS -->
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/flatpickr/flatpickr.min.css">
+    <script src="<?php echo BASE_URL; ?>/assets/flatpickr/flatpickr.js"></script>
 </head>
 
 <body>

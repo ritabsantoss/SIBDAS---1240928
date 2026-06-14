@@ -122,6 +122,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $erros[] = "O ano de fabrico deve estar entre 1950 e " . date('Y') . ".";
     // RI5: data de aquisição não no futuro
     if ($data_aquisicao !== '' && $data_aquisicao > date('Y-m-d')) $erros[] = "A data de aquisição não pode ser no futuro.";
+    // Datas reais (formato AAAA-MM-DD + data existente)
+    if (!data_real($data_aquisicao))       $erros[] = "Data de aquisição inválida.";
+    if (!data_real($data_inicio_garantia)) $erros[] = "Data de início da garantia inválida.";
+    if (!data_real($data_fim_garantia))    $erros[] = "Data de fim da garantia inválida.";
 
     // RI1: se há garantia com as duas datas, fim >= início
     if ($tem_garantia && $data_inicio_garantia !== '' && $data_fim_garantia !== '' && $data_fim_garantia < $data_inicio_garantia) {
@@ -164,6 +168,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if ($dataDoc !== '' && $val !== '' && $val < $dataDoc) {
                 $erros[] = "Documento $n: a validade não pode ser anterior à data do documento.";
             }
+            if (!data_real($dataDoc)) $erros[] = "Documento $n: data do documento inválida.";
+            if (!data_real($val))     $erros[] = "Documento $n: data de validade inválida.";
         }
     }
 
@@ -211,7 +217,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 ':numero_serie'   => $numero_serie ?: null,
                 ':data_aquisicao' => $data_aquisicao ?: null,
                 ':ano_fabrico'    => $ano_fabrico !== '' ? $ano_fabrico : null,
-                ':custo'          => $custo !== '' ? $custo : null,
+                ':custo'          => $custo !== '' ? round((float)$custo, 2) : null,
                 ':tipo_entrada'   => ($tipo_entrada && $tipo_entrada !== 'Escolha...') ? $tipo_entrada : null,
                 ':estado_atual'   => $estado_atual,
                 ':criticidade'    => $criticidade,
@@ -552,7 +558,7 @@ include __DIR__ . '/../../includes/navbar.php';
                             <div class="row mb-3">
                                 <div class="col-md-3">
                                     <label for="data_aquisicao" class="form-label">Data de aquisição</label>
-                                    <input type="date" class="form-control" id="data_aquisicao"
+                                    <input type="text" class="form-control flatpickr-date" id="data_aquisicao"
                                         name="data_aquisicao" value="<?= htmlspecialchars($_POST['data_aquisicao'] ?? '') ?>">
                                 </div>
 
@@ -645,7 +651,8 @@ include __DIR__ . '/../../includes/navbar.php';
                                                     <option value="<?= $forn->idFornecedor ?>"
                                                         data-nif="<?= htmlspecialchars($forn->nif ?? '') ?>"
                                                         data-telefone="<?= htmlspecialchars($forn->telefone ?? '') ?>"
-                                                        data-email="<?= htmlspecialchars($forn->email ?? '') ?>"><?= htmlspecialchars($forn->nome_empresa) ?></option>
+                                                        data-email="<?= htmlspecialchars($forn->email ?? '') ?>"
+                                                        <?= (($_POST['fornecedores'][0]['id_fornecedor'] ?? '') == $forn->idFornecedor) ? 'selected' : '' ?>><?= htmlspecialchars($forn->nome_empresa) ?></option>
                                                 <?php endforeach; ?>
                                             </select>
                                         </div>
@@ -653,11 +660,10 @@ include __DIR__ . '/../../includes/navbar.php';
                                         <div class="col-md-5">
                                             <label class="form-label">Tipo de relação</label>
                                             <select class="form-select" name="fornecedores[0][tipo_relacao]">
-                                                <option value="" selected disabled>Escolha...</option>
-                                                <option>Fabricante</option>
-                                                <option>Distribuidor ou fornecedor comercial</option>
-                                                <option>Empresa de assistência técnica</option>
-                                                <option>Fornecedor de consumíveis ou acessórios</option>
+                                                <option value="" disabled <?= empty($_POST['fornecedores'][0]['tipo_relacao']) ? 'selected' : '' ?>>Escolha...</option>
+                                                <?php foreach (['Fabricante','Distribuidor ou fornecedor comercial','Empresa de assistência técnica','Fornecedor de consumíveis ou acessórios'] as $opt): ?>
+                                                    <option <?= (($_POST['fornecedores'][0]['tipo_relacao'] ?? '') === $opt) ? 'selected' : '' ?>><?= $opt ?></option>
+                                                <?php endforeach; ?>
                                             </select>
                                         </div>
 
@@ -789,38 +795,34 @@ include __DIR__ . '/../../includes/navbar.php';
                                         <div class="col-md-4">
                                             <label class="form-label">Tipo de documento</label>
                                             <select class="form-select" name="documentos[0][tipo_documento]">
-                                                <option selected disabled>Escolha...</option>
-                                                <option>Manual de Utilizador</option>
-                                                <option>Manual de Serviço</option>
-                                                <option>Certificado de Calibração</option>
-                                                <option>Fatura ou Guia de Aquisição</option>
-                                                <option>Declaração de Conformidade</option>
-                                                <option>Relatório Técnico</option>
+                                                <option value="" disabled <?= empty($_POST['documentos'][0]['tipo_documento']) ? 'selected' : '' ?>>Escolha...</option>
+                                                <?php foreach (['Manual de Utilizador','Manual de Serviço','Certificado de Calibração','Fatura ou Guia de Aquisição','Declaração de Conformidade','Relatório Técnico'] as $opt): ?>
+                                                    <option <?= (($_POST['documentos'][0]['tipo_documento'] ?? '') === $opt) ? 'selected' : '' ?>><?= $opt ?></option>
+                                                <?php endforeach; ?>
                                             </select>
                                         </div>
                                         <div class="col-md-4"><label class="form-label">Nome do
                                                 documento</label><input type="text" class="form-control"
-                                                name="documentos[0][nome_documento]"></div>
+                                                name="documentos[0][nome_documento]"
+                                                value="<?= htmlspecialchars($_POST['documentos'][0]['nome_documento'] ?? '') ?>"></div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <div class="col-md-4"><label class="form-label">Data do
-                                                documento</label><input type="date" class="form-control"
-                                                name="documentos[0][data_documento]"></div>
+                                                documento</label><input type="text" class="form-control flatpickr-date"
+                                                name="documentos[0][data_documento]"
+                                                value="<?= htmlspecialchars($_POST['documentos'][0]['data_documento'] ?? '') ?>"></div>
                                         <div class="col-md-4"><label class="form-label">Data de
-                                                validade</label><input type="date" class="form-control"
-                                                name="documentos[0][validade]"></div>
+                                                validade</label><input type="text" class="form-control flatpickr-date"
+                                                name="documentos[0][validade]"
+                                                value="<?= htmlspecialchars($_POST['documentos'][0]['validade'] ?? '') ?>"></div>
                                         <div class="col-md-4">
                                             <label class="form-label">Estado</label>
                                             <select class="form-select" name="documentos[0][estado_documento]">
-                                                <option selected disabled>Escolha...</option>
-                                                <option>Ativo</option>
-                                                <option>Prestes a Expirar</option>
-                                                <option>Expirado</option>
-                                                <option>Pendente</option>
-                                                <option>Anulado</option>
-                                                <option>Estendido</option>
-                                                <option>Não disponível</option>
+                                                <option value="" disabled <?= empty($_POST['documentos'][0]['estado_documento']) ? 'selected' : '' ?>>Escolha...</option>
+                                                <?php foreach (['Ativo','Prestes a Expirar','Expirado','Pendente','Anulado','Estendido','Não disponível'] as $opt): ?>
+                                                    <option <?= (($_POST['documentos'][0]['estado_documento'] ?? '') === $opt) ? 'selected' : '' ?>><?= $opt ?></option>
+                                                <?php endforeach; ?>
                                             </select>
                                         </div>
                                     </div>
@@ -829,6 +831,7 @@ include __DIR__ . '/../../includes/navbar.php';
                                         <div class="col-md-12">
                                             <label class="form-label">Ficheiro (nome ou caminho)</label>
                                             <input type="text" class="form-control" name="documentos[0][ficheiro]"
+                                                value="<?= htmlspecialchars($_POST['documentos'][0]['ficheiro'] ?? '') ?>"
                                                 placeholder="Ex.: manual_ventilador.pdf">
                                         </div>
                                     </div>
@@ -836,7 +839,7 @@ include __DIR__ . '/../../includes/navbar.php';
                                     <div class="mb-2">
                                         <label class="form-label">Observações</label>
                                         <textarea class="form-control"
-                                            name="documentos[0][observacoes_documentacao]" rows="3"></textarea>
+                                            name="documentos[0][observacoes_documentacao]" rows="3"><?= htmlspecialchars($_POST['documentos'][0]['observacoes_documentacao'] ?? '') ?></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -875,25 +878,23 @@ include __DIR__ . '/../../includes/navbar.php';
                                     </select>
                                 </div>
                                 <div class="col-md-3"><label for="data_inicio_garantia" class="form-label">Data de
-                                        início</label><input type="date" class="form-control"
-                                        id="data_inicio_garantia" name="data_inicio_garantia"></div>
+                                        início</label><input type="text" class="form-control flatpickr-date"
+                                        id="data_inicio_garantia" name="data_inicio_garantia"
+                                        value="<?= htmlspecialchars($_POST['data_inicio_garantia'] ?? '') ?>"></div>
                                 <div class="col-md-3"><label for="data_fim_garantia" class="form-label">Data de
-                                        fim</label><input type="date" class="form-control" id="data_fim_garantia"
-                                        name="data_fim_garantia"></div>
+                                        fim</label><input type="text" class="form-control flatpickr-date" id="data_fim_garantia"
+                                        name="data_fim_garantia"
+                                        value="<?= htmlspecialchars($_POST['data_fim_garantia'] ?? '') ?>"></div>
                             </div>
 
                             <div class="row mb-3">
                                 <div class="col-md-4">
                                     <label for="estado_garantia" class="form-label">Estado da garantia</label>
                                     <select class="form-select" id="estado_garantia" name="estado_garantia">
-                                        <option selected disabled>Escolha...</option>
-                                        <option>Ativa</option>
-                                        <option>Prestes a Expirar</option>
-                                        <option>Expirada</option>
-                                        <option>Pendente</option>
-                                        <option>Anulada</option>
-                                        <option>Estendida</option>
-                                        <option>Não disponível</option>
+                                        <option value="" disabled <?= empty($_POST['estado_garantia']) ? 'selected' : '' ?>>Escolha...</option>
+                                        <?php foreach (['Ativa','Prestes a Expirar','Expirada','Pendente','Anulada','Estendida','Não disponível'] as $opt): ?>
+                                            <option <?= (($_POST['estado_garantia'] ?? '') === $opt) ? 'selected' : '' ?>><?= $opt ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                                 <div class="col-md-8">
@@ -906,7 +907,7 @@ include __DIR__ . '/../../includes/navbar.php';
                             <div class="mb-4">
                                 <label for="observacoes_garantia" class="form-label">Observações da garantia</label>
                                 <textarea class="form-control" id="observacoes_garantia" name="observacoes_garantia"
-                                    rows="4"></textarea>
+                                    rows="4"><?= htmlspecialchars($_POST['observacoes_garantia'] ?? '') ?></textarea>
                             </div>
 
                             <div class="d-flex justify-content-between mt-4">
@@ -929,9 +930,10 @@ include __DIR__ . '/../../includes/navbar.php';
                                     <label for="existe_contrato" class="form-label">Existe contrato de
                                         manutenção?</label>
                                     <select class="form-select" id="existe_contrato" name="existe_contrato">
-                                        <option selected disabled>Escolha...</option>
-                                        <option>Sim</option>
-                                        <option>Não</option>
+                                        <option value="" disabled <?= empty($_POST['existe_contrato']) ? 'selected' : '' ?>>Escolha...</option>
+                                        <?php foreach (['Sim','Não'] as $opt): ?>
+                                            <option <?= (($_POST['existe_contrato'] ?? '') === $opt) ? 'selected' : '' ?>><?= $opt ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
 
@@ -943,11 +945,10 @@ include __DIR__ . '/../../includes/navbar.php';
                                 <div class="col-md-3">
                                     <label for="tipo_contrato" class="form-label">Tipo de contrato</label>
                                     <select class="form-select" id="tipo_contrato" name="tipo_contrato">
-                                        <option selected disabled>Escolha...</option>
-                                        <option>Contrato de Manutenção</option>
-                                        <option>Manutenção Preventiva</option>
-                                        <option>Contrato de Assistência Técnica</option>
-                                        <option>Sem Contrato</option>
+                                        <option value="" disabled <?= empty($_POST['tipo_contrato']) ? 'selected' : '' ?>>Escolha...</option>
+                                        <?php foreach (['Contrato de Manutenção','Manutenção Preventiva','Contrato de Assistência Técnica','Sem Contrato'] as $opt): ?>
+                                            <option <?= (($_POST['tipo_contrato'] ?? '') === $opt) ? 'selected' : '' ?>><?= $opt ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
 
@@ -966,12 +967,10 @@ include __DIR__ . '/../../includes/navbar.php';
                                 <div class="col-md-4">
                                     <label for="periodicidade" class="form-label">Periodicidade</label>
                                     <select class="form-select" id="periodicidade" name="periodicidade">
-                                        <option selected disabled>Escolha...</option>
-                                        <option>Mensal</option>
-                                        <option>Trimestral</option>
-                                        <option>Semestral</option>
-                                        <option>Anual</option>
-                                        <option>Bianual</option>
+                                        <option value="" disabled <?= empty($_POST['periodicidade']) ? 'selected' : '' ?>>Escolha...</option>
+                                        <?php foreach (['Mensal','Trimestral','Semestral','Anual','Bianual'] as $opt): ?>
+                                            <option <?= (($_POST['periodicidade'] ?? '') === $opt) ? 'selected' : '' ?>><?= $opt ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                                 <div class="col-md-8">
@@ -984,7 +983,7 @@ include __DIR__ . '/../../includes/navbar.php';
                             <div class="mb-4">
                                 <label for="observacoes_contrato" class="form-label">Observações do contrato</label>
                                 <textarea class="form-control" id="observacoes_contrato" name="observacoes_contrato"
-                                    rows="4"></textarea>
+                                    rows="4"><?= htmlspecialchars($_POST['observacoes_contrato'] ?? '') ?></textarea>
                             </div>
 
                             <div class="d-flex justify-content-between mt-4">
