@@ -119,3 +119,30 @@ function aes_decrypt($value)
     if (!is_string($value) || strlen($value) % 2 !== 0) return false;
     return openssl_decrypt(hex2bin($value), OPENSSL_METHOD, OPENSSL_KEY, OPENSSL_RAW_DATA, OPENSSL_IV);
 }
+
+function erro_bd_equipamento(Exception $err, string $acao = 'guardar'): string
+{
+    $msg = $err->getMessage();
+
+    if ($err instanceof PDOException && strpos($msg, '23000') !== false) {
+        if (strpos($msg, 'codigo_interno') !== false)    return "Já existe um equipamento com esse código interno.";
+        if (strpos($msg, 'codigo_documento') !== false)  return "Já existe um documento com esse código.";
+        if (strpos($msg, 'codigo_garantia') !== false)   return "Já existe uma garantia com esse código.";
+        if (strpos($msg, 'codigo_contrato') !== false)   return "Já existe um contrato com esse código.";
+        if (strpos($msg, 'codigo_componente') !== false) return "Já existe um componente com esse código.";
+        if (strpos($msg, 'Equipamentos_index_0') !== false)           return "Já existe um equipamento com a mesma marca/modelo/número de série.";
+        if (strpos($msg, 'Equipamento_Fornecedor_index_1') !== false) return "Esse fornecedor já foi associado a este equipamento com o mesmo tipo de relação.";
+        if (stripos($msg, 'foreign key') !== false)      return "Foi selecionada uma categoria, localização ou fornecedor inválido.";
+        return "Já existe um registo duplicado.";
+    }
+    if (strpos($msg, 'ficheiro excede') !== false || strpos($msg, 'Tipo de ficheiro') !== false || strpos($msg, 'carregar o ficheiro') !== false || strpos($msg, 'guardar o ficheiro') !== false) {
+        return $msg;
+    }
+    if (strpos($msg, 'too long') !== false) {
+        return "Um dos campos tem texto demasiado comprido.";
+    }
+    if (strpos($msg, 'Incorrect') !== false || strpos($msg, 'Data truncated') !== false) {
+        return "Um dos valores selecionados não é válido.";
+    }
+    return "Não foi possível $acao o equipamento. Verifique os dados e tente novamente.";
+}

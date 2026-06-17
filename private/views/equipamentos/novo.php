@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../includes/funcoes.php';
 redirect_if_not_logged();
+require_once __DIR__ . '/../../includes/validacoes.php';
 
 $pagina_ativa = 'equipamentos';
 
@@ -77,6 +78,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $periodicidade     = $_POST['periodicidade'] ?? '';
     $obs_contrato      = trim($_POST['observacoes_contrato'] ?? '');
 
+
+    /*
     // 2. Validar (obrigatórios + restrições de integridade)
     if ($codigo_interno === '') $erros[] = "O código interno é obrigatório.";
     if ($designacao === '')     $erros[] = "A designação é obrigatória.";
@@ -185,6 +188,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if ($nome === '') $erros[] = "Componente $n: o nome é obrigatório.";
         }
     }
+*/
+    // 2. Validar (centralizado em validacoes.php)
+    $erros = validar_equipamento([
+        'codigo_interno'       => $codigo_interno,
+        'designacao'           => $designacao,
+        'idCategoria'          => $idCategoria,
+        'idLocalizacao'        => $idLocalizacao,
+        'estado_atual'         => $estado_atual,
+        'criticidade'          => $criticidade,
+        'custo'                => $custo,
+        'ano_fabrico'          => $ano_fabrico,
+        'data_aquisicao'       => $data_aquisicao,
+        'tem_garantia'         => $tem_garantia,
+        'data_inicio_garantia' => $data_inicio_garantia,
+        'data_fim_garantia'    => $data_fim_garantia,
+        'fornecedores'         => $_POST['fornecedores'] ?? [],
+        'documentos'           => $_POST['documentos'] ?? [],
+        'componentes'          => $_POST['componentes'] ?? [],
+    ]);
 
     // 3. Inserir se não houver erros (transação: equipamento + fornecedores)
     if (empty($erros)) {
@@ -362,57 +384,56 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             header("Location: lista.php");
             exit;
         } catch (Exception $err) {
+            if (isset($ligacao) && $ligacao->inTransaction()) {
+                $ligacao->rollBack();
+            }
+            foreach ($ficheiros_guardados as $fnome) {
+                if (is_file(PASTA_UPLOADS . $fnome)) {
+                    unlink(PASTA_UPLOADS . $fnome);
+                }
+            }
+            $erro_sistema = erro_bd_equipamento($err, 'guardar');
 
-    if (isset($ligacao) && $ligacao->inTransaction()) {
-        $ligacao->rollBack();
-    }
+/*
+            $msg = $err->getMessage();
 
-    foreach ($ficheiros_guardados as $fnome) {
-        if (is_file(PASTA_UPLOADS . $fnome)) {
-            unlink(PASTA_UPLOADS . $fnome);
+            if ($err instanceof PDOException && strpos($msg, '23000') !== false) {
+                if (strpos($msg, 'codigo_interno') !== false) {
+                    $erro_sistema = "Já existe um equipamento com esse código interno.";
+                } elseif (strpos($msg, 'codigo_documento') !== false) {
+                    $erro_sistema = "Já existe um documento com esse código.";
+                } elseif (strpos($msg, 'codigo_garantia') !== false) {
+                    $erro_sistema = "Já existe uma garantia com esse código.";
+                } elseif (strpos($msg, 'codigo_contrato') !== false) {
+                    $erro_sistema = "Já existe um contrato com esse código.";
+                } elseif (strpos($msg, 'codigo_componente') !== false) {
+                    $erro_sistema = "Já existe um componente com esse código.";
+                } elseif (strpos($msg, 'Equipamentos_index_0') !== false) {
+                    $erro_sistema = "Já existe um equipamento com a mesma marca/modelo/número de série.";
+                } elseif (strpos($msg, 'Equipamento_Fornecedor_index_1') !== false) {
+                    $erro_sistema = "Esse fornecedor já foi associado a este equipamento com o mesmo tipo de relação.";
+                } elseif (stripos($msg, 'foreign key') !== false) {
+                    $erro_sistema = "Foi selecionada uma categoria, localização ou fornecedor inválido.";
+                } else {
+                    $erro_sistema = "Já existe um registo duplicado.";
+                }
+            } elseif (
+                strpos($msg, 'ficheiro excede') !== false ||
+                strpos($msg, 'Tipo de ficheiro') !== false ||
+                strpos($msg, 'carregar o ficheiro') !== false ||
+                strpos($msg, 'guardar o ficheiro') !== false
+            ) {
+
+                $erro_sistema = $msg;
+            } elseif (strpos($msg, 'Data too long') !== false || strpos($msg, 'too long') !== false) {
+                $erro_sistema = "Um dos campos tem texto demasiado comprido.";
+            } elseif (strpos($msg, 'Incorrect') !== false || strpos($msg, 'Data truncated') !== false) {
+                $erro_sistema = "Um dos valores selecionados não é válido.";
+            } else {
+                $erro_sistema = "Não foi possível guardar o equipamento. Verifique os dados e tente novamente.";
+            }
+*/
         }
-    }
-
-    $msg = $err->getMessage();
-
-    if ($err instanceof PDOException && strpos($msg, '23000') !== false) {
-        if (strpos($msg, 'codigo_interno') !== false) {
-            $erro_sistema = "Já existe um equipamento com esse código interno.";
-        } elseif (strpos($msg, 'codigo_documento') !== false) {
-            $erro_sistema = "Já existe um documento com esse código.";
-        } elseif (strpos($msg, 'codigo_garantia') !== false) {
-            $erro_sistema = "Já existe uma garantia com esse código.";
-        } elseif (strpos($msg, 'codigo_contrato') !== false) {
-            $erro_sistema = "Já existe um contrato com esse código.";
-        } elseif (strpos($msg, 'codigo_componente') !== false) {
-            $erro_sistema = "Já existe um componente com esse código.";
-        } elseif (strpos($msg, 'Equipamentos_index_0') !== false) {
-            $erro_sistema = "Já existe um equipamento com a mesma marca/modelo/número de série.";
-        } elseif (strpos($msg, 'Equipamento_Fornecedor_index_1') !== false) {
-            $erro_sistema = "Esse fornecedor já foi associado a este equipamento com o mesmo tipo de relação.";
-        } elseif (stripos($msg, 'foreign key') !== false) {
-            $erro_sistema = "Foi selecionada uma categoria, localização ou fornecedor inválido.";
-        } else {
-            $erro_sistema = "Já existe um registo duplicado.";
-        }
-
-    } elseif (strpos($msg, 'ficheiro excede') !== false ||
-              strpos($msg, 'Tipo de ficheiro') !== false ||
-              strpos($msg, 'carregar o ficheiro') !== false ||
-              strpos($msg, 'guardar o ficheiro') !== false) {
-
-        $erro_sistema = $msg;
-
-    } elseif (strpos($msg, 'Data too long') !== false || strpos($msg, 'too long') !== false) {
-        $erro_sistema = "Um dos campos tem texto demasiado comprido.";
-
-    } elseif (strpos($msg, 'Incorrect') !== false || strpos($msg, 'Data truncated') !== false) {
-        $erro_sistema = "Um dos valores selecionados não é válido.";
-
-    } else {
-        $erro_sistema = "Não foi possível guardar o equipamento. Verifique os dados e tente novamente.";
-    }
-}
         $ligacao = null;
     }
 }
@@ -661,7 +682,7 @@ include __DIR__ . '/../../includes/navbar.php';
                                             <label class="form-label">Tipo de relação</label>
                                             <select class="form-select" name="fornecedores[0][tipo_relacao]">
                                                 <option value="" disabled <?= empty($_POST['fornecedores'][0]['tipo_relacao']) ? 'selected' : '' ?>>Escolha...</option>
-                                                <?php foreach (['Fabricante','Distribuidor ou fornecedor comercial','Empresa de assistência técnica','Fornecedor de consumíveis ou acessórios'] as $opt): ?>
+                                                <?php foreach (['Fabricante', 'Distribuidor ou fornecedor comercial', 'Empresa de assistência técnica', 'Fornecedor de consumíveis ou acessórios'] as $opt): ?>
                                                     <option <?= (($_POST['fornecedores'][0]['tipo_relacao'] ?? '') === $opt) ? 'selected' : '' ?>><?= $opt ?></option>
                                                 <?php endforeach; ?>
                                             </select>
@@ -796,7 +817,7 @@ include __DIR__ . '/../../includes/navbar.php';
                                             <label class="form-label">Tipo de documento</label>
                                             <select class="form-select" name="documentos[0][tipo_documento]">
                                                 <option value="" disabled <?= empty($_POST['documentos'][0]['tipo_documento']) ? 'selected' : '' ?>>Escolha...</option>
-                                                <?php foreach (['Manual de Utilizador','Manual de Serviço','Certificado de Calibração','Fatura ou Guia de Aquisição','Declaração de Conformidade','Relatório Técnico'] as $opt): ?>
+                                                <?php foreach (['Manual de Utilizador', 'Manual de Serviço', 'Certificado de Calibração', 'Fatura ou Guia de Aquisição', 'Declaração de Conformidade', 'Relatório Técnico'] as $opt): ?>
                                                     <option <?= (($_POST['documentos'][0]['tipo_documento'] ?? '') === $opt) ? 'selected' : '' ?>><?= $opt ?></option>
                                                 <?php endforeach; ?>
                                             </select>
@@ -820,7 +841,7 @@ include __DIR__ . '/../../includes/navbar.php';
                                             <label class="form-label">Estado</label>
                                             <select class="form-select" name="documentos[0][estado_documento]">
                                                 <option value="" disabled <?= empty($_POST['documentos'][0]['estado_documento']) ? 'selected' : '' ?>>Escolha...</option>
-                                                <?php foreach (['Ativo','Prestes a Expirar','Expirado','Pendente','Anulado','Estendido','Não disponível'] as $opt): ?>
+                                                <?php foreach (['Ativo', 'Prestes a Expirar', 'Expirado', 'Pendente', 'Anulado', 'Estendido', 'Não disponível'] as $opt): ?>
                                                     <option <?= (($_POST['documentos'][0]['estado_documento'] ?? '') === $opt) ? 'selected' : '' ?>><?= $opt ?></option>
                                                 <?php endforeach; ?>
                                             </select>
@@ -892,7 +913,7 @@ include __DIR__ . '/../../includes/navbar.php';
                                     <label for="estado_garantia" class="form-label">Estado da garantia</label>
                                     <select class="form-select" id="estado_garantia" name="estado_garantia">
                                         <option value="" disabled <?= empty($_POST['estado_garantia']) ? 'selected' : '' ?>>Escolha...</option>
-                                        <?php foreach (['Ativa','Prestes a Expirar','Expirada','Pendente','Anulada','Estendida','Não disponível'] as $opt): ?>
+                                        <?php foreach (['Ativa', 'Prestes a Expirar', 'Expirada', 'Pendente', 'Anulada', 'Estendida', 'Não disponível'] as $opt): ?>
                                             <option <?= (($_POST['estado_garantia'] ?? '') === $opt) ? 'selected' : '' ?>><?= $opt ?></option>
                                         <?php endforeach; ?>
                                     </select>
@@ -931,7 +952,7 @@ include __DIR__ . '/../../includes/navbar.php';
                                         manutenção?</label>
                                     <select class="form-select" id="existe_contrato" name="existe_contrato">
                                         <option value="" disabled <?= empty($_POST['existe_contrato']) ? 'selected' : '' ?>>Escolha...</option>
-                                        <?php foreach (['Sim','Não'] as $opt): ?>
+                                        <?php foreach (['Sim', 'Não'] as $opt): ?>
                                             <option <?= (($_POST['existe_contrato'] ?? '') === $opt) ? 'selected' : '' ?>><?= $opt ?></option>
                                         <?php endforeach; ?>
                                     </select>
@@ -946,7 +967,7 @@ include __DIR__ . '/../../includes/navbar.php';
                                     <label for="tipo_contrato" class="form-label">Tipo de contrato</label>
                                     <select class="form-select" id="tipo_contrato" name="tipo_contrato">
                                         <option value="" disabled <?= empty($_POST['tipo_contrato']) ? 'selected' : '' ?>>Escolha...</option>
-                                        <?php foreach (['Contrato de Manutenção','Manutenção Preventiva','Contrato de Assistência Técnica','Sem Contrato'] as $opt): ?>
+                                        <?php foreach (['Contrato de Manutenção', 'Manutenção Preventiva', 'Contrato de Assistência Técnica', 'Sem Contrato'] as $opt): ?>
                                             <option <?= (($_POST['tipo_contrato'] ?? '') === $opt) ? 'selected' : '' ?>><?= $opt ?></option>
                                         <?php endforeach; ?>
                                     </select>
@@ -968,7 +989,7 @@ include __DIR__ . '/../../includes/navbar.php';
                                     <label for="periodicidade" class="form-label">Periodicidade</label>
                                     <select class="form-select" id="periodicidade" name="periodicidade">
                                         <option value="" disabled <?= empty($_POST['periodicidade']) ? 'selected' : '' ?>>Escolha...</option>
-                                        <?php foreach (['Mensal','Trimestral','Semestral','Anual','Bianual'] as $opt): ?>
+                                        <?php foreach (['Mensal', 'Trimestral', 'Semestral', 'Anual', 'Bianual'] as $opt): ?>
                                             <option <?= (($_POST['periodicidade'] ?? '') === $opt) ? 'selected' : '' ?>><?= $opt ?></option>
                                         <?php endforeach; ?>
                                     </select>

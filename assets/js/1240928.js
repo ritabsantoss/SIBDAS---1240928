@@ -324,7 +324,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const botaoAdicionarDocumento = document.getElementById("adicionar-documento");
 
     if (botaoAdicionarDocumento) {
-        let contadorDocumentos = 1;
+        let contadorDocumentos = document.getElementById("documentos-container").querySelectorAll(".documento-bloco").length;
 
         botaoAdicionarDocumento.addEventListener("click", function () {
             const container = document.getElementById("documentos-container");
@@ -374,7 +374,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (botaoAdicionarComponente) {
 
-        let contadorComponentes = 0;
+        let contadorComponentes = document.getElementById("componentes-container").querySelectorAll(".componente-bloco").length;
 
         botaoAdicionarComponente.addEventListener("click", function () {
 
@@ -457,7 +457,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (botaoAdicionarFornecedor) {
 
-        let contadorFornecedores = 1;
+        let contadorFornecedores = document.getElementById("fornecedores-container").querySelectorAll(".fornecedor-bloco").length;
 
         botaoAdicionarFornecedor.addEventListener("click", function () {
 
@@ -491,6 +491,16 @@ document.addEventListener("DOMContentLoaded", function () {
             contadorFornecedores++;
         });
     }
+
+    // Remover blocos (delegado) — funciona para blocos vindos do servidor (editar) e dinâmicos
+    document.addEventListener("click", function (e) {
+        const alvoF = e.target.closest(".remover-fornecedor");
+        if (alvoF) { const b = alvoF.closest(".fornecedor-bloco"); if (b) b.remove(); return; }
+        const alvoD = e.target.closest(".remover-documento");
+        if (alvoD) { const b = alvoD.closest(".documento-bloco"); if (b) b.remove(); return; }
+        const alvoC = e.target.closest(".remover-componente");
+        if (alvoC) { const b = alvoC.closest(".componente-bloco"); if (b) b.remove(); return; }
+    });
 
     // Preencher dados ao escolher fornecedor / localização
     document.addEventListener("change", function (e) {

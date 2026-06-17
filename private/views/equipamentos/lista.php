@@ -345,7 +345,7 @@ include __DIR__ . '/../../includes/navbar.php';
                                         <td>
                                             <div class="d-flex justify-content-center gap-1 flex-nowrap">
                                                 <a href="detalhes.php?id=<?= $eq->idEquipamento ?>" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-circle-info"></i></a>
-                                                <a href="editar.php?id=<?= $eq->idEquipamento ?>" class="btn btn-sm btn-outline-warning"><i class="fa-regular fa-pen-to-square"></i></a>
+                                                <a href="editar.php?id_equipamento=<?= aes_encrypt($eq->idEquipamento) ?>" class="btn btn-sm btn-outline-warning"><i class="fa-regular fa-pen-to-square"></i></a>
                                                 <button class="btn btn-sm btn-outline-danger btn-gestao" data-bs-toggle="modal" data-bs-target="#modalArquivar" data-nome="<?= htmlspecialchars($eq->designacao) ?>"><i class="fa-solid fa-box-archive"></i></button>
                                             </div>
                                         </td>
