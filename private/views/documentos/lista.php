@@ -142,7 +142,7 @@ include __DIR__ . '/../../includes/navbar.php';
                                         <td><?= $doc->validade ? htmlspecialchars($doc->validade) : '—' ?></td>
                                         <td>
                                             <div class="d-flex justify-content-center gap-1 flex-nowrap">
-                                                <a href="detalhes.php?id=<?= $doc->idDocumento ?>" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-circle-info"></i></a>
+                                                <a href="detalhes.php?id_documento=<?= aes_encrypt($doc->idDocumento) ?>" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-circle-info"></i></a>
                                                 <button class="btn btn-sm btn-outline-danger btn-gestao" data-bs-toggle="modal" data-bs-target="#modalArquivar" data-nome="<?= htmlspecialchars($doc->nome_documento) ?>"><i class="fa-solid fa-box-archive"></i></button>
                                             </div>
                                         </td>

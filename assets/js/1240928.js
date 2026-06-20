@@ -575,4 +575,13 @@ document.addEventListener("DOMContentLoaded", function () {
         flatpickr(".flatpickr-date", { dateFormat: "Y-m-d", allowInput: true });
     }
 
+    // Navegação Seguinte/Anterior nos detalhes (sem validação)
+    document.querySelectorAll(".btn-tab-seguinte, .btn-tab-anterior").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+            const alvo = this.getAttribute("data-bs-target");
+            const tab = document.querySelector('#equipamentoTabs button[data-bs-target="' + alvo + '"]');
+            if (tab) new bootstrap.Tab(tab).show();
+        });
+    });
+
 });
