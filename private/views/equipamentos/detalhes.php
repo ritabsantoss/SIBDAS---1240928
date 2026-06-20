@@ -115,6 +115,13 @@ include __DIR__ . '/../../includes/navbar.php';
             <h2 class="mb-1">
                 <i class="fa-solid fa-circle-info me-2"></i>
                 Detalhes do Equipamento
+                <?php if ($equipamento) : ?>
+                    <?php if ($equipamento->ativo == 1) : ?>
+                        <span class="badge badge-sihem ms-2">Ativo</span>
+                    <?php else : ?>
+                        <span class="badge badge-sihem-pink ms-2">Inativo</span>
+                    <?php endif; ?>
+                <?php endif; ?>
             </h2>
             <p class="text-muted mb-0">Consulte as informações completas do equipamento selecionado.</p>
         </div>

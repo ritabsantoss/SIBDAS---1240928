@@ -46,89 +46,96 @@ include __DIR__ . '/../../includes/header.php';
 include __DIR__ . '/../../includes/navbar.php';
 ?>
 
-    <div class="private-container">
+<div class="private-container">
 
     <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
 
     <main class="private-main">
-        
 
-            <div class="mb-4">
-                <h2 class="mb-1">
-                    <i class="fa-solid fa-circle-info me-2"></i>
-                    Detalhes do Documento
-                </h2>
-                <p class="text-muted mb-0">Informação detalhada do documento selecionado.</p>
+
+        <div class="mb-4">
+            <h2 class="mb-1">
+                <i class="fa-solid fa-circle-info me-2"></i>
+                Detalhes do Documento
+                <?php if ($documento) : ?>
+                    <?php if ($documento->ativo == 1) : ?>
+                        <span class="badge badge-sihem ms-2">Ativo</span>
+                    <?php else : ?>
+                        <span class="badge badge-sihem-pink ms-2">Inativo</span>
+                    <?php endif; ?>
+                <?php endif; ?>
+            </h2>
+            <p class="text-muted mb-0">Informação detalhada do documento selecionado.</p>
+        </div>
+
+        <?php if (!empty($erro_sistema)) : ?>
+            <div class="alert alert-danger"><?= htmlspecialchars($erro_sistema) ?></div>
+        <?php endif; ?>
+
+        <!-- card rosinho: identificação -->
+        <div class="card-destaque">
+            <p class="detalhe-nome"><?= htmlspecialchars($documento->nome_documento ?? '—') ?></p>
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Código</label>
+                    <p class="form-control-plaintext"><?= htmlspecialchars($documento->codigo_documento ?? '—') ?></p>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Equipamento associado</label>
+                    <p class="form-control-plaintext"><?= htmlspecialchars($documento->equipamento ?? '—') ?></p>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Fornecedor associado</label>
+                    <p class="form-control-plaintext"><?= htmlspecialchars($documento->fornecedor ?? '—') ?></p>
+                </div>
             </div>
+        </div>
 
-            <?php if (!empty($erro_sistema)) : ?>
-                <div class="alert alert-danger"><?= htmlspecialchars($erro_sistema) ?></div>
-            <?php endif; ?>
-
-            <!-- card rosinho: identificação -->
-            <div class="card-destaque">
-                <p class="detalhe-nome"><?= htmlspecialchars($documento->nome_documento ?? '—') ?></p>
+        <!-- card branco: detalhes -->
+        <div class="card shadow-sm border-0 rounded-4 mb-3">
+            <div class="card-body p-4">
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Tipo de documento</label>
+                        <p class="form-control-plaintext"><?= htmlspecialchars($documento->tipo_documento ?? '—') ?></p>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Data do documento</label>
+                        <p class="form-control-plaintext"><?= $documento->data_documento ? date('d/m/Y', strtotime($documento->data_documento)) : '—' ?></p>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Data de validade</label>
+                        <p class="form-control-plaintext"><?= $documento->validade ? date('d/m/Y', strtotime($documento->validade)) : '—' ?></p>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <label class="form-label fw-bold">Código</label>
-                        <p class="form-control-plaintext"><?= htmlspecialchars($documento->codigo_documento ?? '—') ?></p>
+                        <label class="form-label fw-bold">Estado</label>
+                        <p class="form-control-plaintext"><?= htmlspecialchars($documento->estado_documento ?? '—') ?></p>
                     </div>
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold">Equipamento associado</label>
-                        <p class="form-control-plaintext"><?= htmlspecialchars($documento->equipamento ?? '—') ?></p>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold">Fornecedor associado</label>
-                        <p class="form-control-plaintext"><?= htmlspecialchars($documento->fornecedor ?? '—') ?></p>
-                    </div>
+                    <?php if (!empty($documento->ficheiro)) : ?>
+                        <div class="col-md-8">
+                            <label class="form-label fw-bold">Ficheiro:</label>
+                            <a href="<?= BASE_URL ?>/public/uploads/<?= rawurlencode($documento->ficheiro) ?>" target="_blank" rel="noopener" class="ms-1">
+                                <?= htmlspecialchars($documento->ficheiro) ?>
+                            </a>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
+        </div>
 
-            <!-- card branco: detalhes -->
-            <div class="card shadow-sm border-0 rounded-4 mb-3">
-                <div class="card-body p-4">
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label class="form-label fw-bold">Tipo de documento</label>
-                            <p class="form-control-plaintext"><?= htmlspecialchars($documento->tipo_documento ?? '—') ?></p>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label fw-bold">Data do documento</label>
-                            <p class="form-control-plaintext"><?= $documento->data_documento ? date('d/m/Y', strtotime($documento->data_documento)) : '—' ?></p>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label fw-bold">Data de validade</label>
-                            <p class="form-control-plaintext"><?= $documento->validade ? date('d/m/Y', strtotime($documento->validade)) : '—' ?></p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label class="form-label fw-bold">Estado</label>
-                            <p class="form-control-plaintext"><?= htmlspecialchars($documento->estado_documento ?? '—') ?></p>
-                        </div>
-                        <?php if (!empty($documento->ficheiro)) : ?>
-                            <div class="col-md-8">
-                                <label class="form-label fw-bold">Ficheiro:</label>
-                                <a href="<?= BASE_URL ?>/public/uploads/<?= rawurlencode($documento->ficheiro) ?>" target="_blank" rel="noopener" class="ms-1">
-                                    <?= htmlspecialchars($documento->ficheiro) ?>
-                                </a>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            </div>
+        <!-- card rosinho: observações -->
+        <div class="card-destaque">
+            <label class="form-label fw-bold">Observações</label>
+            <p class="form-control-plaintext"><?= htmlspecialchars($documento->observacoes ?? '—') ?></p>
+        </div>
 
-            <!-- card rosinho: observações -->
-            <div class="card-destaque">
-                <label class="form-label fw-bold">Observações</label>
-                <p class="form-control-plaintext"><?= htmlspecialchars($documento->observacoes ?? '—') ?></p>
-            </div>
-
-            <div class="d-flex justify-content-end gap-2">
-                <a href="lista.php" class="btn btn-outline-secondary">
-                    <i class="fa-solid fa-arrow-left me-1"></i>Voltar
-                </a>
-            </div>
+        <div class="d-flex justify-content-end gap-2">
+            <a href="lista.php" class="btn btn-outline-secondary">
+                <i class="fa-solid fa-arrow-left me-1"></i>Voltar
+            </a>
+        </div>
     </main>
 </div>
 
