@@ -16,6 +16,7 @@ $lista_categorias = [];
 $lista_localizacoes = [];
 $lista_fornecedores = [];
 $ficheiros_guardados = [];
+$mapa_doc_uploads = [];
 $proximo_gar_num  = 1;
 $proximo_con_num  = 1;
 $proximo_doc_num  = 1;
@@ -167,14 +168,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                          (:idEquipamento, :codigo_documento, :tipo_documento, :nome_documento,
                           :data_documento, :validade, :estado_documento, :ficheiro, :observacoes)";
                 $stmtD = $ligacao->prepare($sqlD);
-                foreach ($_POST['documentos'] as $doc) {
+                foreach ($_POST['documentos'] as $i => $doc) {
                     $cod = trim($doc['codigo_documento'] ?? '');
                     $tipo = $doc['tipo_documento'] ?? '';
                     $nomeDoc = trim($doc['nome_documento'] ?? '');
                     $dataDoc = trim($doc['data_documento'] ?? '');
                     $val = trim($doc['validade'] ?? '');
                     $estadoD = $doc['estado_documento'] ?? '';
-                    $ficheiroD = trim($doc['ficheiro'] ?? '');
+                    $ficheiroD_atual = trim($doc['ficheiro_atual'] ?? '');
+                    $ficheiroD_novo  = guarda_ficheiro_array(ficheiro_de_secao('documentos', $i, 'ficheiro'), 'documento');
+                    if ($ficheiroD_novo) $ficheiros_guardados[] = $ficheiroD_novo;
+                    $ficheiroD = $ficheiroD_novo ?: $ficheiroD_atual;
+                    $mapa_doc_uploads[$i] = ['antigo' => $ficheiroD_atual, 'novo' => $ficheiroD_novo]; // <-- adiciona esta linha
                     $obsD = trim($doc['observacoes_documentacao'] ?? '');
                     $temDocumento = ($tipo !== '' || $nomeDoc !== '' || $dataDoc !== '' || $val !== '' || $estadoD !== '' || $ficheiroD !== '' || $obsD !== '');
                     if (!$temDocumento || $cod === '') continue;
@@ -186,7 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         ':data_documento'   => $dataDoc ?: null,
                         ':validade'         => $val ?: null,
                         ':estado_documento' => ($estadoD && $estadoD !== 'Escolha...') ? $estadoD : null,
-                        ':ficheiro'         => $ficheiroD ?: null,
+                        ':ficheiro' => $ficheiroD ?: null,
                         ':observacoes'      => $obsD ?: null
                     ]);
                 }
@@ -259,6 +264,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($old_fich_gar && $old_fich_gar !== $fich_gar_final && is_file(PASTA_UPLOADS . $old_fich_gar)) unlink(PASTA_UPLOADS . $old_fich_gar);
             $fich_con_final = ($existe_contrato === 'Sim' && $codigo_contrato !== '') ? $ficheiro_contrato : null;
             if ($old_fich_con && $old_fich_con !== $fich_con_final && is_file(PASTA_UPLOADS . $old_fich_con)) unlink(PASTA_UPLOADS . $old_fich_con);
+            // apagar ficheiros de documentos substituídos por upload novo
+            foreach ($mapa_doc_uploads as $entrada) {
+                $antigo = $entrada['antigo'];
+                $novo   = $entrada['novo'];
+                if ($novo && $antigo && $antigo !== $novo && is_file(PASTA_UPLOADS . $antigo)) {
+                    unlink(PASTA_UPLOADS . $antigo);
+                }
+            }
 
             header('Location: ' . BASE_URL . '/private/views/equipamentos/lista.php');
             exit;
@@ -266,10 +279,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($ligacao) && $ligacao->inTransaction()) {
                 $ligacao->rollBack();
             }
-           foreach ($ficheiros_guardados as $fnome) {
+            foreach ($ficheiros_guardados as $fnome) {
                 if (is_file(PASTA_UPLOADS . $fnome)) {
                     unlink(PASTA_UPLOADS . $fnome);
-                }    
+                }
             }
             $erro_sistema = erro_bd_equipamento($err, 'atualizar');
 
@@ -499,7 +512,8 @@ include __DIR__ . '/../../includes/navbar.php';
                             <p class="text-muted">Opcional. Adicione apenas se o equipamento tiver componentes associados.</p>
 
                             <div id="componentes-container" data-proximo="<?= $proximo_comp_num ?>">
-                                <?php $ci = 0; foreach ($comp_dados as $cd) : ?>
+                                <?php $ci = 0;
+                                foreach ($comp_dados as $cd) : ?>
                                     <div class="componente-bloco border rounded-4 p-3 mb-3">
                                         <div class="row align-items-end">
                                             <div class="col-md-3">
@@ -524,7 +538,8 @@ include __DIR__ . '/../../includes/navbar.php';
                                             </div>
                                         </div>
                                     </div>
-                                <?php $ci++; endforeach; ?>
+                                <?php $ci++;
+                                endforeach; ?>
                             </div>
 
                             <button type="button" class="btn btn-outline-secondary" id="adicionar-componente"><i class="fa-solid fa-plus me-1"></i>Adicionar componente</button>
@@ -601,7 +616,8 @@ include __DIR__ . '/../../includes/navbar.php';
                             <p class="text-muted">Associe pelo menos um fornecedor e indique obrigatoriamente o tipo de relação.</p>
 
                             <div id="fornecedores-container">
-                                <?php $fi = 0; foreach ($forn_dados as $fd) :
+                                <?php $fi = 0;
+                                foreach ($forn_dados as $fd) :
                                     $fid = $fd['id_fornecedor'] ?? '';
                                     $ftipo = $fd['tipo_relacao'] ?? '';
                                     $finfo = $forn_lookup[$fid] ?? null;
@@ -643,7 +659,8 @@ include __DIR__ . '/../../includes/navbar.php';
                                             </div>
                                         </div>
                                     </div>
-                                <?php $fi++; endforeach; ?>
+                                <?php $fi++;
+                                endforeach; ?>
                             </div>
 
                             <button type="button" class="btn btn-outline-secondary" id="adicionar-fornecedor"><i class="fa-solid fa-plus me-1"></i>Adicionar fornecedor</button>
@@ -692,7 +709,8 @@ include __DIR__ . '/../../includes/navbar.php';
                             <p class="text-muted">Opcional. Adicione documentos apenas se existirem.</p>
 
                             <div id="documentos-container" data-proximo="<?= $proximo_doc_num ?>">
-                                <?php $di = 0; foreach ($doc_dados as $dd) : ?>
+                                <?php $di = 0;
+                                foreach ($doc_dados as $dd) : ?>
                                     <div class="documento-bloco border rounded-4 p-3 mb-3">
                                         <div class="d-flex justify-content-between align-items-center mb-3">
                                             <h6 class="mb-0">Documento <?= $di + 1 ?></h6>
@@ -726,8 +744,22 @@ include __DIR__ . '/../../includes/navbar.php';
                                         </div>
                                         <div class="row mb-3">
                                             <div class="col-md-12">
-                                                <label class="form-label">Ficheiro (nome ou caminho)</label>
-                                                <input type="text" class="form-control" name="documentos[<?= $di ?>][ficheiro]" value="<?= htmlspecialchars($dd['ficheiro'] ?? '') ?>" placeholder="Ex.: manual_ventilador.pdf">
+                                                <label class="form-label">Ficheiro</label>
+                                                <input type="file" class="form-control"
+                                                    name="documentos[<?= $di ?>][ficheiro]"
+                                                    accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
+                                                <?php if (!empty($dd['ficheiro'])) : ?>
+                                                    <div class="form-text">
+                                                        Ficheiro atual:
+                                                        <a href="<?= BASE_URL ?>/public/uploads/<?= rawurlencode($dd['ficheiro']) ?>"
+                                                            target="_blank">
+                                                            <?= htmlspecialchars($dd['ficheiro']) ?>
+                                                        </a>
+                                                    </div>
+                                                <?php endif; ?>
+                                                <input type="hidden"
+                                                    name="documentos[<?= $di ?>][ficheiro_atual]"
+                                                    value="<?= htmlspecialchars($dd['ficheiro'] ?? '') ?>">
                                             </div>
                                         </div>
                                         <div class="mb-2">
@@ -735,7 +767,8 @@ include __DIR__ . '/../../includes/navbar.php';
                                             <textarea class="form-control" name="documentos[<?= $di ?>][observacoes_documentacao]" rows="3"><?= htmlspecialchars($dd['observacoes_documentacao'] ?? '') ?></textarea>
                                         </div>
                                     </div>
-                                <?php $di++; endforeach; ?>
+                                <?php $di++;
+                                endforeach; ?>
                             </div>
 
                             <button type="button" class="btn btn-outline-secondary" id="adicionar-documento"><i class="fa-solid fa-plus me-1"></i>Adicionar documento</button>
@@ -780,7 +813,13 @@ include __DIR__ . '/../../includes/navbar.php';
                                     <label for="ficheiro_garantia" class="form-label">Documento da garantia</label>
                                     <input type="file" class="form-control" id="ficheiro_garantia" name="ficheiro_garantia" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
                                     <?php if (!empty($garantia?->ficheiro_garantia)) : ?>
-                                        <div class="form-text">Ficheiro atual: <?= htmlspecialchars($garantia->ficheiro_garantia) ?> (carregue um novo só para substituir)</div>
+                                        <div class="form-text">
+                                            Ficheiro atual:
+                                            <a href="<?= BASE_URL ?>/public/uploads/<?= rawurlencode($garantia->ficheiro_garantia) ?>"
+                                                target="_blank" rel="noopener">
+                                                <?= htmlspecialchars($garantia->ficheiro_garantia) ?>
+                                            </a>
+                                        </div>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -844,7 +883,13 @@ include __DIR__ . '/../../includes/navbar.php';
                                     <label for="ficheiro_contrato" class="form-label">Ficheiro do contrato</label>
                                     <input type="file" class="form-control" id="ficheiro_contrato" name="ficheiro_contrato" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
                                     <?php if (!empty($contrato?->ficheiro_contrato)) : ?>
-                                        <div class="form-text">Ficheiro atual: <?= htmlspecialchars($contrato->ficheiro_contrato) ?> (carregue um novo só para substituir)</div>
+                                        <div class="form-text">
+                                            Ficheiro atual:
+                                            <a href="<?= BASE_URL ?>/public/uploads/<?= rawurlencode($contrato->ficheiro_contrato) ?>"
+                                                target="_blank" rel="noopener">
+                                                <?= htmlspecialchars($contrato->ficheiro_contrato) ?>
+                                            </a>
+                                        </div>
                                     <?php endif; ?>
                                 </div>
                             </div>

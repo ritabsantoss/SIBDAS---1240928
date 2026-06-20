@@ -118,9 +118,8 @@ function validar_equipamento(array $d): array
             $dataDoc = trim($doc['data_documento'] ?? '');
             $val     = trim($doc['validade'] ?? '');
             $estadoD = $doc['estado_documento'] ?? '';
-            $ficheiroD = trim($doc['ficheiro'] ?? '');
             $obsD    = trim($doc['observacoes_documentacao'] ?? '');
-            $temDoc = ($tipo !== '' || $nomeDoc !== '' || $dataDoc !== '' || $val !== '' || $estadoD !== '' || $ficheiroD !== '' || $obsD !== '');
+            $temDoc = ($tipo !== '' || $nomeDoc !== '' || $dataDoc !== '' || $val !== '' || $estadoD !== '' || $obsD !== '');
             if (!$temDoc) continue;
             if ($cod === '') $erros[] = "Documento $n: o código é obrigatório.";
             if ($tipo === '' || $tipo === 'Escolha...') $erros[] = "Documento $n: o tipo é obrigatório.";

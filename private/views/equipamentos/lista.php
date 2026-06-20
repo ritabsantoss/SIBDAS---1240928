@@ -329,7 +329,7 @@ include __DIR__ . '/../../includes/navbar.php';
                                     <tr>
                                         <td><?= htmlspecialchars($eq->codigo_interno) ?></td>
                                         <td><?= htmlspecialchars($eq->designacao) ?></td>
-                                        <td><?= htmlspecialchars($eq->marca) ?></td>
+                                        <td><?= htmlspecialchars($eq->marca ?? '') ?></td>
                                         <td><?= htmlspecialchars($eq->categoria) ?></td>
                                         <td><?= htmlspecialchars($eq->servico) ?><?= $eq->sala ? ' — ' . htmlspecialchars($eq->sala) : '' ?></td>
                                         <td>

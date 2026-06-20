@@ -143,10 +143,10 @@ include __DIR__ . '/../../includes/navbar.php';
                             <tbody>
                                 <?php foreach ($resultados as $loc) : ?>
                                     <tr>
-                                        <td><?= htmlspecialchars($loc->edificio) ?></td>
-                                        <td><?= htmlspecialchars($loc->piso) ?></td>
+                                        <td><?= htmlspecialchars($loc->edificio ?? '') ?></td>
+                                        <td><?= htmlspecialchars($loc->piso ?? '') ?></td>
                                         <td><?= htmlspecialchars($loc->servico) ?></td>
-                                        <td><?= htmlspecialchars($loc->sala) ?></td>
+                                        <td><?= htmlspecialchars($loc->sala ?? '') ?></td>
                                         <td>
                                             <div class="d-flex justify-content-center gap-1 flex-nowrap">
                                                 <a href="detalhes.php?id=<?= $loc->idLocalizacao ?>" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-circle-info"></i></a>

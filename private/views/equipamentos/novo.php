@@ -324,15 +324,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                          (:idEquipamento, :codigo_documento, :tipo_documento, :nome_documento,
                           :data_documento, :validade, :estado_documento, :ficheiro, :observacoes)";
                 $stmtD = $ligacao->prepare($sqlD);
-                foreach ($_POST['documentos'] as $doc) {
-                    $cod = trim($doc['codigo_documento'] ?? '');
-                    $tipo = $doc['tipo_documento'] ?? '';
+                foreach ($_POST['documentos'] as $i => $doc) {
+                    $cod     = trim($doc['codigo_documento'] ?? '');
+                    $tipo    = $doc['tipo_documento'] ?? '';
                     $nomeDoc = trim($doc['nome_documento'] ?? '');
                     $dataDoc = trim($doc['data_documento'] ?? '');
-                    $val = trim($doc['validade'] ?? '');
+                    $val     = trim($doc['validade'] ?? '');
                     $estadoD = $doc['estado_documento'] ?? '';
-                    $ficheiroD = trim($doc['ficheiro'] ?? '');
-                    $obsD = trim($doc['observacoes_documentacao'] ?? '');
+                    $obsD    = trim($doc['observacoes_documentacao'] ?? '');
 
                     $temDocumento = (
                         $tipo !== '' ||
@@ -340,22 +339,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         $dataDoc !== '' ||
                         $val !== '' ||
                         $estadoD !== '' ||
-                        $ficheiroD !== '' ||
                         $obsD !== ''
                     );
 
                     if (!$temDocumento || $cod === '') continue;
-                    $tipo = $doc['tipo_documento'] ?? '';
+
+                    // só faz o upload se o documento vai mesmo ser inserido
+                    $ficheiroD = guarda_ficheiro_array(ficheiro_de_secao('documentos', $i, 'ficheiro'), 'documento');
+                    if ($ficheiroD) $ficheiros_guardados[] = $ficheiroD;
+
                     $stmtD->execute([
                         ':idEquipamento'    => $idEquipamento,
                         ':codigo_documento' => $cod,
                         ':tipo_documento'   => ($tipo && $tipo !== 'Escolha...') ? $tipo : null,
-                        ':nome_documento'   => trim($doc['nome_documento'] ?? '') ?: null,
-                        ':data_documento'   => trim($doc['data_documento'] ?? '') ?: null,
-                        ':validade'         => trim($doc['validade'] ?? '') ?: null,
-                        ':estado_documento' => (!empty($doc['estado_documento']) && $doc['estado_documento'] !== 'Escolha...') ? $doc['estado_documento'] : null,
-                        ':ficheiro'         => trim($doc['ficheiro'] ?? '') ?: null,
-                        ':observacoes'      => trim($doc['observacoes_documentacao'] ?? '') ?: null
+                        ':nome_documento'   => $nomeDoc ?: null,
+                        ':data_documento'   => $dataDoc ?: null,
+                        ':validade'         => $val ?: null,
+                        ':estado_documento' => ($estadoD && $estadoD !== 'Escolha...') ? $estadoD : null,
+                        ':ficheiro'         => $ficheiroD ?: null,
+                        ':observacoes'      => $obsD ?: null
                     ]);
                 }
             }
@@ -394,7 +396,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
             $erro_sistema = erro_bd_equipamento($err, 'guardar');
 
-/*
+            /*
             $msg = $err->getMessage();
 
             if ($err instanceof PDOException && strpos($msg, '23000') !== false) {
@@ -850,10 +852,9 @@ include __DIR__ . '/../../includes/navbar.php';
 
                                     <div class="row mb-3">
                                         <div class="col-md-12">
-                                            <label class="form-label">Ficheiro (nome ou caminho)</label>
-                                            <input type="text" class="form-control" name="documentos[0][ficheiro]"
-                                                value="<?= htmlspecialchars($_POST['documentos'][0]['ficheiro'] ?? '') ?>"
-                                                placeholder="Ex.: manual_ventilador.pdf">
+                                            <label class="form-label">Ficheiro</label>
+                                            <input type="file" class="form-control" name="documentos[0][ficheiro]"
+                                                accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
                                         </div>
                                     </div>
 
