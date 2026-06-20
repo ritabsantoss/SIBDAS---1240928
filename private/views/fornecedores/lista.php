@@ -136,7 +136,7 @@ include __DIR__ . '/../../includes/navbar.php';
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#modalEliminar"
                                                         data-nome="<?= htmlspecialchars($f->nome_empresa) ?>"
-                                                        data-id="<?= aes_encrypt($f->idFornecedor) ?>">
+                                                        data-href="confirmar_apagar.php?id_fornecedor=<?= aes_encrypt($f->idFornecedor) ?>">
                                                         <i class="fa-solid fa-trash-can"></i>
                                                     </button>
                                                 <?php else : ?>

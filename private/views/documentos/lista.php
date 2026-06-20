@@ -9,11 +9,11 @@ try {
 
     $resultados = $ligacao->query(
         "SELECT d.idDocumento, d.codigo_documento, d.nome_documento, d.tipo_documento,
-                d.validade, e.designacao AS equipamento, f.nome_empresa AS fornecedor
-         FROM Documentos d
-         JOIN Equipamentos e      ON d.idEquipamento = e.idEquipamento
-         LEFT JOIN Fornecedores f ON d.idFornecedor  = f.idFornecedor
-         ORDER BY d.codigo_documento"
+        d.validade, d.ativo, e.designacao AS equipamento, f.nome_empresa AS fornecedor
+        FROM Documentos d
+        JOIN Equipamentos e      ON d.idEquipamento = e.idEquipamento
+        LEFT JOIN Fornecedores f ON d.idFornecedor  = f.idFornecedor
+        ORDER BY d.ativo DESC, d.codigo_documento"
     )->fetchAll(PDO::FETCH_OBJ);
 
     $erro = '';
@@ -133,7 +133,7 @@ include __DIR__ . '/../../includes/navbar.php';
 
                             <tbody>
                                 <?php foreach ($resultados as $doc) : ?>
-                                    <tr>
+                                    <tr <?= $doc->ativo == 0 ? 'class="linha-inativa"' : '' ?>>
                                         <td><?= htmlspecialchars($doc->codigo_documento) ?></td>
                                         <td><?= htmlspecialchars($doc->nome_documento) ?></td>
                                         <td><?= htmlspecialchars($doc->tipo_documento) ?></td>
@@ -142,8 +142,22 @@ include __DIR__ . '/../../includes/navbar.php';
                                         <td><?= $doc->validade ? htmlspecialchars($doc->validade) : '—' ?></td>
                                         <td>
                                             <div class="d-flex justify-content-center gap-1 flex-nowrap">
-                                                <a href="detalhes.php?id_documento=<?= aes_encrypt($doc->idDocumento) ?>" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-circle-info"></i></a>
-                                                <button class="btn btn-sm btn-outline-danger btn-gestao" data-bs-toggle="modal" data-bs-target="#modalArquivar" data-nome="<?= htmlspecialchars($doc->nome_documento) ?>"><i class="fa-solid fa-box-archive"></i></button>
+                                                <a href="detalhes.php?id_documento=<?= aes_encrypt($doc->idDocumento) ?>" class="btn btn-sm btn-outline-primary">
+                                                    <i class="fa-solid fa-circle-info"></i>
+                                                </a>
+                                                <?php if ($doc->ativo == 1) : ?>
+                                                    <button class="btn btn-sm btn-outline-danger btn-gestao"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modalEliminar"
+                                                        data-nome="<?= htmlspecialchars($doc->nome_documento) ?>"
+                                                        data-href="confirmar_apagar.php?id_documento=<?= aes_encrypt($doc->idDocumento) ?>">
+                                                        <i class="fa-solid fa-trash-can"></i>
+                                                    </button>
+                                                <?php else : ?>
+                                                    <a href="reativar.php?id_documento=<?= aes_encrypt($doc->idDocumento) ?>" class="btn btn-sm btn-outline-success">
+                                                        <i class="fa-solid fa-rotate-left me-1"></i>Reativar
+                                                    </a>
+                                                <?php endif; ?>
                                             </div>
                                         </td>
                                     </tr>
@@ -160,51 +174,32 @@ include __DIR__ . '/../../includes/navbar.php';
             </div>
         </div>
 
-        <div class="modal fade" id="modalArquivar" tabindex="-1">
 
+        <div class="modal fade" id="modalEliminar" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
-
                 <div class="modal-content border-0 rounded-4">
-
                     <div class="modal-body text-center p-5">
 
-                        <div class="text-warning mb-4">
+                        <i class="fa-solid fa-triangle-exclamation fa-3x mb-3"
+                            style="color: var(--rosa-principal);"></i>
 
-                            <i class="fa-solid fa-triangle-exclamation fa-4x"></i>
-
-                        </div>
-
-                        <h4 class="mb-3">Gestão do Documento</h4>
-
-                        <p class="text-muted mb-2">
-                            Documento selecionado:
-                        </p>
-
-                        <h5 id="itemSelecionado" class="mb-4 text-primary">
-                            —
+                        <h5 class="mb-2" style="color: var(--azul-principal);">
+                            Desativar documento?
                         </h5>
 
-                        <p class="text-muted mb-4">
-                            Pretende arquivar ou eliminar este documento?
-                        </p>
+                        <p class="text-muted mb-1">Documento selecionado:</p>
+                        <p id="itemSelecionado" class="fw-bold mb-4"
+                            style="color: var(--azul-principal);">—</p>
 
-                        <div class="d-flex justify-content-center gap-3 flex-wrap">
-
-                            <button class="btn btn-warning px-4">
-                                <i class="fa-solid fa-box-archive me-2"></i>
-                                Arquivar
-                            </button>
-
-                            <button class="btn btn-danger px-4">
-                                <i class="fa-solid fa-trash-can me-2"></i>
-                                Eliminar
-                            </button>
-
+                        <div class="d-flex justify-content-center gap-3">
                             <button class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
-                                Cancelar
+                                <i class="fa-solid fa-xmark me-1"></i>Cancelar
                             </button>
-
+                            <a id="linkConfirmar" href="#" class="btn btn-danger px-4">
+                                <i class="fa-solid fa-trash-can me-1"></i>Eliminar
+                            </a>
                         </div>
+
                     </div>
                 </div>
             </div>

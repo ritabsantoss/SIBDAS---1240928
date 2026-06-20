@@ -175,10 +175,10 @@ document.addEventListener("DOMContentLoaded", function () {
         botoesGestao.forEach(botao => {
             botao.addEventListener("click", function () {
                 const nome = this.getAttribute("data-nome");
-                const id = this.getAttribute("data-id");
+                const href = this.getAttribute("data-href");
                 if (itemSelecionado) itemSelecionado.textContent = nome;
                 const link = document.getElementById("linkConfirmar");
-                if (link && id) link.href = "confirmar_apagar.php?id_fornecedor=" + id;
+                if (link && href) link.href = href;
             });
         });
     }
