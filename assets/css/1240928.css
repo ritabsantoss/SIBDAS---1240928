@@ -795,3 +795,31 @@ body {
     font-weight: 600;
     margin-bottom: 1rem;
 }
+
+/* Desativar — página de confirmação */
+.apagar-card {
+    max-width: 480px;
+    margin: 60px auto;
+    background: white;
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.10);
+    text-align: center;
+}
+
+.apagar-icone {
+    font-size: 48px;
+    color: var(--rosa-principal);
+    margin-bottom: 1rem;
+}
+
+/* Badge inativo na lista */
+.badge-inativo {
+    background-color: #6c757d;
+    color: white;
+}
+
+.linha-inativa {
+    opacity: 0.45;
+    filter: grayscale(100%);
+}

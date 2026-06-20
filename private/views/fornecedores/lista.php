@@ -8,9 +8,9 @@ try {
     $ligacao = liga_bd();
 
     $resultados = $ligacao->query(
-        "SELECT idFornecedor, nome_empresa, nif, telefone, email
-         FROM Fornecedores
-         ORDER BY nome_empresa"
+        "SELECT idFornecedor, nome_empresa, nif, telefone, email, ativo
+            FROM Fornecedores
+            ORDER BY ativo DESC, nome_empresa"
     )->fetchAll(PDO::FETCH_OBJ);
 
     $erro = '';
@@ -118,16 +118,32 @@ include __DIR__ . '/../../includes/navbar.php';
 
                             <tbody>
                                 <?php foreach ($resultados as $f) : ?>
-                                    <tr>
+                                    <tr <?= $f->ativo == 0 ? 'class="linha-inativa"' : '' ?>>
                                         <td><?= htmlspecialchars($f->nome_empresa) ?></td>
                                         <td><?= htmlspecialchars($f->telefone) ?></td>
                                         <td><?= htmlspecialchars($f->email) ?></td>
                                         <td><?= htmlspecialchars($f->nif) ?></td>
                                         <td>
                                             <div class="d-flex justify-content-center gap-1 flex-nowrap">
-                                                <a href="detalhes.php?id_fornecedor=<?= aes_encrypt($f->idFornecedor) ?>" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-circle-info"></i></a>
-                                                <a href="editar.php?id_fornecedor=<?= aes_encrypt($f->idFornecedor) ?>" class="btn btn-sm btn-outline-warning"><i class="fa-regular fa-pen-to-square"></i></a>
-                                                <button class="btn btn-sm btn-outline-danger btn-gestao" data-bs-toggle="modal" data-bs-target="#modalArquivar" data-nome="<?= htmlspecialchars($f->nome_empresa) ?>"><i class="fa-solid fa-box-archive"></i></button>
+                                                <a href="detalhes.php?id_fornecedor=<?= aes_encrypt($f->idFornecedor) ?>" class="btn btn-sm btn-outline-primary">
+                                                    <i class="fa-solid fa-circle-info"></i>
+                                                </a>
+                                                <?php if ($f->ativo == 1) : ?>
+                                                    <a href="editar.php?id_fornecedor=<?= aes_encrypt($f->idFornecedor) ?>" class="btn btn-sm btn-outline-warning">
+                                                        <i class="fa-regular fa-pen-to-square"></i>
+                                                    </a>
+                                                    <button class="btn btn-sm btn-outline-danger btn-gestao"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modalEliminar"
+                                                        data-nome="<?= htmlspecialchars($f->nome_empresa) ?>"
+                                                        data-id="<?= aes_encrypt($f->idFornecedor) ?>">
+                                                        <i class="fa-solid fa-trash-can"></i>
+                                                    </button>
+                                                <?php else : ?>
+                                                    <a href="reativar.php?id_fornecedor=<?= aes_encrypt($f->idFornecedor) ?>" class="btn btn-sm btn-outline-success">
+                                                        <i class="fa-solid fa-rotate-left me-1"></i>Reativar
+                                                    </a>
+                                                <?php endif; ?>
                                             </div>
                                         </td>
                                     </tr>
@@ -144,51 +160,27 @@ include __DIR__ . '/../../includes/navbar.php';
             </div>
         </div>
 
-        <div class="modal fade" id="modalArquivar" tabindex="-1">
-
+        <div class="modal fade" id="modalEliminar" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
-
                 <div class="modal-content border-0 rounded-4">
-
                     <div class="modal-body text-center p-5">
 
-                        <div class="text-warning mb-4">
+                        <i class="fa-solid fa-triangle-exclamation fa-3x mb-3" style="color: var(--rosa-principal);"></i>
 
-                            <i class="fa-solid fa-triangle-exclamation fa-4x"></i>
+                        <h5 class="mb-2" style="color: var(--azul-principal);">Desativar fornecedor?</h5>
 
-                        </div>
+                        <p class="text-muted mb-1">Fornecedor selecionado:</p>
+                        <p id="itemSelecionado" class="fw-bold mb-4" style="color: var(--azul-principal);">—</p>
 
-                        <h4 class="mb-3">Gestão do Fornecedor</h4>
-
-                        <p class="text-muted mb-2">
-                            Fornecedor selecionado:
-                        </p>
-
-                        <h5 id="itemSelecionado" class="mb-4 text-primary">
-                            —
-                        </h5>
-
-                        <p class="text-muted mb-4">
-                            Pretende arquivar ou eliminar este fornecedor?
-                        </p>
-
-                        <div class="d-flex justify-content-center gap-3 flex-wrap">
-
-                            <button class="btn btn-warning px-4">
-                                <i class="fa-solid fa-box-archive me-2"></i>
-                                Arquivar
-                            </button>
-
-                            <button class="btn btn-danger px-4">
-                                <i class="fa-solid fa-trash-can me-2"></i>
-                                Eliminar
-                            </button>
-
+                        <div class="d-flex justify-content-center gap-3">
                             <button class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
-                                Cancelar
+                                <i class="fa-solid fa-xmark me-1"></i>Cancelar
                             </button>
-
+                            <a id="linkConfirmar" href="#" class="btn btn-danger px-4">
+                                <i class="fa-solid fa-trash-can me-1"></i>Eliminar
+                            </a>
                         </div>
+
                     </div>
                 </div>
             </div>
