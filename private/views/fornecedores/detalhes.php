@@ -62,135 +62,80 @@ include __DIR__ . '/../../includes/navbar.php';
 
     <!--Conteúdo-->
     <main class="private-main">
+       
 
-        <div class="mb-4">
-            <h2 class="mb-1">
-                <i class="fa-solid fa-circle-info me-2"></i>
-                Detalhes do Fornecedor
-            </h2>
-            <p class="text-muted mb-0">
-                Informação detalhada do fornecedor selecionado.
-            </p>
-        </div>
+            <div class="mb-4">
+                <h2 class="mb-1">
+                    <i class="fa-solid fa-circle-info me-2"></i>
+                    Detalhes do Fornecedor
+                </h2>
+                <p class="text-muted mb-0">
+                    Informação detalhada do fornecedor selecionado.
+                </p>
+            </div>
 
-        <div class="card shadow-sm border-0 rounded-4">
-            <div class="card-body p-4">
-
+            <div class="card-destaque">
+                <p class="detalhe-nome"><?= htmlspecialchars($fornecedor->nome_empresa ?? '') ?></p>
                 <div class="row mb-3">
-
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold">
-                            Nome da empresa
-                        </label>
-                        <p class="form-control-plaintext">
-                            <?= htmlspecialchars($fornecedor->nome_empresa ?? '') ?>
-                        </p>
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">NIF</label>
+                        <p class="form-control-plaintext"><?= htmlspecialchars($fornecedor->nif ?? '—') ?></p>
                     </div>
-
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold">
-                            NIF
-                        </label>
-                        <p class="form-control-plaintext">
-                            <?= htmlspecialchars($fornecedor->nif ?? '') ?>
-                        </p>
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">Contacto telefónico</label>
+                        <p class="form-control-plaintext"><?= htmlspecialchars($fornecedor->telefone ?? '—') ?></p>
                     </div>
-
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">Email</label>
+                        <p class="form-control-plaintext"><?= htmlspecialchars($fornecedor->email ?? '—') ?></p>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">Website</label>
+                        <p class="form-control-plaintext"><?= htmlspecialchars($fornecedor->website ?? '—') ?></p>
+                    </div>
                 </div>
+            </div>
 
-                <hr>
 
-                <div class="row mb-3">
-
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold">
-                            Contacto telefónico
-                        </label>
-                        <p class="form-control-plaintext">
-                            <?= htmlspecialchars($fornecedor->telefone ?? '') ?>
-                        </p>
+            <div class="card shadow-sm border-0 rounded-4 mb-3">
+                <div class="card-body p-4">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Morada</label>
+                            <p class="form-control-plaintext"><?= htmlspecialchars($fornecedor->morada ?? '—') ?></p>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label fw-bold">Pessoa de contacto</label>
+                            <p class="form-control-plaintext"><?= htmlspecialchars($fornecedor->pessoa_contacto ?? '—') ?></p>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label fw-bold">Telefone de contacto</label>
+                            <p class="form-control-plaintext"><?= htmlspecialchars($fornecedor->telefone_contacto ?? '—') ?></p>
+                        </div>
                     </div>
-
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold">
-                            Email
-                        </label>
-                        <p class="form-control-plaintext">
-                            <?= htmlspecialchars($fornecedor->email ?? '') ?>
-                        </p>
-                    </div>
-
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold">
-                            Website
-                        </label>
-                        <p class="form-control-plaintext">
-                            <?= htmlspecialchars($fornecedor->website ?? '') ?>
-                        </p>
-                    </div>
-
                 </div>
+            </div>
 
-                <div class="mb-3">
 
-                    <label class="form-label fw-bold">
-                        Morada
-                    </label>
-                    <p class="form-control-plaintext">
-                        <?= htmlspecialchars($fornecedor->morada ?? '') ?>
+            <div class="card shadow-sm border-0 rounded-4 mb-3">
+                <div class="card-body p-4">
+                    <p class="detalhe-secao-titulo">
+                        <i class="fa-solid fa-stethoscope me-2"></i>Equipamentos associados
                     </p>
-
-                </div>
-
-                <hr>
-
-                <div class="row mb-3">
-
-                    <div class="col-md-6">
-                        <label class="form-label fw-bold">
-                            Pessoa de contacto
-                        </label>
-                        <p class="form-control-plaintext">
-                            <?= htmlspecialchars($fornecedor->pessoa_contacto ?? '') ?>
-                        </p>
-
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label fw-bold">
-                            Telefone da pessoa de contacto
-                        </label>
-                        <p class="form-control-plaintext">
-                            <?= htmlspecialchars($fornecedor->telefone_contacto ?? '') ?>
-                        </p>
-                    </div>
-
-                </div>
-
-                <hr>
-
-                <h5 class="mb-3">
-                    <i class="fa-solid fa-stethoscope me-2"></i>
-                    Equipamentos associados
-                </h5>
-
-                <div class="table-responsive mb-4">
                     <table class="table table-hover align-middle">
                         <thead>
                             <tr>
                                 <th>Código</th>
                                 <th>Designação</th>
-                                <th>Categoria</th>
                                 <th>Estado</th>
                                 <th>Criticidade</th>
-                                <th class="text-end">Ações</th>
+                                <th></th>
                             </tr>
                         </thead>
-
                         <tbody>
                             <?php if (empty($equipamentos_associados)) : ?>
                                 <tr>
-                                    <td colspan="6" class="text-center text-muted">
+                                    <td colspan="5" class="text-center text-muted">
                                         Nenhum equipamento associado a este fornecedor.
                                     </td>
                                 </tr>
@@ -199,12 +144,7 @@ include __DIR__ . '/../../includes/navbar.php';
                                     <tr>
                                         <td><?= htmlspecialchars($eq->codigo_interno) ?></td>
                                         <td><?= htmlspecialchars($eq->designacao) ?></td>
-                                        <td><?= htmlspecialchars($eq->categoria ?? '') ?></td>
-                                        <td>
-                                            <span class="badge badge-sihem">
-                                                <?= htmlspecialchars($eq->estado_atual) ?>
-                                            </span>
-                                        </td>
+                                        <td><span class="badge badge-sihem"><?= htmlspecialchars($eq->estado_atual) ?></span></td>
                                         <td><?= htmlspecialchars($eq->criticidade) ?></td>
                                         <td class="text-end">
                                             <a href="../equipamentos/detalhes.php?id_equipamento=<?= aes_encrypt($eq->idEquipamento) ?>"
@@ -218,35 +158,23 @@ include __DIR__ . '/../../includes/navbar.php';
                         </tbody>
                     </table>
                 </div>
-
-                <hr>
-
-                <div class="mb-4">
-                    <label class="form-label fw-bold">
-                        Observações
-                    </label>
-                    <p class="form-control-plaintext">
-                        <?= htmlspecialchars($fornecedor->observacoes ?? '') ?>
-                    </p>
-                </div>
-
-                <div class="d-flex justify-content-end gap-2">
-
-                    <a href="lista.php" class="btn btn-outline-secondary">
-                        <i class="fa-solid fa-arrow-left me-1"></i>
-                        Voltar
-                    </a>
-
-                    <a href="editar.php?id_fornecedor=<?= htmlspecialchars($idEncriptado) ?>" class="btn btn-pink">
-                        <i class="fa-regular fa-pen-to-square me-1"></i>
-                        Editar
-                    </a>
-
-                </div>
             </div>
-        </div>
-</div>
-</main>
+
+            <div class="card-destaque">
+                <label class="form-label fw-bold">Observações</label>
+                <p class="form-control-plaintext"><?= htmlspecialchars($fornecedor->observacoes ?? '—') ?></p>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2">
+                <a href="lista.php" class="btn btn-outline-secondary">
+                    <i class="fa-solid fa-arrow-left me-1"></i>Voltar
+                </a>
+                <a href="editar.php?id_fornecedor=<?= htmlspecialchars($idEncriptado) ?>" class="btn btn-pink">
+                    <i class="fa-regular fa-pen-to-square me-1"></i>Editar
+                </a>
+            </div>
+        
+    </main>
 </div>
 
 <?php include __DIR__ . '/../../includes/footer.php'; ?>

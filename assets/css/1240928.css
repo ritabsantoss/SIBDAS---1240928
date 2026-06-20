@@ -772,3 +772,26 @@ body {
     background-color: var(--rosa-principal);
     color: white;
 }
+
+/* Detalhes */
+.card-destaque {
+    background: #fdf0f3;
+    border: 0.5px solid #f0c4cf;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.detalhe-nome {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--azul-principal);
+    margin-bottom: 1rem;
+}
+
+.detalhe-secao-titulo {
+    color: var(--azul-principal);
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
