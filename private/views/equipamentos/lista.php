@@ -62,18 +62,18 @@ try {
     }
 
     $sql = "SELECT e.idEquipamento, e.codigo_interno, e.designacao, e.marca,
-                   e.modelo, e.numero_serie, c.nome AS categoria,
-                   e.estado_atual, e.criticidade,
-                   s.nome AS servico, l.sala
-            FROM Equipamentos e
-            JOIN Localizacoes l ON e.idLocalizacao = l.idLocalizacao
-            JOIN Servicos s     ON l.idServico    = s.idServico
-            JOIN Categorias c   ON e.idCategoria  = c.idCategoria";
+               e.modelo, e.numero_serie, c.nome AS categoria,
+               e.estado_atual, e.criticidade, e.ativo,
+               s.nome AS servico, l.sala
+        FROM Equipamentos e
+        JOIN Localizacoes l ON e.idLocalizacao = l.idLocalizacao
+        JOIN Servicos s     ON l.idServico    = s.idServico
+        JOIN Categorias c   ON e.idCategoria  = c.idCategoria";
 
     if (count($where) > 0) {
         $sql .= " WHERE " . implode(" AND ", $where);
     }
-    $sql .= " ORDER BY e.codigo_interno";
+    $sql .= " ORDER BY e.ativo DESC, e.codigo_interno";
 
     $stmt = $ligacao->prepare($sql);
     $stmt->execute($params);
@@ -326,7 +326,7 @@ include __DIR__ . '/../../includes/navbar.php';
 
                             <tbody>
                                 <?php foreach ($resultados as $eq) : ?>
-                                    <tr>
+                                    <tr <?= $eq->ativo == 0 ? 'class="linha-inativa"' : '' ?>>
                                         <td><?= htmlspecialchars($eq->codigo_interno) ?></td>
                                         <td><?= htmlspecialchars($eq->designacao) ?></td>
                                         <td><?= htmlspecialchars($eq->marca ?? '') ?></td>
@@ -344,9 +344,25 @@ include __DIR__ . '/../../includes/navbar.php';
                                         </td>
                                         <td>
                                             <div class="d-flex justify-content-center gap-1 flex-nowrap">
-                                                <a href="detalhes.php?id_equipamento=<?= aes_encrypt($eq->idEquipamento) ?>" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-circle-info"></i></a>
-                                                <a href="editar.php?id_equipamento=<?= aes_encrypt($eq->idEquipamento) ?>" class="btn btn-sm btn-outline-warning"><i class="fa-regular fa-pen-to-square"></i></a>
-                                                <button class="btn btn-sm btn-outline-danger btn-gestao" data-bs-toggle="modal" data-bs-target="#modalArquivar" data-nome="<?= htmlspecialchars($eq->designacao) ?>"><i class="fa-solid fa-box-archive"></i></button>
+                                                <a href="detalhes.php?id_equipamento=<?= aes_encrypt($eq->idEquipamento) ?>" class="btn btn-sm btn-outline-primary">
+                                                    <i class="fa-solid fa-circle-info"></i>
+                                                </a>
+                                                <?php if ($eq->ativo == 1) : ?>
+                                                    <a href="editar.php?id_equipamento=<?= aes_encrypt($eq->idEquipamento) ?>" class="btn btn-sm btn-outline-warning">
+                                                        <i class="fa-regular fa-pen-to-square"></i>
+                                                    </a>
+                                                    <button class="btn btn-sm btn-outline-danger btn-gestao"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modalEliminar"
+                                                        data-nome="<?= htmlspecialchars($eq->designacao) ?>"
+                                                        data-href="confirmar_apagar.php?id_equipamento=<?= aes_encrypt($eq->idEquipamento) ?>">
+                                                        <i class="fa-solid fa-trash-can"></i>
+                                                    </button>
+                                                <?php else : ?>
+                                                    <a href="reativar.php?id_equipamento=<?= aes_encrypt($eq->idEquipamento) ?>" class="btn btn-sm btn-outline-success">
+                                                        <i class="fa-solid fa-rotate-left me-1"></i>Reativar
+                                                    </a>
+                                                <?php endif; ?>
                                             </div>
                                         </td>
                                     </tr>
@@ -365,48 +381,31 @@ include __DIR__ . '/../../includes/navbar.php';
         </div>
 
 
-        <div class="modal fade" id="modalArquivar" tabindex="-1">
-
+        <div class="modal fade" id="modalEliminar" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
-
                 <div class="modal-content border-0 rounded-4">
-
                     <div class="modal-body text-center p-5">
 
-                        <div class="text-warning mb-4">
-                            <i class="fa-solid fa-triangle-exclamation fa-4x"></i>
-                        </div>
+                        <i class="fa-solid fa-triangle-exclamation fa-3x mb-3"
+                            style="color: var(--rosa-principal);"></i>
 
-                        <h4 class="mb-3">Gestão do Equipamento</h4>
-
-                        <p class="text-muted mb-2">
-                            Equipamento selecionado:
-                        </p>
-
-                        <h5 id="itemSelecionado" class="mb-4 text-primary">
-                            —
+                        <h5 class="mb-2" style="color: var(--azul-principal);">
+                            Desativar equipamento?
                         </h5>
 
-                        <p class="text-muted mb-4">
-                            Pretende arquivar ou eliminar este equipamento?
-                        </p>
-                        <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <p class="text-muted mb-1">Equipamento selecionado:</p>
+                        <p id="itemSelecionado" class="fw-bold mb-4"
+                            style="color: var(--azul-principal);">—</p>
 
-                            <button class="btn btn-warning px-4">
-                                <i class="fa-solid fa-box-archive me-2"></i>
-                                Arquivar
-                            </button>
-
-                            <button class="btn btn-danger px-4">
-                                <i class="fa-solid fa-trash-can me-2"></i>
-                                Eliminar
-                            </button>
-
+                        <div class="d-flex justify-content-center gap-3">
                             <button class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
-                                Cancelar
+                                <i class="fa-solid fa-xmark me-1"></i>Cancelar
                             </button>
-
+                            <a id="linkConfirmar" href="#" class="btn btn-danger px-4">
+                                <i class="fa-solid fa-trash-can me-1"></i>Eliminar
+                            </a>
                         </div>
+
                     </div>
                 </div>
             </div>

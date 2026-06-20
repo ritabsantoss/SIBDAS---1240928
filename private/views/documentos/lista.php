@@ -11,7 +11,7 @@ try {
         "SELECT d.idDocumento, d.codigo_documento, d.nome_documento, d.tipo_documento,
         d.validade, d.ativo, e.designacao AS equipamento, f.nome_empresa AS fornecedor
         FROM Documentos d
-        JOIN Equipamentos e      ON d.idEquipamento = e.idEquipamento
+        JOIN Equipamentos e      ON d.idEquipamento = e.idEquipamento AND e.ativo = 1
         LEFT JOIN Fornecedores f ON d.idFornecedor  = f.idFornecedor
         ORDER BY d.ativo DESC, d.codigo_documento"
     )->fetchAll(PDO::FETCH_OBJ);

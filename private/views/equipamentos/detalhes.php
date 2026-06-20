@@ -62,7 +62,7 @@ try {
     $fornecedores = $stmt->fetchAll(PDO::FETCH_OBJ);
 
     // documentos
-    $stmt = $ligacao->prepare("SELECT * FROM Documentos WHERE idEquipamento = :id ORDER BY codigo_documento");
+    $stmt = $ligacao->prepare("SELECT * FROM Documentos WHERE idEquipamento = :id AND ativo = 1 ORDER BY codigo_documento");
     $stmt->bindParam(':id', $idEquipamento, PDO::PARAM_INT);
     $stmt->execute();
     $documentos = $stmt->fetchAll(PDO::FETCH_OBJ);

@@ -353,7 +353,7 @@ try {
         $fornecedores_bd[] = ['id_fornecedor' => $r->idFornecedor, 'tipo_relacao' => $r->tipo_relacao];
     }
 
-    $stmt = $ligacao->prepare("SELECT * FROM Documentos WHERE idEquipamento = :id");
+    $stmt = $ligacao->prepare("SELECT * FROM Documentos WHERE idEquipamento = :id AND ativo = 1");
     $stmt->execute([':id' => $idEquipamento]);
     foreach ($stmt->fetchAll(PDO::FETCH_OBJ) as $r) {
         $documentos_bd[] = [
