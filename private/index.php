@@ -23,11 +23,27 @@ include __DIR__ . '/includes/navbar.php';
                     <?= ($_SESSION['genero'] ?? '') === 'F' ? 'Bem-vinda' : 'Bem-vindo' ?>, <?= htmlspecialchars($_SESSION['nome'] ?? '') ?>!
                 </h1>
 
-                <p>
-                    Esta área permite gerir o inventário hospitalar de equipamentos médicos,
-                    consultar fornecedores, acompanhar localizações, visualizar documentação técnica
-                    e monitorizar garantias e contratos associados aos equipamentos.
-                </p>
+                <?php if ($_SESSION['perfil'] === 'administrador') : ?>
+                    <p>
+                        Esta área permite administrar todo o inventário hospitalar, gerir equipamentos,
+                        fornecedores, localizações e documentação técnica. Permite ainda 
+                        acompanhar indicadores e relatórios do sistema e gerir os conteúdos públicos.
+                    </p>
+
+                <?php elseif ($_SESSION['perfil'] === 'tecnico') : ?>
+                    <p>
+                        Esta área permite acompanhar o estado dos equipamentos médicos, fornecedores e 
+                        localizações, consultar documentação técnica e apoiar as atividades
+                        de manutenção e gestão do parque tecnológico.
+                    </p>
+
+                <?php else : ?>
+                    <p>
+                        Esta área permite consultar a ficha dos equipamentos médicos registados no sistema,
+                        verificar a sua localização, documentação técnica e outras informações
+                        relevantes associadas.
+                    </p>
+                <?php endif; ?>
 
                 <?php if ($_SESSION['perfil'] === 'administrador' || $_SESSION['perfil'] === 'tecnico') : ?>
                     <a href="<?php echo BASE_URL; ?>/private/views/dashboard.php" class="btn welcome-btn">

@@ -7,16 +7,28 @@ $pagina_ativa = 'documentos';
 try {
     $ligacao = liga_bd();
 
-    $filtro_ativo = $_SESSION['perfil'] === 'administrador' ? "" : "AND d.ativo = 1";
-    $resultados = $ligacao->query(
+    if ($_SESSION['perfil'] === 'administrador') {
+    $stmt = $ligacao->prepare(
         "SELECT d.idDocumento, d.codigo_documento, d.nome_documento, d.tipo_documento,
-            d.validade, d.ativo, e.designacao AS equipamento, f.nome_empresa AS fornecedor
-     FROM Documentos d
-     JOIN Equipamentos e      ON d.idEquipamento = e.idEquipamento AND e.ativo = 1
-     LEFT JOIN Fornecedores f ON d.idFornecedor  = f.idFornecedor
-     $filtro_ativo
-     ORDER BY d.ativo DESC, d.codigo_documento"
-    )->fetchAll(PDO::FETCH_OBJ);
+                d.validade, d.ativo, e.designacao AS equipamento, f.nome_empresa AS fornecedor
+         FROM Documentos d
+         JOIN Equipamentos e      ON d.idEquipamento = e.idEquipamento AND e.ativo = 1
+         LEFT JOIN Fornecedores f ON d.idFornecedor  = f.idFornecedor
+         ORDER BY d.ativo DESC, d.codigo_documento"
+    );
+} else {
+    $stmt = $ligacao->prepare(
+        "SELECT d.idDocumento, d.codigo_documento, d.nome_documento, d.tipo_documento,
+                d.validade, d.ativo, e.designacao AS equipamento, f.nome_empresa AS fornecedor
+         FROM Documentos d
+         JOIN Equipamentos e      ON d.idEquipamento = e.idEquipamento AND e.ativo = 1
+         LEFT JOIN Fornecedores f ON d.idFornecedor  = f.idFornecedor
+         WHERE d.ativo = 1
+         ORDER BY d.ativo DESC, d.codigo_documento"
+    );
+}
+$stmt->execute();
+$resultados = $stmt->fetchAll(PDO::FETCH_OBJ);
 
     $erro = '';
 } catch (PDOException $err) {
