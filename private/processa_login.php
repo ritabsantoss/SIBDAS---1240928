@@ -30,18 +30,55 @@ if (!empty($validation_errors)) {
     return;
 }
 
-// SIMULAÇÃO do resultado da BD (depois troca-se por consulta real)
-$result['status'] = 1;
-if (!$result['status']) {
-    $_SESSION['server_error'] = 'Email ou palavra-passe incorretos.';
+// Ligação à BD 
+try {
+    $ligacao = liga_bd();
+
+    // Definir os parâmetros de login 
+    $parametros = [
+        ':email' => $email
+    ];
+
+    // Procurar o utilizador pelo email 
+    $comando = $ligacao->prepare("SELECT * FROM Utilizadores WHERE email = :email");
+    $comando->execute($parametros);
+    $resultados = $comando->fetchAll(PDO::FETCH_OBJ);
+
+    // Verificar se foram encontrados resultados 
+    if (count($resultados) === 0) {
+        $_SESSION['server_error'] = 'Email ou palavra-passe incorretos.';
+        header('Location: ' . BASE_URL . '/private/login.php');
+        return;
+    }
+
+    // Recolher os dados do utilizador autenticado 
+    $utilizador = $resultados[0];
+
+    // Verificar a password (bcrypt em vez de texto simples como na ficha)
+    if (!password_verify($password, $utilizador->password_hash)) {
+        $_SESSION['server_error'] = 'Email ou palavra-passe incorretos.';
+        header('Location: ' . BASE_URL . '/private/login.php');
+        return;
+    }
+
+    // Atualizar o last_login 
+    $comando = $ligacao->prepare("UPDATE Utilizadores SET last_login = NOW() WHERE idUtilizador = ?");
+    $comando->execute([$utilizador->idUtilizador]);
+
+    // Guardar dados na sessão 
+    $_SESSION['email']  = $utilizador->email;
+    $_SESSION['nome']   = $utilizador->nome;
+    $_SESSION['perfil'] = $utilizador->perfil;
+
+    $ligacao = null;
+
+    // Vai para a área privada
+    header('Location: ' . BASE_URL . '/private/index.php');
+    exit;
+
+} catch (PDOException $err) {
+    // Capturar exceções 
+    $_SESSION['server_error'] = 'Erro ao ligar à base de dados.';
     header('Location: ' . BASE_URL . '/private/login.php');
     return;
 }
-
-// LOGIN VÁLIDO — guardar o utilizador
-$_SESSION['email'] = $email;
-// Com a BD: $_SESSION['nome'] = $row['nome'];
-
-// Vai para a área privada
-header('Location: ' . BASE_URL . '/private/index.php');
-exit;
