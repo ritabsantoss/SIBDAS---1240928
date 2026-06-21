@@ -192,3 +192,7 @@ function erro_bd_equipamento(Exception $err, string $acao = 'guardar'): string
     }
     return "Não foi possível $acao o equipamento. Verifique os dados e tente novamente.";
 }
+
+function conteudo(array $conteudos, string $chave): string {
+    return htmlspecialchars($conteudos[$chave] ?? '');
+}
