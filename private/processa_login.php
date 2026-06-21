@@ -61,6 +61,13 @@ try {
         return;
     }
 
+    // Verificar se o utilizador está ativo
+    if ($utilizador->ativo == 0) {
+        $_SESSION['server_error'] = 'A sua conta está desativada. Contacte o administrador.';
+        header('Location: ' . BASE_URL . '/private/login.php');
+        return;
+    }
+
     // Atualizar o last_login 
     $comando = $ligacao->prepare("UPDATE Utilizadores SET last_login = NOW() WHERE idUtilizador = ?");
     $comando->execute([$utilizador->idUtilizador]);
@@ -76,7 +83,6 @@ try {
     // Vai para a área privada
     header('Location: ' . BASE_URL . '/private/index.php');
     exit;
-
 } catch (PDOException $err) {
     // Capturar exceções 
     $_SESSION['server_error'] = 'Erro ao ligar à base de dados.';
