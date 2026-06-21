@@ -20,7 +20,7 @@ include __DIR__ . '/includes/navbar.php';
             <div>
 
                 <h1>
-                    Bem-vindo à Área Reservada
+                    <?= ($_SESSION['genero'] ?? '') === 'F' ? 'Bem-vinda' : 'Bem-vindo' ?>, <?= htmlspecialchars($_SESSION['nome'] ?? '') ?>!
                 </h1>
 
                 <p>
@@ -29,10 +29,17 @@ include __DIR__ . '/includes/navbar.php';
                     e monitorizar garantias e contratos associados aos equipamentos.
                 </p>
 
-                <a href="<?php echo BASE_URL; ?>/private/views/dashboard.php" class="btn welcome-btn">
-                    Ir para o Dashboard
-                    <i class="fa-solid fa-arrow-right ms-2"></i>
-                </a>
+                <?php if ($_SESSION['perfil'] === 'administrador' || $_SESSION['perfil'] === 'tecnico') : ?>
+                    <a href="<?php echo BASE_URL; ?>/private/views/dashboard.php" class="btn welcome-btn">
+                        Ir para o Dashboard
+                        <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </a>
+                <?php else : ?>
+                    <a href="<?php echo BASE_URL; ?>/private/views/equipamentos/lista.php" class="btn welcome-btn">
+                        Ver Equipamentos
+                        <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </a>
+                <?php endif; ?>
 
             </div>
 

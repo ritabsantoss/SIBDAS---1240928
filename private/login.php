@@ -54,7 +54,7 @@ if (!empty($_SESSION['server_error'])) {
                         <img src="<?php echo BASE_URL; ?>/assets/img/sihem1.png" class="login-logo">
                     </div>
 
-                    <form action="processa_login.php" method="post">
+                    <form name="formulario" action="processa_login.php" method="post">
                         <div class="mb-3">
                             <label for="email" class="form-label">Utilizador</label>
                             <input type="email" id="email" name="email" class="form-control" placeholder="exemplo@isep.ipp.pt">
@@ -68,6 +68,19 @@ if (!empty($_SESSION['server_error'])) {
                         <div class="mb-3 text-center">
                             <button type="submit" class="btn login-btn px-4">
                                 Entrar <i class="fa-solid fa-right-to-bracket ms-2"></i>
+                            </button>
+                        </div>
+
+                        <!-- Botões de preenchimento automático (Fase de Testes) -->
+                        <div class="mt-2 text-center">
+                            <button type="button" id="preencher_adm" class="btn btn-outline-primary btn-sm me-2">
+                                Preencher Administrador
+                            </button>
+                            <button type="button" id="preencher_tec" class="btn btn-outline-secondary btn-sm me-2">
+                                Preencher Técnico
+                            </button>
+                            <button type="button" id="preencher_prof" class="btn btn-outline-secondary btn-sm">
+                                Preencher Profissional
                             </button>
                         </div>
                     </form>
@@ -100,6 +113,26 @@ if (!empty($_SESSION['server_error'])) {
 
     <!-- Bootstrap JS -->
     <script src="<?php echo BASE_URL; ?>/assets/bootstrap/bootstrap.bundle.min.js"></script>
+    <script>
+    // Preenchimento automático para testes (Ficha 14)
+    document.querySelector("#preencher_adm").addEventListener('click', () => {
+        const formulario = document.forms['formulario'];
+        formulario['email'].value    = "ritasantos@sihem.pt";
+        // Preencher a password para admin
+    });
+
+    document.querySelector("#preencher_tec").addEventListener('click', () => {
+        const formulario = document.forms['formulario'];
+        formulario['email'].value    = "mariosilva@sihem.pt";
+        //Preencher a password para tecnico
+    });
+
+    document.querySelector("#preencher_prof").addEventListener('click', () => {
+        const formulario = document.forms['formulario'];
+        formulario['email'].value    = "alexandrarosas@sihem.pt";
+        // Preencher a password para o profissional
+    });
+</script>
 </body>
 
 </html>

@@ -69,6 +69,7 @@ try {
     $_SESSION['email']  = $utilizador->email;
     $_SESSION['nome']   = $utilizador->nome;
     $_SESSION['perfil'] = $utilizador->perfil;
+    $_SESSION['genero'] = $utilizador->genero;
 
     $ligacao = null;
 
