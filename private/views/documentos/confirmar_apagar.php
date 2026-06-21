@@ -1,6 +1,10 @@
 <?php
 require_once __DIR__ . '/../../includes/funcoes.php';
 redirect_if_not_logged();
+if ($_SESSION['perfil'] !== 'administrador') {
+    header('Location: ' . BASE_URL . '/private/views/documentos/lista.php');
+    exit;
+}
 
 $idEncriptado = $_GET['id_documento'] ?? null;
 $idDocumento = aes_decrypt($idEncriptado);

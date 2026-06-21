@@ -7,13 +7,15 @@ $pagina_ativa = 'documentos';
 try {
     $ligacao = liga_bd();
 
+    $filtro_ativo = $_SESSION['perfil'] === 'administrador' ? "" : "AND d.ativo = 1";
     $resultados = $ligacao->query(
         "SELECT d.idDocumento, d.codigo_documento, d.nome_documento, d.tipo_documento,
-        d.validade, d.ativo, e.designacao AS equipamento, f.nome_empresa AS fornecedor
-        FROM Documentos d
-        JOIN Equipamentos e      ON d.idEquipamento = e.idEquipamento AND e.ativo = 1
-        LEFT JOIN Fornecedores f ON d.idFornecedor  = f.idFornecedor
-        ORDER BY d.ativo DESC, d.codigo_documento"
+            d.validade, d.ativo, e.designacao AS equipamento, f.nome_empresa AS fornecedor
+     FROM Documentos d
+     JOIN Equipamentos e      ON d.idEquipamento = e.idEquipamento AND e.ativo = 1
+     LEFT JOIN Fornecedores f ON d.idFornecedor  = f.idFornecedor
+     $filtro_ativo
+     ORDER BY d.ativo DESC, d.codigo_documento"
     )->fetchAll(PDO::FETCH_OBJ);
 
     $erro = '';
@@ -146,17 +148,21 @@ include __DIR__ . '/../../includes/navbar.php';
                                                     <i class="fa-solid fa-circle-info"></i>
                                                 </a>
                                                 <?php if ($doc->ativo == 1) : ?>
-                                                    <button class="btn btn-sm btn-outline-danger btn-gestao"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#modalEliminar"
-                                                        data-nome="<?= htmlspecialchars($doc->nome_documento) ?>"
-                                                        data-href="confirmar_apagar.php?id_documento=<?= aes_encrypt($doc->idDocumento) ?>">
-                                                        <i class="fa-solid fa-trash-can"></i>
-                                                    </button>
+                                                    <?php if ($_SESSION['perfil'] === 'administrador') : ?>
+                                                        <button class="btn btn-sm btn-outline-danger btn-gestao"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modalEliminar"
+                                                            data-nome="<?= htmlspecialchars($doc->nome_documento) ?>"
+                                                            data-href="confirmar_apagar.php?id_documento=<?= aes_encrypt($doc->idDocumento) ?>">
+                                                            <i class="fa-solid fa-trash-can"></i>
+                                                        </button>
+                                                    <?php endif; ?>
                                                 <?php else : ?>
-                                                    <a href="reativar.php?id_documento=<?= aes_encrypt($doc->idDocumento) ?>" class="btn btn-sm btn-outline-success">
-                                                        <i class="fa-solid fa-rotate-left me-1"></i>Reativar
-                                                    </a>
+                                                    <?php if ($_SESSION['perfil'] === 'administrador') : ?>
+                                                        <a href="reativar.php?id_documento=<?= aes_encrypt($doc->idDocumento) ?>" class="btn btn-sm btn-outline-success">
+                                                            <i class="fa-solid fa-rotate-left me-1"></i>Reativar
+                                                        </a>
+                                                    <?php endif; ?>
                                                 <?php endif; ?>
                                             </div>
                                         </td>

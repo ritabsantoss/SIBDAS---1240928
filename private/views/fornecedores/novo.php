@@ -1,6 +1,10 @@
 <?php
 require_once __DIR__ . '/../../includes/funcoes.php';
 redirect_if_not_logged();
+if ($_SESSION['perfil'] === 'profissional') {
+    header('Location: ' . BASE_URL . '/private/views/fornecedores/lista.php');
+    exit;
+}
 require_once __DIR__ . '/../../includes/validacoes.php';
 
 $pagina_ativa = 'fornecedores';

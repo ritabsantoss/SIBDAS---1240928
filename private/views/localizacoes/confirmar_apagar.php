@@ -1,6 +1,10 @@
 <?php
 require_once __DIR__ . '/../../includes/funcoes.php';
 redirect_if_not_logged();
+if ($_SESSION['perfil'] !== 'administrador') {
+    header('Location: ' . BASE_URL . '/private/views/localizacoes/lista.php');
+    exit;
+}
 
 $idEncriptado = $_GET['id_localizacao'] ?? null;
 $idLocalizacao = aes_decrypt($idEncriptado);

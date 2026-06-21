@@ -9,11 +9,13 @@ $lista_edificios = [];
 try {
     $ligacao = liga_bd();
 
+    $filtro_ativo = $_SESSION['perfil'] === 'administrador' ? "" : "WHERE l.ativo = 1";
     $resultados = $ligacao->query(
         "SELECT l.idLocalizacao, l.edificio, l.piso, s.nome AS servico, l.sala, l.ativo
-        FROM Localizacoes l
-        JOIN Servicos s ON l.idServico = s.idServico
-        ORDER BY l.ativo DESC, l.edificio"
+     FROM Localizacoes l
+     JOIN Servicos s ON l.idServico = s.idServico
+     $filtro_ativo
+     ORDER BY l.ativo DESC, l.edificio"
     )->fetchAll(PDO::FETCH_OBJ);
 
     $lista_servicos  = $ligacao->query("SELECT nome FROM Servicos ORDER BY nome")->fetchAll(PDO::FETCH_COLUMN);
@@ -48,9 +50,11 @@ include __DIR__ . '/../../includes/navbar.php';
                 </p>
             </div>
 
-            <a href="novo.php" class="btn btn-pink">
-                <i class="fa-solid fa-plus me-2"></i>Nova Localização
-            </a>
+            <?php if ($_SESSION['perfil'] !== 'profissional') : ?>
+                <a href="novo.php" class="btn btn-pink">
+                    <i class="fa-solid fa-plus me-2"></i>Nova Localização
+                </a>
+            <?php endif; ?>
 
         </div>
 
@@ -153,20 +157,26 @@ include __DIR__ . '/../../includes/navbar.php';
                                                     <i class="fa-solid fa-circle-info"></i>
                                                 </a>
                                                 <?php if ($loc->ativo == 1) : ?>
-                                                    <a href="editar.php?id_localizacao=<?= aes_encrypt($loc->idLocalizacao) ?>" class="btn btn-sm btn-outline-warning">
-                                                        <i class="fa-regular fa-pen-to-square"></i>
-                                                    </a>
-                                                    <button class="btn btn-sm btn-outline-danger btn-gestao"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#modalEliminar"
-                                                        data-nome="<?= htmlspecialchars($loc->servico) ?>"
-                                                         data-href="confirmar_apagar.php?id_localizacao=<?= aes_encrypt($loc->idLocalizacao) ?>">
-                                                        <i class="fa-solid fa-trash-can"></i>
-                                                    </button>
+                                                    <?php if ($_SESSION['perfil'] !== 'profissional') : ?>
+                                                        <a href="editar.php?id_localizacao=<?= aes_encrypt($loc->idLocalizacao) ?>" class="btn btn-sm btn-outline-warning">
+                                                            <i class="fa-regular fa-pen-to-square"></i>
+                                                        </a>
+                                                    <?php endif; ?>
+                                                    <?php if ($_SESSION['perfil'] === 'administrador') : ?>
+                                                        <button class="btn btn-sm btn-outline-danger btn-gestao"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modalEliminar"
+                                                            data-nome="<?= htmlspecialchars($loc->servico) ?>"
+                                                            data-href="confirmar_apagar.php?id_localizacao=<?= aes_encrypt($loc->idLocalizacao) ?>">
+                                                            <i class="fa-solid fa-trash-can"></i>
+                                                        </button>
+                                                    <?php endif; ?>
                                                 <?php else : ?>
-                                                    <a href="reativar.php?id_localizacao=<?= aes_encrypt($loc->idLocalizacao) ?>" class="btn btn-sm btn-outline-success">
-                                                        <i class="fa-solid fa-rotate-left me-1"></i>Reativar
-                                                    </a>
+                                                    <?php if ($_SESSION['perfil'] === 'administrador') : ?>
+                                                        <a href="reativar.php?id_localizacao=<?= aes_encrypt($loc->idLocalizacao) ?>" class="btn btn-sm btn-outline-success">
+                                                            <i class="fa-solid fa-rotate-left me-1"></i>Reativar
+                                                        </a>
+                                                    <?php endif; ?>
                                                 <?php endif; ?>
                                             </div>
                                         </td>

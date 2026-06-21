@@ -70,6 +70,9 @@ try {
         JOIN Servicos s     ON l.idServico    = s.idServico
         JOIN Categorias c   ON e.idCategoria  = c.idCategoria";
 
+    if ($_SESSION['perfil'] !== 'administrador') {
+        $where[] = "e.ativo = 1";
+    }
     if (count($where) > 0) {
         $sql .= " WHERE " . implode(" AND ", $where);
     }
@@ -122,9 +125,11 @@ include __DIR__ . '/../../includes/navbar.php';
                 </p>
             </div>
 
-            <a href="novo.php" class="btn btn-pink">
-                <i class="fa-solid fa-plus me-2"></i>Novo Equipamento
-            </a>
+            <?php if ($_SESSION['perfil'] !== 'profissional') : ?>
+                <a href="novo.php" class="btn btn-pink">
+                    <i class="fa-solid fa-plus me-2"></i>Novo Equipamento
+                </a>
+            <?php endif; ?>
         </div>
 
         <div class="card shadow-sm border-0 rounded-4">
@@ -348,20 +353,26 @@ include __DIR__ . '/../../includes/navbar.php';
                                                     <i class="fa-solid fa-circle-info"></i>
                                                 </a>
                                                 <?php if ($eq->ativo == 1) : ?>
-                                                    <a href="editar.php?id_equipamento=<?= aes_encrypt($eq->idEquipamento) ?>" class="btn btn-sm btn-outline-warning">
-                                                        <i class="fa-regular fa-pen-to-square"></i>
-                                                    </a>
-                                                    <button class="btn btn-sm btn-outline-danger btn-gestao"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#modalEliminar"
-                                                        data-nome="<?= htmlspecialchars($eq->designacao) ?>"
-                                                        data-href="confirmar_apagar.php?id_equipamento=<?= aes_encrypt($eq->idEquipamento) ?>">
-                                                        <i class="fa-solid fa-trash-can"></i>
-                                                    </button>
+                                                    <?php if ($_SESSION['perfil'] !== 'profissional') : ?>
+                                                        <a href="editar.php?id_equipamento=<?= aes_encrypt($eq->idEquipamento) ?>" class="btn btn-sm btn-outline-warning">
+                                                            <i class="fa-regular fa-pen-to-square"></i>
+                                                        </a>
+                                                    <?php endif; ?>
+                                                    <?php if ($_SESSION['perfil'] === 'administrador') : ?>
+                                                        <button class="btn btn-sm btn-outline-danger btn-gestao"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modalEliminar"
+                                                            data-nome="<?= htmlspecialchars($eq->designacao) ?>"
+                                                            data-href="confirmar_apagar.php?id_equipamento=<?= aes_encrypt($eq->idEquipamento) ?>">
+                                                            <i class="fa-solid fa-trash-can"></i>
+                                                        </button>
+                                                    <?php endif; ?>
                                                 <?php else : ?>
-                                                    <a href="reativar.php?id_equipamento=<?= aes_encrypt($eq->idEquipamento) ?>" class="btn btn-sm btn-outline-success">
-                                                        <i class="fa-solid fa-rotate-left me-1"></i>Reativar
-                                                    </a>
+                                                    <?php if ($_SESSION['perfil'] === 'administrador') : ?>
+                                                        <a href="reativar.php?id_equipamento=<?= aes_encrypt($eq->idEquipamento) ?>" class="btn btn-sm btn-outline-success">
+                                                            <i class="fa-solid fa-rotate-left me-1"></i>Reativar
+                                                        </a>
+                                                    <?php endif; ?>
                                                 <?php endif; ?>
                                             </div>
                                         </td>

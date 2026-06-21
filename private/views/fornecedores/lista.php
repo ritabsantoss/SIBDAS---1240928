@@ -7,10 +7,12 @@ $pagina_ativa = 'fornecedores';
 try {
     $ligacao = liga_bd();
 
+    $filtro_ativo = $_SESSION['perfil'] === 'administrador' ? "" : "WHERE ativo = 1";
     $resultados = $ligacao->query(
         "SELECT idFornecedor, nome_empresa, nif, telefone, email, ativo
-            FROM Fornecedores
-            ORDER BY ativo DESC, nome_empresa"
+     FROM Fornecedores
+     $filtro_ativo
+     ORDER BY ativo DESC, nome_empresa"
     )->fetchAll(PDO::FETCH_OBJ);
 
     $erro = '';
@@ -42,9 +44,11 @@ include __DIR__ . '/../../includes/navbar.php';
                 </p>
             </div>
 
-            <a href="novo.php" class="btn btn-pink">
-                <i class="fa-solid fa-plus me-2"></i>Novo Fornecedor
-            </a>
+            <?php if ($_SESSION['perfil'] !== 'profissional') : ?>
+                <a href="novo.php" class="btn btn-pink">
+                    <i class="fa-solid fa-plus me-2"></i>Novo Fornecedor
+                </a>
+            <?php endif; ?>
 
         </div>
 
@@ -129,20 +133,26 @@ include __DIR__ . '/../../includes/navbar.php';
                                                     <i class="fa-solid fa-circle-info"></i>
                                                 </a>
                                                 <?php if ($f->ativo == 1) : ?>
-                                                    <a href="editar.php?id_fornecedor=<?= aes_encrypt($f->idFornecedor) ?>" class="btn btn-sm btn-outline-warning">
-                                                        <i class="fa-regular fa-pen-to-square"></i>
-                                                    </a>
-                                                    <button class="btn btn-sm btn-outline-danger btn-gestao"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#modalEliminar"
-                                                        data-nome="<?= htmlspecialchars($f->nome_empresa) ?>"
-                                                        data-href="confirmar_apagar.php?id_fornecedor=<?= aes_encrypt($f->idFornecedor) ?>">
-                                                        <i class="fa-solid fa-trash-can"></i>
-                                                    </button>
+                                                    <?php if ($_SESSION['perfil'] !== 'profissional') : ?>
+                                                        <a href="editar.php?id_fornecedor=<?= aes_encrypt($f->idFornecedor) ?>" class="btn btn-sm btn-outline-warning">
+                                                            <i class="fa-regular fa-pen-to-square"></i>
+                                                        </a>
+                                                    <?php endif; ?>
+                                                    <?php if ($_SESSION['perfil'] === 'administrador') : ?>
+                                                        <button class="btn btn-sm btn-outline-danger btn-gestao"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modalEliminar"
+                                                            data-nome="<?= htmlspecialchars($f->nome_empresa) ?>"
+                                                            data-href="confirmar_apagar.php?id_fornecedor=<?= aes_encrypt($f->idFornecedor) ?>">
+                                                            <i class="fa-solid fa-trash-can"></i>
+                                                        </button>
+                                                    <?php endif; ?>
                                                 <?php else : ?>
-                                                    <a href="reativar.php?id_fornecedor=<?= aes_encrypt($f->idFornecedor) ?>" class="btn btn-sm btn-outline-success">
-                                                        <i class="fa-solid fa-rotate-left me-1"></i>Reativar
-                                                    </a>
+                                                    <?php if ($_SESSION['perfil'] === 'administrador') : ?>
+                                                        <a href="reativar.php?id_fornecedor=<?= aes_encrypt($f->idFornecedor) ?>" class="btn btn-sm btn-outline-success">
+                                                            <i class="fa-solid fa-rotate-left me-1"></i>Reativar
+                                                        </a>
+                                                    <?php endif; ?>
                                                 <?php endif; ?>
                                             </div>
                                         </td>
