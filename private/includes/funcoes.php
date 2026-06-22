@@ -28,6 +28,7 @@ function redirect_if_not_logged($redirect_to = '/private/login.php')
 function logout_and_redirect($redirect_to = '/private/login.php')
 {
     start_session();
+    registar_log('LOGOUT', $_SESSION['email'] ?? 'desconhecido');
     session_unset();
     session_destroy();
 
@@ -195,4 +196,16 @@ function erro_bd_equipamento(Exception $err, string $acao = 'guardar'): string
 
 function conteudo(array $conteudos, string $chave): string {
     return htmlspecialchars($conteudos[$chave] ?? '');
+}
+
+function registar_log(string $tipo, string $mensagem): void {
+    $pasta = __DIR__ . '/../../private/logs';
+    if (!is_dir($pasta)) {
+        mkdir($pasta, 0755, true);
+    }
+    $ficheiro = $pasta . '/app.log';
+    $ip       = $_SERVER['REMOTE_ADDR'] ?? 'IP desconhecido';
+    $data     = date('Y-m-d H:i:s');
+    $linha    = "[$data] [$tipo] $mensagem | IP: $ip" . PHP_EOL;
+    file_put_contents($ficheiro, $linha, FILE_APPEND | LOCK_EX);
 }

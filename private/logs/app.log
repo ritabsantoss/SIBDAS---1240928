@@ -1,0 +1,34 @@
+[2026-06-22 13:23:36] [LOGIN_OK] ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:03:53] [LOGIN_OK] ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:06:05] [LOGIN_OK] mariosilva@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:06:16] [LOGOUT] mariosilva@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:06:32] [LOGIN_FAIL] tentativa: alexandrarosas@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:06:47] [LOGIN_FAIL] conta desativada: alexandrarosas@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:07:04] [LOGIN_OK] ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:07:17] [EDITAR] Conteúdos públicos editados por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:07:23] [EDITAR] Conteúdos públicos editados por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:07:41] [REATIVAR] Documento reativado por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:07:52] [DESATIVAR] Documento desativado por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:08:07] [REATIVAR] Localização reativada por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:08:10] [DESATIVAR] Localização desativada por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:09:15] [CRIAR] Localização criada por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:09:33] [EDITAR] Localização editada por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:09:43] [EDITAR] Localização editada por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:09:50] [DESATIVAR] Fornecedor desativado por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:09:52] [REATIVAR] Fornecedor reativado por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:10:07] [EDITAR] Fornecedor editado por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:10:19] [EDITAR] Fornecedor editado por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:10:31] [CRIAR] Fornecedor criado por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:11:43] [EDITAR] Password alterada por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:12:05] [EDITAR] Password alterada por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:12:31] [REATIVAR] Equipamento reativado por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:12:41] [DESATIVAR] Equipamento desativado por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:13:06] [EDITAR] Equipamento editado por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:13:16] [EDITAR] Equipamento editado por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:13:43] [CRIAR] Equipamento criado por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:14:05] [REATIVAR] Utilizador reativado por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:14:32] [EDITAR] Password redefinida por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:14:56] [EDITAR] Password redefinida por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:15:51] [CRIAR] Utilizador criado por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:16:10] [EDITAR] Utilizador editado por ritasantos@sihem.pt | IP: 127.0.0.1
+[2026-06-22 14:16:14] [EDITAR] Utilizador editado por ritasantos@sihem.pt | IP: 127.0.0.1

@@ -38,6 +38,7 @@ try {
     $proximo_comp_num = proximo_numero_codigo($ligacao, 'Componentes', 'codigo_componente', 'COMP');
     $ligacao = null;
 } catch (PDOException $err) {
+    registar_log('ERRO_BD', "Equipamentos: " . $err->getMessage());
     $erro_sistema = "Erro ao carregar os dados do formulário.";
 }
 
@@ -387,6 +388,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
 
             $ligacao->commit();
+            registar_log('CRIAR', "Equipamento criado por " . ($_SESSION['email'] ?? 'desconhecido'));
             $_SESSION['mensagem'] = 'Equipamento criado com sucesso.';
             $_SESSION['mensagem_tipo'] = 'success';
             header("Location: lista.php");

@@ -115,6 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         $ligacao = null;
+        registar_log('EDITAR', "Conteúdos públicos editados por " . ($_SESSION['email'] ?? 'desconhecido'));
         $sucesso = 'Conteúdos atualizados com sucesso.';
 
         // Recarregar os conteúdos atualizados

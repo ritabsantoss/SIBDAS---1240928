@@ -69,11 +69,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 ':observacoes' => $observacoes ?: null
             ]);
             $ligacao = null;
+            registar_log('CRIAR', "Localização criada por " . ($_SESSION['email'] ?? 'desconhecido'));
             $_SESSION['mensagem'] = 'Localização criada com sucesso.';
             $_SESSION['mensagem_tipo'] = 'success';
             header("Location: lista.php");
             exit;
         } catch (PDOException $err) {
+            registar_log('ERRO_BD', "Localizacoes: " . $err->getMessage());
             $msg = $err->getMessage();
             if (stripos($msg, 'foreign key') !== false) {
                 $erro_sistema = "O serviço selecionado não é válido.";

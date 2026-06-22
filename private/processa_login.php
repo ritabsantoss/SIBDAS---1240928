@@ -56,6 +56,7 @@ try {
 
     // Verificar a password (bcrypt em vez de texto simples como na ficha)
     if (!password_verify($password, $utilizador->password_hash)) {
+        registar_log('LOGIN_FAIL', "tentativa: $email");
         $_SESSION['server_error'] = 'Email ou palavra-passe incorretos.';
         header('Location: ' . BASE_URL . '/private/login.php');
         return;
@@ -63,6 +64,7 @@ try {
 
     // Verificar se o utilizador está ativo
     if ($utilizador->ativo == 0) {
+        registar_log('LOGIN_FAIL', "conta desativada: $email");
         $_SESSION['server_error'] = 'A sua conta está desativada. Contacte o administrador.';
         header('Location: ' . BASE_URL . '/private/login.php');
         return;
@@ -81,9 +83,11 @@ try {
     $ligacao = null;
 
     // Vai para a área privada
+    registar_log('LOGIN_OK', $utilizador->email);
     header('Location: ' . BASE_URL . '/private/index.php');
     exit;
 } catch (PDOException $err) {
+    registar_log('ERRO_BD', "Login: " . $err->getMessage());
     // Capturar exceções 
     $_SESSION['server_error'] = 'Erro ao ligar à base de dados.';
     header('Location: ' . BASE_URL . '/private/login.php');

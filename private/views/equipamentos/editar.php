@@ -277,7 +277,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     unlink(PASTA_UPLOADS . $antigo);
                 }
             }
-
+            registar_log('EDITAR', "Equipamento editado por " . ($_SESSION['email'] ?? 'desconhecido'));
             $sucesso = 'Equipamento atualizado com sucesso.';
         } catch (Exception $err) {
             if (isset($ligacao) && $ligacao->inTransaction()) {
@@ -392,6 +392,7 @@ try {
 
     $ligacao = null;
 } catch (PDOException $err) {
+    registar_log('ERRO_BD', "Equipamentos: " . $err->getMessage());
     $erro_sistema = "Erro ao carregar o equipamento.";
 }
 

@@ -31,6 +31,7 @@ try {
 } catch (PDOException $err) {
     // falha silenciosa
 }
+registar_log('DESATIVAR', "Utilizador desativado por " . ($_SESSION['email'] ?? 'desconhecido'));
 $_SESSION['mensagem'] = 'Utilizador desativado com sucesso.';
 $_SESSION['mensagem_tipo'] = 'success';
 header('Location: ' . BASE_URL . '/private/views/utilizadores/lista.php');

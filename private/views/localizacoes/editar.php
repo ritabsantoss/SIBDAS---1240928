@@ -63,8 +63,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':id'          => $idLocalizacao
             ]);
             $ligacao = null;
+            registar_log('EDITAR', "Localização editada por " . ($_SESSION['email'] ?? 'desconhecido'));
             $sucesso = 'Localização atualizada com sucesso.';
         } catch (PDOException $err) {
+            registar_log('ERRO_BD', "Localizacoes: " . $err->getMessage());
             $msg = $err->getMessage();
             if (stripos($msg, 'foreign key') !== false) {
                 $erro_sistema = "O serviço selecionado não é válido.";
@@ -90,6 +92,7 @@ try {
         exit;
     }
 } catch (PDOException $err) {
+    registar_log('ERRO_BD', "Localizacoes: " . $err->getMessage());
     $erro_sistema = "Erro ao carregar a localização.";
 }
 

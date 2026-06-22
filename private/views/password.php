@@ -38,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ':hash'  => $novo_hash,
                     ':email' => $_SESSION['email']
                 ]);
+                registar_log('EDITAR', "Password alterada por " . ($_SESSION['email'] ?? 'desconhecido'));
                 $sucesso = 'Password alterada com sucesso.';
             }
 

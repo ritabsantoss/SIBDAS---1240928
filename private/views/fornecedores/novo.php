@@ -76,11 +76,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 ':observacoes'       => $observacoes ?: null
             ]);
             $ligacao = null;
+            registar_log('CRIAR', "Fornecedor criado por " . ($_SESSION['email'] ?? 'desconhecido'));
             $_SESSION['mensagem'] = 'Fornecedor criado com sucesso.';
             $_SESSION['mensagem_tipo'] = 'success';
             header("Location: lista.php");
             exit;
         } catch (PDOException $err) {
+            registar_log('ERRO_BD', "Fornecedores: " . $err->getMessage());
             $msg = $err->getMessage();
             if (strpos($msg, '23000') !== false) {
                 if (strpos($msg, 'nif') !== false) {

@@ -67,8 +67,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':id'     => $idUtilizador
             ]);
             $ligacao = null;
+            registar_log('EDITAR', "Utilizador editado por " . ($_SESSION['email'] ?? 'desconhecido'));
             $sucesso = 'Utilizador atualizado com sucesso.';
         } catch (PDOException $err) {
+            registar_log('ERRO_BD', "Utilizadores: " . $err->getMessage());
             $msg = $err->getMessage();
             if (strpos($msg, '23000') !== false) {
                 $erro_sistema = "Já existe um utilizador com esse email.";
@@ -95,6 +97,7 @@ try {
         exit;
     }
 } catch (PDOException $err) {
+    registar_log('ERRO_BD', "Utilizadores: " . $err->getMessage());
     $erro_sistema = "Erro ao carregar o utilizador.";
 }
 

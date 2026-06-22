@@ -22,6 +22,7 @@ try {
 } catch (PDOException $err) {
     // falha silenciosa
 }
+registar_log('DESATIVAR', "Equipamento desativado por " . ($_SESSION['email'] ?? 'desconhecido'));
 $_SESSION['mensagem'] = 'Equipamento desativado com sucesso.';
 $_SESSION['mensagem_tipo'] = 'success';
 header('Location: ' . BASE_URL . '/private/views/equipamentos/lista.php');

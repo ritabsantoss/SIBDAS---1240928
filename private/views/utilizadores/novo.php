@@ -61,11 +61,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 ':genero'        => $genero
             ]);
             $ligacao = null;
+            registar_log('CRIAR', "Utilizador criado por " . ($_SESSION['email'] ?? 'desconhecido'));
             $_SESSION['mensagem'] = 'Utilizador criado com sucesso.';
             $_SESSION['mensagem_tipo'] = 'success';
             header("Location: lista.php");
             exit;
         } catch (PDOException $err) {
+            registar_log('ERRO_BD', "Utilizadores: " . $err->getMessage());
             $msg = $err->getMessage();
             if (strpos($msg, '23000') !== false) {
                 $erro_sistema = "Já existe um utilizador com esse email.";

@@ -22,6 +22,7 @@ try {
 } catch (PDOException $err) {
     // falha silenciosa
 }
+registar_log('REATIVAR', "Documento reativado por " . ($_SESSION['email'] ?? 'desconhecido'));
 $_SESSION['mensagem'] = 'Documento reativado com sucesso.';
 $_SESSION['mensagem_tipo'] = 'success';
 header('Location: ' . BASE_URL . '/private/views/documentos/lista.php');

@@ -73,8 +73,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':id'                => $idFornecedor
             ]);
             $ligacao = null;
+            registar_log('EDITAR', "Fornecedor editado por " . ($_SESSION['email'] ?? 'desconhecido'));
             $sucesso = 'Fornecedor atualizado com sucesso.';
         } catch (PDOException $err) {
+            registar_log('ERRO_BD', "Fornecedores: " . $err->getMessage());
             $msg = $err->getMessage();
             if (strpos($msg, '23000') !== false) {
                 $erro_sistema = (strpos($msg, 'nif') !== false)
@@ -101,6 +103,7 @@ try {
         exit;
     }
 } catch (PDOException $err) {
+    registar_log('ERRO_BD', "Fornecedores: " . $err->getMessage());
     $erro_sistema = "Erro ao carregar o fornecedor.";
 }
 

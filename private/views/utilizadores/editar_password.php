@@ -45,11 +45,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':id'   => $idUtilizador
             ]);
             $ligacao = null;
+            registar_log('EDITAR', "Password redefinida por " . ($_SESSION['email'] ?? 'desconhecido'));
             $_SESSION['mensagem'] = 'Password redefinida com sucesso.';
             $_SESSION['mensagem_tipo'] = 'success';
             header('Location: ' . BASE_URL . '/private/views/utilizadores/lista.php');
             exit;
         } catch (PDOException $err) {
+            registar_log('ERRO_BD', "Utilizadores: " . $err->getMessage());
             $erro_sistema = "Não foi possível atualizar a password. Tente novamente.";
         }
     }
@@ -67,6 +69,7 @@ try {
         exit;
     }
 } catch (PDOException $err) {
+    registar_log('ERRO_BD', "Utilizadores: " . $err->getMessage());
     $erro_sistema = "Erro ao carregar o utilizador.";
 }
 
