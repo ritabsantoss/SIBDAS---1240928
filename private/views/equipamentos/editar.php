@@ -115,8 +115,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmtTmp->execute([':id' => $idEquipamento]);
             $old_fich_con = $stmtTmp->fetchColumn() ?: null;
 
-            $ficheiro_garantia = $novo_fich_gar ?: $old_fich_gar;
-            $ficheiro_contrato = $novo_fich_con ?: $old_fich_con;
+            // garantia — verificar se marcou para remover
+            if (isset($_POST['remover_ficheiro_garantia']) && !$novo_fich_gar) {
+                $ficheiro_garantia = null;
+            } else {
+                $ficheiro_garantia = $novo_fich_gar ?: $old_fich_gar;
+            }
+
+            // contrato — verificar se marcou para remover
+            if (isset($_POST['remover_ficheiro_contrato']) && !$novo_fich_con) {
+                $ficheiro_contrato = null;
+            } else {
+                $ficheiro_contrato = $novo_fich_con ?: $old_fich_con;
+            }
             $tem_garantia_final = $tem_garantia || !empty($novo_fich_gar);
 
             $ligacao->beginTransaction();
@@ -183,7 +194,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $ficheiroD_atual = trim($doc['ficheiro_atual'] ?? '');
                     $ficheiroD_novo  = guarda_ficheiro_array(ficheiro_de_secao('documentos', $i, 'ficheiro'), 'documento');
                     if ($ficheiroD_novo) $ficheiros_guardados[] = $ficheiroD_novo;
-                    $ficheiroD = $ficheiroD_novo ?: $ficheiroD_atual;
+                    if (!empty($doc['remover_ficheiro']) && !$ficheiroD_novo) {
+                        $ficheiroD = '';
+                    } else {
+                        $ficheiroD = $ficheiroD_novo ?: $ficheiroD_atual;
+                    }
                     $mapa_doc_uploads[$i] = ['antigo' => $ficheiroD_atual, 'novo' => $ficheiroD_novo]; // <-- adiciona esta linha
                     $obsD = trim($doc['observacoes_documentacao'] ?? '');
                     $temDocumento = ($tipo !== '' || $nomeDoc !== '' || $dataDoc !== '' || $val !== '' || $estadoD !== '' || $ficheiroD !== '' || $obsD !== '');
@@ -767,6 +782,15 @@ include __DIR__ . '/../../includes/navbar.php';
                                                             <?= htmlspecialchars($dd['ficheiro']) ?>
                                                         </a>
                                                     </div>
+                                                    <div class="form-check mt-1">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            id="remover_doc_<?= $di ?>"
+                                                            name="documentos[<?= $di ?>][remover_ficheiro]"
+                                                            value="1">
+                                                        <label class="form-check-label text-danger" for="remover_doc_<?= $di ?>">
+                                                            Remover ficheiro atual
+                                                        </label>
+                                                    </div>
                                                 <?php endif; ?>
                                                 <input type="hidden"
                                                     name="documentos[<?= $di ?>][ficheiro_atual]"
@@ -824,12 +848,17 @@ include __DIR__ . '/../../includes/navbar.php';
                                     <label for="ficheiro_garantia" class="form-label">Documento da garantia</label>
                                     <input type="file" class="form-control" id="ficheiro_garantia" name="ficheiro_garantia" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
                                     <?php if (!empty($garantia?->ficheiro_garantia)) : ?>
-                                        <div class="form-text">
+                                        <p class="form-text">
                                             Ficheiro atual:
-                                            <a href="<?= BASE_URL ?>/public/uploads/<?= rawurlencode($garantia->ficheiro_garantia) ?>"
-                                                target="_blank" rel="noopener">
+                                            <a href="<?= BASE_URL ?>/public/uploads/<?= rawurlencode($garantia->ficheiro_garantia) ?>" target="_blank" rel="noopener">
                                                 <?= htmlspecialchars($garantia->ficheiro_garantia) ?>
                                             </a>
+                                        </p>
+                                        <div class="form-check mt-1">
+                                            <input class="form-check-input" type="checkbox" id="remover_ficheiro_garantia" name="remover_ficheiro_garantia" value="1">
+                                            <label class="form-check-label text-danger" for="remover_ficheiro_garantia">
+                                                Remover ficheiro atual
+                                            </label>
                                         </div>
                                     <?php endif; ?>
                                 </div>
@@ -896,10 +925,15 @@ include __DIR__ . '/../../includes/navbar.php';
                                     <?php if (!empty($contrato?->ficheiro_contrato)) : ?>
                                         <div class="form-text">
                                             Ficheiro atual:
-                                            <a href="<?= BASE_URL ?>/public/uploads/<?= rawurlencode($contrato->ficheiro_contrato) ?>"
-                                                target="_blank" rel="noopener">
+                                            <a href="<?= BASE_URL ?>/public/uploads/<?= rawurlencode($contrato->ficheiro_contrato) ?>" target="_blank" rel="noopener">
                                                 <?= htmlspecialchars($contrato->ficheiro_contrato) ?>
                                             </a>
+                                        </div>
+                                        <div class="form-check mt-1">
+                                            <input class="form-check-input" type="checkbox" id="remover_ficheiro_contrato" name="remover_ficheiro_contrato" value="1">
+                                            <label class="form-check-label text-danger" for="remover_ficheiro_contrato">
+                                                Remover ficheiro atual
+                                            </label>
                                         </div>
                                     <?php endif; ?>
                                 </div>
