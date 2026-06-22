@@ -67,9 +67,32 @@ include __DIR__ . '/../../includes/navbar.php';
                 </p>
 
             </div>
-
+            <?php if ($_SESSION['perfil'] === 'administrador') : ?>
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="fa-solid fa-download me-1"></i>Exportar
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="exportar.php?formato=csv">
+                                <i class="fa-solid fa-file-csv me-2"></i>CSV
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="exportar.php?formato=json">
+                                <i class="fa-solid fa-file-code me-2"></i>JSON
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="exportar.php?formato=pdf" target="_blank">
+                                <i class="fa-solid fa-file-pdf me-2"></i>PDF
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            <?php endif; ?>
         </div>
-
+        
         <div class="card shadow-sm border-0 rounded-4">
 
             <div class="card-body">
