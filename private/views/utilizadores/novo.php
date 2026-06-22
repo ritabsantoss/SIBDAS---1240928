@@ -61,6 +61,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 ':genero'        => $genero
             ]);
             $ligacao = null;
+            $_SESSION['mensagem'] = 'Utilizador criado com sucesso.';
+            $_SESSION['mensagem_tipo'] = 'success';
             header("Location: lista.php");
             exit;
         } catch (PDOException $err) {

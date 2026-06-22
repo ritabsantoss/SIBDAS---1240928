@@ -45,6 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':id'   => $idUtilizador
             ]);
             $ligacao = null;
+            $_SESSION['mensagem'] = 'Password redefinida com sucesso.';
+            $_SESSION['mensagem_tipo'] = 'success';
             header('Location: ' . BASE_URL . '/private/views/utilizadores/lista.php');
             exit;
         } catch (PDOException $err) {

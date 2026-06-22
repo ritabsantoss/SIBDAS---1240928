@@ -22,6 +22,7 @@ try {
 } catch (PDOException $err) {
     // falha silenciosa
 }
-
+$_SESSION['mensagem'] = 'Fornecedor reativado com sucesso.';
+$_SESSION['mensagem_tipo'] = 'success';
 header('Location: ' . BASE_URL . '/private/views/fornecedores/lista.php');
 exit;

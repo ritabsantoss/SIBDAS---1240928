@@ -113,6 +113,13 @@ include __DIR__ . '/../../includes/navbar.php';
 
     <!-- Conteúdo -->
     <main class="private-main">
+        <?php if (!empty($_SESSION['mensagem'])) : ?>
+            <div class="alert alert-<?= $_SESSION['mensagem_tipo'] ?? 'success' ?> alert-dismissible fade show mb-4" role="alert">
+                <i class="fa-solid fa-circle-check me-2"></i><?= htmlspecialchars($_SESSION['mensagem']) ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            <?php unset($_SESSION['mensagem'], $_SESSION['mensagem_tipo']); ?>
+        <?php endif; ?>
 
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>

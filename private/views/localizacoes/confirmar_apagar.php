@@ -22,6 +22,7 @@ try {
 } catch (PDOException $err) {
     // falha silenciosa
 }
-
+$_SESSION['mensagem'] = 'Localização desativada com sucesso.';
+$_SESSION['mensagem_tipo'] = 'success';
 header('Location: ' . BASE_URL . '/private/views/localizacoes/lista.php');
 exit;

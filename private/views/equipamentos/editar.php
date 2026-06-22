@@ -16,6 +16,7 @@ if (!in_array($_SERVER['REQUEST_METHOD'], ['GET', 'POST'])) {
 $pagina_ativa = 'equipamentos';
 $erros = [];
 $erro_sistema = '';
+$sucesso = '';
 $lista_categorias = [];
 $lista_localizacoes = [];
 $lista_fornecedores = [];
@@ -277,8 +278,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
-            header('Location: ' . BASE_URL . '/private/views/equipamentos/lista.php');
-            exit;
+            $sucesso = 'Equipamento atualizado com sucesso.';
         } catch (Exception $err) {
             if (isset($ligacao) && $ligacao->inTransaction()) {
                 $ligacao->rollBack();
@@ -429,6 +429,12 @@ include __DIR__ . '/../../includes/navbar.php';
 
         <div class="card shadow-sm border-0 rounded-4">
             <div class="card-body p-4">
+
+                <?php if (!empty($sucesso)) : ?>
+                    <div class="alert alert-success" role="alert">
+                        <i class="fa-solid fa-circle-check me-2"></i><?= htmlspecialchars($sucesso) ?>
+                    </div>
+                <?php endif; ?>
 
                 <?php if (!empty($erros)) : ?>
                     <div class="alert alert-danger" role="alert">

@@ -387,6 +387,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
 
             $ligacao->commit();
+            $_SESSION['mensagem'] = 'Equipamento criado com sucesso.';
+            $_SESSION['mensagem_tipo'] = 'success';
             header("Location: lista.php");
             exit;
         } catch (Exception $err) {

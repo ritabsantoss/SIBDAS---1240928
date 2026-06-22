@@ -76,6 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 ':observacoes'       => $observacoes ?: null
             ]);
             $ligacao = null;
+            $_SESSION['mensagem'] = 'Fornecedor criado com sucesso.';
+            $_SESSION['mensagem_tipo'] = 'success';
             header("Location: lista.php");
             exit;
         } catch (PDOException $err) {
@@ -98,138 +100,138 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 include __DIR__ . '/../../includes/header.php';
 include __DIR__ . '/../../includes/navbar.php';
 ?>
-    
-    <div class="private-container">
 
-        <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
+<div class="private-container">
 
-        <!-- Conteúdo -->
-        <main class="private-main">
+    <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
 
-            <div class="mb-4">
-                <h2 class="mb-1">
-                    <i class="fa-solid fa-plus me-2"></i>
-                    Inserir Fornecedor
-                </h2>
+    <!-- Conteúdo -->
+    <main class="private-main">
 
-                <p class="text-muted mb-0">
-                    Preencha as principais informações do fornecedor.
-                </p>
+        <div class="mb-4">
+            <h2 class="mb-1">
+                <i class="fa-solid fa-plus me-2"></i>
+                Inserir Fornecedor
+            </h2>
+
+            <p class="text-muted mb-0">
+                Preencha as principais informações do fornecedor.
+            </p>
+        </div>
+
+        <div class="card shadow-sm border-0 rounded-4">
+            <div class="card-body p-4">
+
+                <?php if (!empty($erros)) : ?>
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Foram encontrados os seguintes erros:</strong>
+                        <ul class="mb-0">
+                            <?php foreach ($erros as $e) : ?>
+                                <li><?= htmlspecialchars($e) ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (!empty($erro_sistema)) : ?>
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Erro:</strong> <?= htmlspecialchars($erro_sistema) ?>
+                    </div>
+                <?php endif; ?>
+
+                <form action="#" method="post">
+
+                    <h5 class="mb-3">
+                        Identificação</h5>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="nome_empresa" class="form-label">Nome da empresa</label>
+                            <input type="text" class="form-control" id="nome_empresa" name="nome_empresa" value="<?= htmlspecialchars($_POST['nome_empresa'] ?? '') ?>">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="nif" class="form-label">NIF</label>
+                            <input type="text" class="form-control" id="nif" name="nif" value="<?= htmlspecialchars($_POST['nif'] ?? '') ?>">
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <h5 class="mb-3">
+                        Contactos</h5>
+
+                    <div class="row mb-3">
+
+                        <div class="col-md-4">
+                            <label for="telefone" class="form-label">Contacto telefónico</label>
+                            <input type="text" class="form-control" id="telefone" name="telefone" value="<?= htmlspecialchars($_POST['telefone'] ?? '') ?>">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="website" class="form-label">Website</label>
+                            <input type="url" class="form-control" id="website" name="website" value="<?= htmlspecialchars($_POST['website'] ?? '') ?>">
+                        </div>
+
+                    </div>
+
+                    <div class="row mb-3">
+
+                        <div class="col-12">
+                            <label for="morada" class="form-label">Morada</label>
+                            <input type="text" class="form-control" id="morada" name="morada" value="<?= htmlspecialchars($_POST['morada'] ?? '') ?>">
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <h5 class="mb-3">
+                        Pessoa de contacto</h5>
+
+                    <div class="row mb-3">
+
+                        <div class="col-md-6">
+                            <label for="pessoa_contacto" class="form-label">Pessoa de contacto</label>
+                            <input type="text" class="form-control" id="pessoa_contacto" name="pessoa_contacto" value="<?= htmlspecialchars($_POST['pessoa_contacto'] ?? '') ?>">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="telefone_contacto" class="form-label">Telefone da pessoa de contacto</label>
+                            <input type="text" class="form-control" id="telefone_contacto" name="telefone_contacto" value="<?= htmlspecialchars($_POST['telefone_contacto'] ?? '') ?>">
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <h5 class="mb-3">Observações</h5>
+
+                    <textarea class="form-control mb-4" id="observacoes" name="observacoes" rows="4"><?= htmlspecialchars($_POST['observacoes'] ?? '') ?></textarea>
+
+                    <div class="d-flex justify-content-end gap-2">
+
+                        <a href="lista.php" class="btn btn-outline-secondary">
+                            <i class="fa-solid fa-xmark me-1"></i>
+                            Cancelar
+                        </a>
+
+                        <button type="submit" class="btn btn-pink">
+                            <i class="fa-regular fa-floppy-disk me-1"></i>
+                            Guardar
+                        </button>
+
+                    </div>
+                </form>
             </div>
+        </div>
+    </main>
+</div>
 
-            <div class="card shadow-sm border-0 rounded-4">
-                <div class="card-body p-4">
-
-                    <?php if (!empty($erros)) : ?>
-                        <div class="alert alert-danger" role="alert">
-                            <strong>Foram encontrados os seguintes erros:</strong>
-                            <ul class="mb-0">
-                                <?php foreach ($erros as $e) : ?>
-                                    <li><?= htmlspecialchars($e) ?></li>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
-                    <?php endif; ?>
-
-                    <?php if (!empty($erro_sistema)) : ?>
-                        <div class="alert alert-danger" role="alert">
-                            <strong>Erro:</strong> <?= htmlspecialchars($erro_sistema) ?>
-                        </div>
-                    <?php endif; ?>
-
-                    <form action="#" method="post" >
-
-                        <h5 class="mb-3">
-                            Identificação</h5>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="nome_empresa" class="form-label">Nome da empresa</label>
-                                <input type="text" class="form-control" id="nome_empresa" name="nome_empresa" value="<?= htmlspecialchars($_POST['nome_empresa'] ?? '') ?>">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="nif" class="form-label">NIF</label>
-                                <input type="text" class="form-control" id="nif" name="nif" value="<?= htmlspecialchars($_POST['nif'] ?? '') ?>">
-                            </div>
-
-                        </div>
-
-                        <hr>
-
-                        <h5 class="mb-3">
-                            Contactos</h5>
-
-                        <div class="row mb-3">
-
-                            <div class="col-md-4">
-                                <label for="telefone" class="form-label">Contacto telefónico</label>
-                                <input type="text" class="form-control" id="telefone" name="telefone" value="<?= htmlspecialchars($_POST['telefone'] ?? '') ?>">
-                            </div>
-
-                            <div class="col-md-4">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
-                            </div>
-
-                            <div class="col-md-4">
-                                <label for="website" class="form-label">Website</label>
-                                <input type="url" class="form-control" id="website" name="website" value="<?= htmlspecialchars($_POST['website'] ?? '') ?>">
-                            </div>
-
-                        </div>
-
-                        <div class="row mb-3">
-
-                            <div class="col-12">
-                                <label for="morada" class="form-label">Morada</label>
-                                <input type="text" class="form-control" id="morada" name="morada" value="<?= htmlspecialchars($_POST['morada'] ?? '') ?>">
-                            </div>
-
-                        </div>
-
-                        <hr>
-
-                        <h5 class="mb-3">
-                            Pessoa de contacto</h5>
-
-                        <div class="row mb-3">
-
-                            <div class="col-md-6">
-                                <label for="pessoa_contacto" class="form-label">Pessoa de contacto</label>
-                                <input type="text" class="form-control" id="pessoa_contacto" name="pessoa_contacto" value="<?= htmlspecialchars($_POST['pessoa_contacto'] ?? '') ?>">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="telefone_contacto" class="form-label">Telefone da pessoa de contacto</label>
-                                <input type="text" class="form-control" id="telefone_contacto" name="telefone_contacto" value="<?= htmlspecialchars($_POST['telefone_contacto'] ?? '') ?>">
-                            </div>
-
-                        </div>
-
-                        <hr>
-
-                        <h5 class="mb-3">Observações</h5>
-
-                        <textarea class="form-control mb-4" id="observacoes" name="observacoes" rows="4"><?= htmlspecialchars($_POST['observacoes'] ?? '') ?></textarea>
-
-                        <div class="d-flex justify-content-end gap-2">
-
-                            <a href="lista.php" class="btn btn-outline-secondary">
-                                <i class="fa-solid fa-xmark me-1"></i>
-                                Cancelar
-                            </a>
-
-                            <button type="submit" class="btn btn-pink">
-                                <i class="fa-regular fa-floppy-disk me-1"></i>
-                                Guardar
-                            </button>
-
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <?php include __DIR__ . '/../../includes/footer.php'; ?>
+<?php include __DIR__ . '/../../includes/footer.php'; ?>

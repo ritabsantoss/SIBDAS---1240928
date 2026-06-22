@@ -8,27 +8,27 @@ try {
     $ligacao = liga_bd();
 
     if ($_SESSION['perfil'] === 'administrador') {
-    $stmt = $ligacao->prepare(
-        "SELECT d.idDocumento, d.codigo_documento, d.nome_documento, d.tipo_documento,
+        $stmt = $ligacao->prepare(
+            "SELECT d.idDocumento, d.codigo_documento, d.nome_documento, d.tipo_documento,
                 d.validade, d.ativo, e.designacao AS equipamento, f.nome_empresa AS fornecedor
          FROM Documentos d
          JOIN Equipamentos e      ON d.idEquipamento = e.idEquipamento AND e.ativo = 1
          LEFT JOIN Fornecedores f ON d.idFornecedor  = f.idFornecedor
          ORDER BY d.ativo DESC, d.codigo_documento"
-    );
-} else {
-    $stmt = $ligacao->prepare(
-        "SELECT d.idDocumento, d.codigo_documento, d.nome_documento, d.tipo_documento,
+        );
+    } else {
+        $stmt = $ligacao->prepare(
+            "SELECT d.idDocumento, d.codigo_documento, d.nome_documento, d.tipo_documento,
                 d.validade, d.ativo, e.designacao AS equipamento, f.nome_empresa AS fornecedor
          FROM Documentos d
          JOIN Equipamentos e      ON d.idEquipamento = e.idEquipamento AND e.ativo = 1
          LEFT JOIN Fornecedores f ON d.idFornecedor  = f.idFornecedor
          WHERE d.ativo = 1
          ORDER BY d.ativo DESC, d.codigo_documento"
-    );
-}
-$stmt->execute();
-$resultados = $stmt->fetchAll(PDO::FETCH_OBJ);
+        );
+    }
+    $stmt->execute();
+    $resultados = $stmt->fetchAll(PDO::FETCH_OBJ);
 
     $erro = '';
 } catch (PDOException $err) {
@@ -46,6 +46,14 @@ include __DIR__ . '/../../includes/navbar.php';
 
     <!-- Conteúdo -->
     <main class="private-main">
+
+        <?php if (!empty($_SESSION['mensagem'])) : ?>
+            <div class="alert alert-<?= $_SESSION['mensagem_tipo'] ?? 'success' ?> alert-dismissible fade show mb-4" role="alert">
+                <i class="fa-solid fa-circle-check me-2"></i><?= htmlspecialchars($_SESSION['mensagem']) ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            <?php unset($_SESSION['mensagem'], $_SESSION['mensagem_tipo']); ?>
+        <?php endif; ?>
 
         <div class="d-flex justify-content-between align-items-center mb-4">
 

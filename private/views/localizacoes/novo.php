@@ -69,6 +69,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 ':observacoes' => $observacoes ?: null
             ]);
             $ligacao = null;
+            $_SESSION['mensagem'] = 'Localização criada com sucesso.';
+            $_SESSION['mensagem_tipo'] = 'success';
             header("Location: lista.php");
             exit;
         } catch (PDOException $err) {
@@ -88,106 +90,106 @@ include __DIR__ . '/../../includes/header.php';
 include __DIR__ . '/../../includes/navbar.php';
 ?>
 
-    <div class="private-container">
+<div class="private-container">
 
-        <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
+    <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
 
-        <!-- Conteúdo -->
-        <main class="private-main">
+    <!-- Conteúdo -->
+    <main class="private-main">
 
-            <div class="mb-4">
-                <h2 class="mb-1">
-                    <i class="fa-solid fa-plus me-2"></i>
-                    Inserir Localização
-                </h2>
+        <div class="mb-4">
+            <h2 class="mb-1">
+                <i class="fa-solid fa-plus me-2"></i>
+                Inserir Localização
+            </h2>
 
-                <p class="text-muted mb-0">
-                    Registe uma nova localização física para equipamentos hospitalares.
-                </p>
+            <p class="text-muted mb-0">
+                Registe uma nova localização física para equipamentos hospitalares.
+            </p>
 
-            </div>
+        </div>
 
-            <div class="card shadow-sm border-0 rounded-4">
-                <div class="card-body p-4">
+        <div class="card shadow-sm border-0 rounded-4">
+            <div class="card-body p-4">
 
-                    <?php if (!empty($erros)) : ?>
-                        <div class="alert alert-danger" role="alert">
-                            <strong>Foram encontrados os seguintes erros:</strong>
-                            <ul class="mb-0">
-                                <?php foreach ($erros as $e) : ?>
-                                    <li><?= htmlspecialchars($e) ?></li>
+                <?php if (!empty($erros)) : ?>
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Foram encontrados os seguintes erros:</strong>
+                        <ul class="mb-0">
+                            <?php foreach ($erros as $e) : ?>
+                                <li><?= htmlspecialchars($e) ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (!empty($erro_sistema)) : ?>
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Erro:</strong> <?= htmlspecialchars($erro_sistema) ?>
+                    </div>
+                <?php endif; ?>
+
+                <form action="#" method="post">
+
+                    <h5 class="mb-3">
+                        Local</h5>
+
+                    <div class="row mb-3">
+
+                        <div class="col-md-3">
+                            <label for="edificio" class="form-label">Edifício</label>
+                            <input type="text" class="form-control" id="edificio" name="edificio" value="<?= htmlspecialchars($_POST['edificio'] ?? '') ?>">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="piso" class="form-label">Piso</label>
+                            <input type="text" class="form-control" id="piso" name="piso" value="<?= htmlspecialchars($_POST['piso'] ?? '') ?>">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="idServico" class="form-label">Serviço | Departamento</label>
+                            <select class="form-select" id="idServico" name="idServico">
+                                <option value="" selected disabled>Escolha...</option>
+                                <?php foreach ($lista_servicos as $s) : ?>
+                                    <option value="<?= $s->idServico ?>" <?= (($_POST['idServico'] ?? '') == $s->idServico) ? 'selected' : '' ?>><?= htmlspecialchars($s->nome) ?></option>
                                 <?php endforeach; ?>
-                            </ul>
-                        </div>
-                    <?php endif; ?>
-
-                    <?php if (!empty($erro_sistema)) : ?>
-                        <div class="alert alert-danger" role="alert">
-                            <strong>Erro:</strong> <?= htmlspecialchars($erro_sistema) ?>
-                        </div>
-                    <?php endif; ?>
-
-                    <form action="#" method="post" >
-
-                        <h5 class="mb-3">
-                            Local</h5>
-
-                        <div class="row mb-3">
-
-                            <div class="col-md-3">
-                                <label for="edificio" class="form-label">Edifício</label>
-                                <input type="text" class="form-control" id="edificio" name="edificio" value="<?= htmlspecialchars($_POST['edificio'] ?? '') ?>">
-                            </div>
-
-                            <div class="col-md-3">
-                                <label for="piso" class="form-label">Piso</label>
-                                <input type="text" class="form-control" id="piso" name="piso" value="<?= htmlspecialchars($_POST['piso'] ?? '') ?>">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="idServico" class="form-label">Serviço | Departamento</label>
-                                <select class="form-select" id="idServico" name="idServico">
-                                    <option value="" selected disabled>Escolha...</option>
-                                    <?php foreach ($lista_servicos as $s) : ?>
-                                        <option value="<?= $s->idServico ?>" <?= (($_POST['idServico'] ?? '') == $s->idServico) ? 'selected' : '' ?>><?= htmlspecialchars($s->nome) ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-
+                            </select>
                         </div>
 
-                        <div class="row mb-3">
+                    </div>
 
-                            <div class="col-md-6">
-                                <label for="sala" class="form-label">Sala | Gabinete</label>
-                                <input type="text" class="form-control" id="sala" name="sala" value="<?= htmlspecialchars($_POST['sala'] ?? '') ?>">
-                            </div>
+                    <div class="row mb-3">
 
+                        <div class="col-md-6">
+                            <label for="sala" class="form-label">Sala | Gabinete</label>
+                            <input type="text" class="form-control" id="sala" name="sala" value="<?= htmlspecialchars($_POST['sala'] ?? '') ?>">
                         </div>
 
-                        <hr>
+                    </div>
 
-                        <h5 class="mb-3">Observações</h5>
+                    <hr>
 
-                        <textarea class="form-control mb-4" id="observacoes" name="observacoes" rows="4"><?= htmlspecialchars($_POST['observacoes'] ?? '') ?></textarea>
+                    <h5 class="mb-3">Observações</h5>
 
-                        <div class="d-flex justify-content-end gap-2">
+                    <textarea class="form-control mb-4" id="observacoes" name="observacoes" rows="4"><?= htmlspecialchars($_POST['observacoes'] ?? '') ?></textarea>
 
-                            <a href="lista.php" class="btn btn-outline-secondary">
-                                <i class="fa-solid fa-xmark me-1"></i>
-                                Cancelar
-                            </a>
+                    <div class="d-flex justify-content-end gap-2">
 
-                            <button type="submit" class="btn btn-pink">
-                                <i class="fa-regular fa-floppy-disk me-1"></i>
-                                Guardar
-                            </button>
+                        <a href="lista.php" class="btn btn-outline-secondary">
+                            <i class="fa-solid fa-xmark me-1"></i>
+                            Cancelar
+                        </a>
 
-                        </div>
-                    </form>
-                </div>
+                        <button type="submit" class="btn btn-pink">
+                            <i class="fa-regular fa-floppy-disk me-1"></i>
+                            Guardar
+                        </button>
+
+                    </div>
+                </form>
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
+</div>
 
-    <?php include __DIR__ . '/../../includes/footer.php'; ?>
+<?php include __DIR__ . '/../../includes/footer.php'; ?>

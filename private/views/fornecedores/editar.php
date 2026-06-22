@@ -16,6 +16,7 @@ if (!in_array($_SERVER['REQUEST_METHOD'], ['GET', 'POST'])) {
 $pagina_ativa = 'fornecedores';
 $erros = [];
 $erro_sistema = '';
+$sucesso = '';
 
 // desencriptar e validar o ID 
 $idEncriptado = $_GET['id_fornecedor'] ?? null;
@@ -72,8 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':id'                => $idFornecedor
             ]);
             $ligacao = null;
-            header('Location: ' . BASE_URL . '/private/views/fornecedores/lista.php');
-            exit;
+            $sucesso = 'Fornecedor atualizado com sucesso.';
         } catch (PDOException $err) {
             $msg = $err->getMessage();
             if (strpos($msg, '23000') !== false) {
@@ -130,6 +130,12 @@ include __DIR__ . '/../../includes/navbar.php';
 
         <div class="card shadow-sm border-0 rounded-4">
             <div class="card-body p-4">
+
+                <?php if (!empty($sucesso)) : ?>
+                    <div class="alert alert-success" role="alert">
+                        <i class="fa-solid fa-circle-check me-2"></i><?= htmlspecialchars($sucesso) ?>
+                    </div>
+                <?php endif; ?>
 
                 <?php if (!empty($erros)) : ?>
                     <div class="alert alert-danger" role="alert">

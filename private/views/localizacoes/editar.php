@@ -16,6 +16,7 @@ if (!in_array($_SERVER['REQUEST_METHOD'], ['GET', 'POST'])) {
 $pagina_ativa = 'localizacoes';
 $erros = [];
 $erro_sistema = '';
+$sucesso = '';
 $lista_servicos = [];
 
 // desencriptar e validar o ID 
@@ -62,8 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':id'          => $idLocalizacao
             ]);
             $ligacao = null;
-            header('Location: ' . BASE_URL . '/private/views/localizacoes/lista.php');
-            exit;
+            $sucesso = 'Localização atualizada com sucesso.';
         } catch (PDOException $err) {
             $msg = $err->getMessage();
             if (stripos($msg, 'foreign key') !== false) {
@@ -119,6 +119,12 @@ include __DIR__ . '/../../includes/navbar.php';
 
         <div class="card shadow-sm border-0 rounded-4">
             <div class="card-body p-4">
+
+                <?php if (!empty($sucesso)) : ?>
+                    <div class="alert alert-success" role="alert">
+                        <i class="fa-solid fa-circle-check me-2"></i><?= htmlspecialchars($sucesso) ?>
+                    </div>
+                <?php endif; ?>
 
                 <?php if (!empty($erros)) : ?>
                     <div class="alert alert-danger" role="alert">
