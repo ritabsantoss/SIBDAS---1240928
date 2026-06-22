@@ -1,5 +1,19 @@
-<?php require_once __DIR__ . '/../config/config.php'; ?>
+<?php
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../private/includes/funcoes.php';
 
+$conteudos = [];
+try {
+    $ligacao = liga_bd();
+    $stmt = $ligacao->query("SELECT chave, valor FROM Conteudos ORDER BY ordem");
+    foreach ($stmt->fetchAll(PDO::FETCH_OBJ) as $row) {
+        $conteudos[$row->chave] = $row->valor;
+    }
+    $ligacao = null;
+} catch (PDOException $err) {
+    // falha silenciosa — página continua com valores vazios
+}
+?>
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -57,133 +71,99 @@
 
         <div class="hero-text">
             <h1>
-                Apoio ao Inventário Hospitalar de Equipamentos Médicos
+                <?= conteudo($conteudos, 'hero_titulo') ?>
             </h1>
 
             <p>
-                A SIHEM permite organizar, monitorizar e gerir
-                o inventário hospitalar de equipamentos médicos
-                de forma centralizada, segura e eficiente.
+                <?= conteudo($conteudos, 'hero_subtitulo') ?>
             </p>
 
-            <a href="#servicos" class="hero-button">
-                Explore a nossa Plataforma
+            <a href="<?= conteudo($conteudos, 'hero_link') ?>" class="hero-button">
+                <?= conteudo($conteudos, 'hero_botao') ?>
             </a>
         </div>
 
         <div class="hero-image">
-            <img src="../assets/img/sihem3.jpg" alt="Hospital">
+            <img src="../assets/img/<?= conteudo($conteudos, 'hero_imagem') ?>" alt="Hospital">
         </div>
 
     </section>
 
     <!-- Estatísticas -->
-
     <section class="estatisticas">
 
         <div class="estatistica-card">
-            <i class="fa-solid fa-laptop-medical"></i>
-            <h2>1500+</h2>
-            <p>Equipamentos Registados</p>
+            <i class="<?= conteudo($conteudos, 'estat1_icone') ?>"></i>
+            <h2><?= conteudo($conteudos, 'estat1_valor') ?></h2>
+            <p><?= conteudo($conteudos, 'estat1_label') ?></p>
         </div>
 
         <div class="estatistica-card">
-            <i class="fa-solid fa-hospital"></i>
-            <h2>45</h2>
-            <p>Hospitais Associados</p>
+            <i class="<?= conteudo($conteudos, 'estat2_icone') ?>"></i>
+            <h2><?= conteudo($conteudos, 'estat2_valor') ?></h2>
+            <p><?= conteudo($conteudos, 'estat2_label') ?></p>
         </div>
 
         <div class="estatistica-card">
-            <i class="fa-solid fa-user-doctor"></i>
-            <h2>120</h2>
-            <p>Técnicos Especializados</p>
+            <i class="<?= conteudo($conteudos, 'estat3_icone') ?>"></i>
+            <h2><?= conteudo($conteudos, 'estat3_valor') ?></h2>
+            <p><?= conteudo($conteudos, 'estat3_label') ?></p>
         </div>
 
         <div class="estatistica-card">
-            <i class="fa-solid fa-clock"></i>
-            <h2>24/7</h2>
-            <p>Monitorização Contínua</p>
+            <i class="<?= conteudo($conteudos, 'estat4_icone') ?>"></i>
+            <h2><?= conteudo($conteudos, 'estat4_valor') ?></h2>
+            <p><?= conteudo($conteudos, 'estat4_label') ?></p>
         </div>
 
     </section>
 
     <!-- Serviços -->
 
+    <!-- Serviços -->
     <section class="servicos" id="servicos">
 
         <div class="servicos-titulo">
-            <h2>Serviços da Plataforma</h2>
-
-            <p>
-                Funcionalidades desenvolvidas para apoiar
-                a gestão hospitalar de equipamentos médicos.
-            </p>
-
+            <h2><?= conteudo($conteudos, 'servicos_titulo') ?></h2>
+            <p><?= conteudo($conteudos, 'servicos_subtitulo') ?></p>
         </div>
 
         <div class="servicos-cards">
 
             <div class="servico-card">
 
-                <i class="fa-solid fa-laptop-file"></i>
-                <h3>Gestão de Equipamentos</h3>
-                <p>
-                    Registo e consulta de equipamentos médicos
-                    com informação técnica detalhada.
-                </p>
-
+                <h3><?= conteudo($conteudos, 'serv1_titulo') ?></h3>
+                <p><?= conteudo($conteudos, 'serv1_texto') ?></p>
             </div>
 
             <div class="servico-card">
 
-                <i class="fa-solid fa-file-medical"></i>
-                <h3>Documentação Técnica</h3>
-                <p>
-                    Armazenamento de manuais, garantias,
-                    relatórios e documentação associada.
-                </p>
-
+                <h3><?= conteudo($conteudos, 'serv2_titulo') ?></h3>
+                <p><?= conteudo($conteudos, 'serv2_texto') ?></p>
             </div>
 
             <div class="servico-card">
 
-                <i class="fa-solid fa-location-dot"></i>
-                <h3>Localização Hospitalar</h3>
-                <p>
-                    Monitorização da localização física
-                    dos equipamentos hospitalares.
-                </p>
-
+                <h3><?= conteudo($conteudos, 'serv3_titulo') ?></h3>
+                <p><?= conteudo($conteudos, 'serv3_texto') ?></p>
             </div>
 
             <div class="servico-card">
 
-                <i class="fa-solid fa-chart-pie"></i>
-
-                <h3>Dashboard Estatístico</h3>
-
-                <p>
-                    Visualização rápida de indicadores
-                    e estatísticas do inventário hospitalar.
-                </p>
-
+                <h3><?= conteudo($conteudos, 'serv4_titulo') ?></h3>
+                <p><?= conteudo($conteudos, 'serv4_texto') ?></p>
             </div>
 
         </div>
 
     </section>
-
     <!-- FAQ -->
 
     <section class="faq-section" id="faq">
 
         <div class="faq-title">
-
-            <h2>Perguntas Frequentes</h2>
-            <p>
-                Esclareça as principais dúvidas sobre a plataforma SIHEM.
-            </p>
-
+            <h2><?= conteudo($conteudos, 'faq_titulo') ?></h2>
+            <p><?= conteudo($conteudos, 'faq_subtitulo') ?></p>
         </div>
 
         <div class="accordion faq-container" id="accordionFAQ">
@@ -192,13 +172,12 @@
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                        O que é a plataforma SIHEM?
+                        <?= conteudo($conteudos, 'faq1_pergunta') ?>
                     </button>
                 </h2>
                 <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#accordionFAQ">
                     <div class="accordion-body">
-                        A SIHEM é uma plataforma de gestão de inventário hospitalar
-                        desenvolvida para organizar equipamentos médicos e documentação técnica.
+                        <?= conteudo($conteudos, 'faq1_resposta') ?>
                     </div>
                 </div>
             </div>
@@ -208,13 +187,12 @@
                 <h2 class="accordion-header">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#faq2">
-                        É possível localizar equipamentos hospitalares?
+                        <?= conteudo($conteudos, 'faq2_pergunta') ?>
                     </button>
                 </h2>
                 <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
                     <div class="accordion-body">
-                        Sim. O sistema permite acompanhar a localização dos equipamentos
-                        dentro das diferentes áreas hospitalares.
+                        <?= conteudo($conteudos, 'faq2_resposta') ?>
                     </div>
                 </div>
             </div>
@@ -224,13 +202,12 @@
                 <h2 class="accordion-header">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#faq3">
-                        A plataforma armazena documentação técnica?
+                        <?= conteudo($conteudos, 'faq3_pergunta') ?>
                     </button>
                 </h2>
                 <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
                     <div class="accordion-body">
-                        A SIHEM permite guardar manuais, relatórios,
-                        garantias e histórico técnico dos equipamentos.
+                        <?= conteudo($conteudos, 'faq3_resposta') ?>
                     </div>
                 </div>
             </div>
@@ -240,13 +217,12 @@
                 <h2 class="accordion-header">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#faq4">
-                        O sistema apresenta estatísticas e dashboards?
+                        <?= conteudo($conteudos, 'faq4_pergunta') ?>
                     </button>
                 </h2>
                 <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
                     <div class="accordion-body">
-                        Sim. A plataforma inclui dashboards com indicadores
-                        estatísticos relacionados com os equipamentos registados.
+                        <?= conteudo($conteudos, 'faq4_resposta') ?>
                     </div>
                 </div>
 
@@ -257,13 +233,12 @@
                 <h2 class="accordion-header">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#faq5">
-                        Quem pode utilizar a plataforma?
+                        <?= conteudo($conteudos, 'faq5_pergunta') ?>
                     </button>
                 </h2>
                 <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
                     <div class="accordion-body">
-                        A plataforma destina-se a hospitais,
-                        clínicas e técnicos responsáveis pela gestão de equipamentos médicos.
+                        <?= conteudo($conteudos, 'faq5_resposta') ?>
                     </div>
                 </div>
             </div>
@@ -272,41 +247,39 @@
     </section>
 
     <!-- Footer -->
-
     <footer class="footer" id="contactos">
 
         <!-- contactos -->
         <div class="footer-section">
 
-            <h3>APOIO TÉCNICO</h3>
+            <h3><?= conteudo($conteudos, 'footer_titulo1') ?></h3>
             <p>
                 <i class="fa-solid fa-envelope"></i>
-                geral@sihem.pt
+                <?= conteudo($conteudos, 'contacto_email') ?>
             </p>
             <p>
                 <i class="fa-solid fa-phone"></i>
-                +351 912 222 222
+                <?= conteudo($conteudos, 'contacto_telefone') ?>
             </p>
             <p>
                 <i class="fa-solid fa-location-dot"></i>
-                Porto, Portugal
+                <?= conteudo($conteudos, 'contacto_local') ?>
             </p>
 
         </div>
 
-
         <div class="footer-section">
 
-            <h3>PLATAFORMA</h3>
+            <h3><?= conteudo($conteudos, 'footer_titulo2') ?></h3>
             <p>
-                Versão da plataforma: v<?php echo APP_VERSION; ?>
+                Versão da plataforma: <?= conteudo($conteudos, 'plataforma_versao') ?>
             </p>
             <p>
-                Última atualização: Junho 2026
+                Última atualização: <?= conteudo($conteudos, 'plataforma_atualizacao') ?>
             </p>
             <p class="estado-sistema">
                 <span class="status-online"></span>
-                Sistema Online
+                <?= conteudo($conteudos, 'plataforma_estado') ?>
             </p>
 
         </div>
