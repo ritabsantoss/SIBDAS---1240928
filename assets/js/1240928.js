@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    // DASHBOARD
+    /*// DASHBOARD
     const totalEquipamentos = document.getElementById("totalEquipamentos");
 
     if (totalEquipamentos && typeof Chart !== "undefined") {
@@ -85,87 +85,55 @@ document.addEventListener("DOMContentLoaded", function () {
                     </tr>
                 `;
             });
-        }
+        }*/
 
-        const graficoEstado = document.getElementById("graficoEstado");
-
-        if (graficoEstado) {
-            new Chart(graficoEstado, {
-                type: "doughnut",
-                data: {
-                    labels: ["Ativos", "Em manutenção", "Inativos"],
-                    datasets: [{
-                        data: [
-                            dadosDashboard.ativos,
-                            dadosDashboard.manutencao,
-                            dadosDashboard.inativos
-                        ],
-                        backgroundColor: [
-                            "#005b9a",
-                            "#003b66",
-                            "#e58ea0"
-                        ]
-                    }]
-                }
-            });
-        }
-
-        const graficoCriticidade = document.getElementById("graficoCriticidade");
-
-        if (graficoCriticidade) {
-            new Chart(graficoCriticidade, {
-                type: "bar",
-                data: {
-                    labels: ["Baixa", "Média", "Alta", "Suporte de vida"],
-                    datasets: [{
-                        label: "N.º de equipamentos",
-                        data: [
-                            dadosDashboard.criticidade.baixa,
-                            dadosDashboard.criticidade.media,
-                            dadosDashboard.criticidade.alta,
-                            dadosDashboard.criticidade.suporteVida
-                        ],
-                        backgroundColor: [
-                            "#005b9a",
-                            "#4a86b8",
-                            "#7aa8ca",
-                            "#e58ea0"
-                        ]
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        }
-
-        const graficoCategoria = document.getElementById("graficoCategoria");
-
-        if (graficoCategoria) {
-            new Chart(graficoCategoria, {
-                type: "bar",
-                data: {
-                    labels: dadosDashboard.categorias.map(categoria => categoria.nome),
-                    datasets: [{
-                        label: "N.º de equipamentos",
-                        data: dadosDashboard.categorias.map(categoria => categoria.total),
-                        backgroundColor: "#005b9a"
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        }
+    // DASHBOARD — gráficos
+    const graficoEstado = document.getElementById("graficoEstado");
+    if (graficoEstado && typeof dadosEstado !== "undefined") {
+        new Chart(graficoEstado, {
+            type: "doughnut",
+            data: {
+                labels: dadosEstado.map(d => d.estado),
+                datasets: [{
+                    data: dadosEstado.map(d => d.total),
+                    backgroundColor: ["#005b9a", "#003b66", "#e58ea0"]
+                }]
+            }
+        });
     }
+
+    const graficoCriticidade = document.getElementById("graficoCriticidade");
+    if (graficoCriticidade && typeof dadosCriticidade !== "undefined") {
+        new Chart(graficoCriticidade, {
+            type: "bar",
+            data: {
+                labels: dadosCriticidade.map(d => d.criticidade),
+                datasets: [{
+                    label: "N.º de equipamentos",
+                    data: dadosCriticidade.map(d => d.total),
+                    backgroundColor: ["#005b9a", "#4a86b8", "#7aa8ca", "#e58ea0"]
+                }]
+            },
+            options: { scales: { y: { beginAtZero: true } } }
+        });
+    }
+
+    const graficoCategoria = document.getElementById("graficoCategoria");
+    if (graficoCategoria && typeof dadosCategorias !== "undefined") {
+        new Chart(graficoCategoria, {
+            type: "bar",
+            data: {
+                labels: dadosCategorias.map(d => d.nome),
+                datasets: [{
+                    label: "N.º de equipamentos",
+                    data: dadosCategorias.map(d => d.total),
+                    backgroundColor: "#005b9a"
+                }]
+            },
+            options: { scales: { y: { beginAtZero: true } } }
+        });
+    }
+    /*}*/
 
     // BOTÕES DE GESTÃO / MODAL ELIMINAR
     const botoesGestao = document.querySelectorAll(".btn-gestao");
