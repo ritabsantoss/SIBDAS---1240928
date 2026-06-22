@@ -8,7 +8,8 @@ $lista_edificios = [];
 
 try {
     $ligacao = liga_bd();
-
+    // Administrador vê todos os fornecedores (ativos e inativos)
+    // Técnico vê apenas os ativos
     $filtro_ativo = $_SESSION['perfil'] === 'administrador' ? "" : "WHERE l.ativo = 1";
     $resultados = $ligacao->query(
         "SELECT l.idLocalizacao, l.edificio, l.piso, s.nome AS servico, l.sala, l.ativo
@@ -17,7 +18,7 @@ try {
      $filtro_ativo
      ORDER BY l.ativo DESC, l.edificio"
     )->fetchAll(PDO::FETCH_OBJ);
-
+    // Carregar listas para os filtros de pesquisa da lista de localizações
     $lista_servicos  = $ligacao->query("SELECT nome FROM Servicos ORDER BY nome")->fetchAll(PDO::FETCH_COLUMN);
     $lista_edificios = $ligacao->query("SELECT DISTINCT edificio FROM Localizacoes WHERE edificio IS NOT NULL ORDER BY edificio")->fetchAll(PDO::FETCH_COLUMN);
 

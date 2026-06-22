@@ -8,6 +8,7 @@
         <i class="fa-solid fa-house"></i> Início
     </a>
 
+    <!-- Administrador -->
     <?php if ($_SESSION['perfil'] == 'administrador') : ?>
         <a href="<?php echo BASE_URL; ?>/private/views/dashboard.php"
             class="sidebar-link <?php echo ($pagina_ativa ?? '') === 'dashboard' ? 'active' : ''; ?>">
@@ -39,6 +40,7 @@
         </a>
     <?php endif; ?>
 
+        <!-- Técnico -->
     <?php if ($_SESSION['perfil'] == 'tecnico') : ?>
         <a href="<?php echo BASE_URL; ?>/private/views/dashboard.php"
             class="sidebar-link <?php echo ($pagina_ativa ?? '') === 'dashboard' ? 'active' : ''; ?>">
@@ -62,6 +64,7 @@
         </a>
     <?php endif; ?>
 
+    <!--Profissional -->
     <?php if ($_SESSION['perfil'] == 'profissional') : ?>
         <a href="<?php echo BASE_URL; ?>/private/views/equipamentos/lista.php"
             class="sidebar-link <?php echo ($pagina_ativa ?? '') === 'equipamentos' ? 'active' : ''; ?>">

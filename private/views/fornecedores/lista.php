@@ -6,7 +6,8 @@ $pagina_ativa = 'fornecedores';
 
 try {
     $ligacao = liga_bd();
-
+    // Administrador vê todos os fornecedores (ativos e inativos)
+    // Técnico vê apenas os ativos
     $filtro_ativo = $_SESSION['perfil'] === 'administrador' ? "" : "WHERE ativo = 1";
     $resultados = $ligacao->query(
         "SELECT idFornecedor, nome_empresa, nif, telefone, email, ativo
@@ -228,7 +229,7 @@ include __DIR__ . '/../../includes/navbar.php';
         </div>
     </main>
 </div>
-
+<!--DataTable-->
 <?php if (empty($erro)) : ?>
     <script>
         $(document).ready(function() {

@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../includes/funcoes.php';
 redirect_if_not_logged();
-
+// Garantir que a página só é acedida por GET (não por POST direto)
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     header('Location: ' . BASE_URL . '/public/login.php');
     exit;
@@ -11,17 +11,17 @@ $pagina_ativa = 'localizacoes';
 $erro_sistema = '';
 $localizacao = null;
 $equipamentos_localizacao = [];
-
+// Desencriptar e validar o ID recebido por GET
 $idEncriptado = $_GET['id_localizacao'] ?? null;
 $idLocalizacao = aes_decrypt($idEncriptado);
 if (!$idLocalizacao || !is_numeric($idLocalizacao)) {
     header('Location: ' . BASE_URL . '/private/views/localizacoes/lista.php');
     exit;
 }
-
+// Carregar os dados
 try {
     $ligacao = liga_bd();
-
+    // carregar a loc
     $stmt = $ligacao->prepare(
         "SELECT l.*, s.nome AS servico
          FROM Localizacoes l
@@ -31,12 +31,12 @@ try {
     $stmt->bindParam(':id', $idLocalizacao, PDO::PARAM_INT);
     $stmt->execute();
     $localizacao = $stmt->fetch(PDO::FETCH_OBJ);
-
+    // Se não existir, redireciona para a lista
     if (!$localizacao) {
         header('Location: ' . BASE_URL . '/private/views/localizacoes/lista.php');
         exit;
     }
-
+    // carregar equipamentos associados a esta loc
     $stmtEq = $ligacao->prepare(
         "SELECT e.codigo_interno, e.designacao, c.nome AS categoria,
                 e.estado_atual, e.criticidade, e.idEquipamento

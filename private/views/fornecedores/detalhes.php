@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../includes/funcoes.php';
 redirect_if_not_logged();
-
+// Garantir que a página só é acedida por GET (não por POST direto)
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     header('Location: ' . BASE_URL . '/public/login.php');
     exit;
@@ -11,14 +11,14 @@ $pagina_ativa = 'fornecedores';
 $erro_sistema = '';
 $fornecedor = null;
 $equipamentos_associados = [];
-
+// Desencriptar e validar o ID recebido por GET
 $idEncriptado = $_GET['id_fornecedor'] ?? null;
 $idFornecedor = aes_decrypt($idEncriptado);
 if (!$idFornecedor || !is_numeric($idFornecedor)) {
     header('Location: ' . BASE_URL . '/private/views/fornecedores/lista.php');
     exit;
 }
-
+// Carregar os dados
 try {
     $ligacao = liga_bd();
 
@@ -27,7 +27,7 @@ try {
     $stmt->bindParam(':id', $idFornecedor, PDO::PARAM_INT);
     $stmt->execute();
     $fornecedor = $stmt->fetch(PDO::FETCH_OBJ);
-
+    // Se não existir, redireciona para a lista
     if (!$fornecedor) {
         header('Location: ' . BASE_URL . '/private/views/fornecedores/lista.php');
         exit;

@@ -1,18 +1,18 @@
 <?php
 require_once __DIR__ . '/../../includes/funcoes.php';
 redirect_if_not_logged();
-
+// Só o administrador pode exportar dados
 if ($_SESSION['perfil'] !== 'administrador') {
     header('Location: ' . BASE_URL . '/private/views/utilizadores/lista.php');
     exit;
 }
-
+// Validar o formato pedido — apenas csv, json e pdf são permitidos
 $formato = $_GET['formato'] ?? '';
 if (!in_array($formato, ['csv', 'json', 'pdf'])) {
     header('Location: ' . BASE_URL . '/private/views/utilizadores/lista.php');
     exit;
 }
-
+// Carregar os dados da BD para exportação
 try {
     $ligacao = liga_bd();
     $resultados = $ligacao->query(
@@ -37,7 +37,7 @@ try {
     header('Location: ' . BASE_URL . '/private/views/utilizadores/lista.php');
     exit;
 }
-
+// Exportar em CSV — formato compatível com Excel, com  UTF-8 para acentos
 if ($formato === 'csv') {
     header('Content-Type: text/csv; charset=utf-8');
     header('Content-Disposition: attachment; filename="utilizadores_' . date('Y-m-d') . '.csv"');
@@ -52,6 +52,7 @@ if ($formato === 'csv') {
     exit;
 }
 
+// Exportar em JSON — formato legível e estruturado
 if ($formato === 'json') {
     header('Content-Type: application/json; charset=utf-8');
     header('Content-Disposition: attachment; filename="utilizadores_' . date('Y-m-d') . '.json"');
@@ -59,7 +60,7 @@ if ($formato === 'json') {
     registar_log('EXPORTAR', "Utilizadores JSON exportado por " . ($_SESSION['email'] ?? 'desconhecido'));
     exit;
 }
-
+// Exportar em PDF — gera HTML formatado e abre o diálogo de impressão do browse (HTML + window.print())
 registar_log('EXPORTAR', "Utilizadores PDF exportado por " . ($_SESSION['email'] ?? 'desconhecido'));
 ?>
 <!DOCTYPE html>

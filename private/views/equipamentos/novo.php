@@ -487,7 +487,7 @@ include __DIR__ . '/../../includes/navbar.php';
 
                 <div id="aviso-passos" class="alert alert-warning d-none" role="alert"></div>
 
-                <form id="form-equipamento" action="#" method="post" enctype="multipart/form-data">
+                <form id="form-equipamento" action="novo.php" method="post" enctype="multipart/form-data">
 
                     <!-- Separadores / Passos -->
                     <ul class="nav nav-tabs mb-4" id="equipamentoTabs">

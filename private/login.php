@@ -71,7 +71,8 @@ if (!empty($_SESSION['server_error'])) {
                             </button>
                         </div>
 
-                        <!-- Botões de preenchimento automático (Fase de Testes) -->
+                        
+                        <!-- Botões de preenchimento automático (Fase de Testes)
                         <div class="mt-2 text-center">
                             <button type="button" id="preencher_adm" class="btn btn-outline-primary btn-sm me-2">
                                 Preencher Administrador
@@ -83,7 +84,9 @@ if (!empty($_SESSION['server_error'])) {
                                 Preencher Profissional
                             </button>
                         </div>
+                        -->
                     </form>
+
                     <!-- Mensagens de erro (validação e servidor) -->
                     <?php if (!empty($validation_errors)) : ?>
                         <div class="alert alert-danger p-2 text-center mt-3">
@@ -113,7 +116,7 @@ if (!empty($_SESSION['server_error'])) {
 
     <!-- Bootstrap JS -->
     <script src="<?php echo BASE_URL; ?>/assets/bootstrap/bootstrap.bundle.min.js"></script>
-    <script>
+    <!-- <script>
     // Preenchimento automático para testes (Ficha 14)
     document.querySelector("#preencher_adm").addEventListener('click', () => {
         const formulario = document.forms['formulario'];
@@ -132,7 +135,7 @@ if (!empty($_SESSION['server_error'])) {
         formulario['email'].value    = "alexandrarosas@sihem.pt";
         // Preencher a password para o profissional
     });
-</script>
+</script> -->
 </body>
 
 </html>

@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../includes/funcoes.php';
 redirect_if_not_logged();
-
+//só o admin
 if ($_SESSION['perfil'] !== 'administrador') {
     header('Location: ' . BASE_URL . '/private/index.php');
     exit;
@@ -11,7 +11,7 @@ $pagina_ativa = 'utilizadores';
 $erros = [];
 $erro_sistema = '';
 $utilizador = null;
-
+// Desencriptar e validar o ID recebido por GET
 $idEncriptado = $_GET['id_utilizador'] ?? null;
 $idUtilizador = aes_decrypt($idEncriptado);
 if (!$idUtilizador || !is_numeric($idUtilizador)) {

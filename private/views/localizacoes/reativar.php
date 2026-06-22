@@ -5,14 +5,14 @@ if ($_SESSION['perfil'] !== 'administrador') {
     header('Location: ' . BASE_URL . '/private/views/localizacoes/lista.php');
     exit;
 }
-
+// Desencriptar e validar o ID recebido por GET
 $idEncriptado = $_GET['id_localizacao'] ?? null;
 $idLocalizacao = aes_decrypt($idEncriptado);
 if (!$idLocalizacao || !is_numeric($idLocalizacao)) {
     header('Location: ' . BASE_URL . '/private/views/localizacoes/lista.php');
     exit;
 }
-
+// Reativar (ativo = 1)
 try {
     $ligacao = liga_bd();
     $stmt = $ligacao->prepare("UPDATE Localizacoes SET ativo = 1 WHERE idLocalizacao = :id");

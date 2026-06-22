@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../includes/funcoes.php';
 redirect_if_not_logged();
-
+// Garantir que a página só é acedida por GET (não por POST direto)
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     header('Location: ' . BASE_URL . '/public/login.php');
     exit;
@@ -17,7 +17,7 @@ $documentos = [];
 $componentes = [];
 $garantia = null;
 $contrato = null;
-
+// Desencriptar e validar o ID recebido por GET
 $idEncriptado = $_GET['id_equipamento'] ?? null;
 $idEquipamento = aes_decrypt($idEncriptado);
 if (!$idEquipamento || !is_numeric($idEquipamento)) {
@@ -28,7 +28,7 @@ if (!$idEquipamento || !is_numeric($idEquipamento)) {
 try {
     $ligacao = liga_bd();
 
-    // equipamento + categoria + localização
+    // carregar os dados equipamento + categoria + localização
     $stmt = $ligacao->prepare(
         "SELECT e.*,
                 c.nome AS nome_categoria,
@@ -43,7 +43,7 @@ try {
     $stmt->bindParam(':id', $idEquipamento, PDO::PARAM_INT);
     $stmt->execute();
     $equipamento = $stmt->fetch(PDO::FETCH_OBJ);
-
+     // Se não existir, redireciona para a lista
     if (!$equipamento) {
         header('Location: ' . BASE_URL . '/private/views/equipamentos/lista.php');
         exit;
@@ -130,7 +130,7 @@ include __DIR__ . '/../../includes/navbar.php';
             <div class="alert alert-danger"><?= htmlspecialchars($erro_sistema) ?></div>
         <?php endif; ?>
 
-        <!-- card rosinho: identificação -->
+        <!-- card identificação -->
         <div class="card-destaque">
             <p class="detalhe-nome"><?= htmlspecialchars($equipamento->designacao ?? '') ?></p>
             <div class="row">

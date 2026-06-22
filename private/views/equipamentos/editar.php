@@ -7,7 +7,7 @@ if ($_SESSION['perfil'] === 'profissional') {
 }
 require_once __DIR__ . '/../../includes/validacoes.php';
 
-// permitir apenas GET e POST (Ficha 13)
+// permitir apenas GET e POST 
 if (!in_array($_SERVER['REQUEST_METHOD'], ['GET', 'POST'])) {
     header('Location: ' . BASE_URL . '/public/login.php');
     exit;
@@ -27,7 +27,7 @@ $proximo_con_num  = 1;
 $proximo_doc_num  = 1;
 $proximo_comp_num = 1;
 
-// desencriptar e validar o ID (Ficha 13)
+// desencriptar e validar o ID 
 $idEncriptado = $_GET['id_equipamento'] ?? null;
 $idEquipamento = aes_decrypt($idEncriptado);
 if (!$idEquipamento || !is_numeric($idEquipamento)) {

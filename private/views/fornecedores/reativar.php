@@ -5,14 +5,14 @@ if ($_SESSION['perfil'] !== 'administrador') {
     header('Location: ' . BASE_URL . '/private/views/fornecedores/lista.php');
     exit;
 }
-
+// Desencriptar e validar o ID recebido por GET
 $idEncriptado = $_GET['id_fornecedor'] ?? null;
 $idFornecedor = aes_decrypt($idEncriptado);
 if (!$idFornecedor || !is_numeric($idFornecedor)) {
     header('Location: ' . BASE_URL . '/private/views/fornecedores/lista.php');
     exit;
 }
-
+// Reativar (ativo = 1)
 try {
     $ligacao = liga_bd();
     $stmt = $ligacao->prepare("UPDATE Fornecedores SET ativo = 1 WHERE idFornecedor = :id");

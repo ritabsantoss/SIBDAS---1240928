@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../../includes/funcoes.php';
 redirect_if_not_logged();
 
+// Garantir que a página só é acedida por GET (não por POST direto)
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     header('Location: ' . BASE_URL . '/public/login.php');
     exit;
@@ -10,14 +11,14 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 $pagina_ativa = 'documentos';
 $erro_sistema = '';
 $documento = null;
-
+// Desencriptar e validar o ID recebido por GET
 $idEncriptado = $_GET['id_documento'] ?? null;
 $idDocumento = aes_decrypt($idEncriptado);
 if (!$idDocumento || !is_numeric($idDocumento)) {
     header('Location: ' . BASE_URL . '/private/views/documentos/lista.php');
     exit;
 }
-
+// Carregar os dados do documento com o equipamento e fornecedor associados
 try {
     $ligacao = liga_bd();
     $stmt = $ligacao->prepare(
@@ -33,7 +34,7 @@ try {
     $stmt->execute();
     $documento = $stmt->fetch(PDO::FETCH_OBJ);
     $ligacao = null;
-
+     // Se o documento não existir, redireciona para a lista
     if (!$documento) {
         header('Location: ' . BASE_URL . '/private/views/documentos/lista.php');
         exit;
@@ -72,7 +73,7 @@ include __DIR__ . '/../../includes/navbar.php';
             <div class="alert alert-danger"><?= htmlspecialchars($erro_sistema) ?></div>
         <?php endif; ?>
 
-        <!-- card rosinho: identificação -->
+        <!-- card identificação -->
         <div class="card-destaque">
             <p class="detalhe-nome"><?= htmlspecialchars($documento->nome_documento ?? '—') ?></p>
             <div class="row">
@@ -125,7 +126,7 @@ include __DIR__ . '/../../includes/navbar.php';
             </div>
         </div>
 
-        <!-- card rosinho: observações -->
+        <!-- card  observações -->
         <div class="card-destaque">
             <label class="form-label fw-bold">Observações</label>
             <p class="form-control-plaintext"><?= htmlspecialchars($documento->observacoes ?? '—') ?></p>

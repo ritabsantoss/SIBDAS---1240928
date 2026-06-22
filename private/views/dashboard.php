@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../includes/funcoes.php';
 redirect_if_not_logged();
 
+// Profissional não tem acesso ao dashboard — redireciona para equipamentos
 if ($_SESSION['perfil'] === 'profissional') {
     header('Location: ' . BASE_URL . '/private/views/equipamentos/lista.php');
     exit;
@@ -9,6 +10,7 @@ if ($_SESSION['perfil'] === 'profissional') {
 
 $pagina_ativa = 'dashboard';
 $erro_sistema = '';
+// Inicializar variáveis com valores por defeito para evitar erros se a BD falhar
 $total               = 0;
 $ativos              = 0;
 $manutencao          = 0;
@@ -23,7 +25,9 @@ $criticidade_raw     = [];
 $categorias_raw      = [];
 $alertas_raw         = [];
 
-// filtro de ativos consoante o perfil
+// Filtros dinâmicos consoante o perfil:
+// Administrador vê todos os equipamentos (sem filtro)
+// Técnico vê apenas equipamentos ativos (ativo = 1)
 $filtro             = $_SESSION['perfil'] === 'administrador' ? "" : "AND e.ativo = 1";
 $filtro_simples     = $_SESSION['perfil'] === 'administrador' ? "" : "WHERE Equipamentos.ativo = 1";
 $filtro_and_simples = $_SESSION['perfil'] === 'administrador' ? "" : "AND Equipamentos.ativo = 1";
@@ -31,18 +35,22 @@ $filtro_and_simples = $_SESSION['perfil'] === 'administrador' ? "" : "AND Equipa
     try {
     $ligacao = liga_bd();
 
+    // Cards principais — contagens gerais
     $total               = $ligacao->query("SELECT COUNT(*) FROM Equipamentos $filtro_simples")->fetchColumn() ?: 0;
     $ativos              = $ligacao->query("SELECT COUNT(*) FROM Equipamentos WHERE estado_atual = 'Ativo' $filtro_and_simples")->fetchColumn() ?: 0;
     $manutencao          = $ligacao->query("SELECT COUNT(*) FROM Equipamentos WHERE estado_atual = 'Em manutenção' $filtro_and_simples")->fetchColumn() ?: 0;
     $inativos_est        = $ligacao->query("SELECT COUNT(*) FROM Equipamentos WHERE estado_atual = 'Inativo' $filtro_and_simples")->fetchColumn() ?: 0;
+    // Cards de alerta
     $garantias_expiradas = $ligacao->query("SELECT COUNT(*) FROM Garantias g JOIN Equipamentos e ON g.idEquipamento = e.idEquipamento WHERE g.estado_garantia = 'Expirada' $filtro")->fetchColumn() ?: 0;
     $sem_documentacao    = $ligacao->query("SELECT COUNT(*) FROM Equipamentos e LEFT JOIN Documentos d ON e.idEquipamento = d.idEquipamento AND d.ativo = 1 WHERE d.idEquipamento IS NULL $filtro")->fetchColumn() ?: 0;
     $garantias_30dias    = $ligacao->query("SELECT COUNT(*) FROM Garantias g JOIN Equipamentos e ON g.idEquipamento = e.idEquipamento WHERE g.data_fim BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY) $filtro")->fetchColumn() ?: 0;
     $criticidade_elevada = $ligacao->query("SELECT COUNT(*) FROM Equipamentos WHERE criticidade IN ('Alta', 'Suporte de vida') $filtro_and_simples")->fetchColumn() ?: 0;
+    // Dados para o gráfico de estado (visível para admin e técnico)
     $estados_raw         = $ligacao->query("SELECT estado_atual, COUNT(*) as total FROM Equipamentos $filtro_simples GROUP BY estado_atual")->fetchAll(PDO::FETCH_OBJ);
+    // Alertas importantes — equipamentos com garantias a expirar, criticidade elevada ou em manutenção
     $alertas_raw         = $ligacao->query("SELECT e.designacao, e.criticidade, e.estado_atual, g.estado_garantia, g.data_fim FROM Equipamentos e LEFT JOIN Garantias g ON e.idEquipamento = g.idEquipamento WHERE (g.estado_garantia IN ('Expirada', 'Prestes a Expirar') OR e.criticidade IN ('Alta', 'Suporte de vida') OR e.estado_atual = 'Em manutenção') $filtro ORDER BY e.criticidade DESC LIMIT 10")->fetchAll(PDO::FETCH_OBJ);
 
-    // só admin
+    // Dados exclusivos do administrador — gráficos e tabela de serviços
     if ($_SESSION['perfil'] === 'administrador') {
         $servicos_raw    = $ligacao->query("SELECT s.nome, COUNT(e.idEquipamento) as total, SUM(CASE WHEN e.criticidade = 'Suporte de vida' THEN 1 ELSE 0 END) as suporte_vida FROM Servicos s LEFT JOIN Localizacoes l ON s.idServico = l.idServico LEFT JOIN Equipamentos e ON l.idLocalizacao = e.idLocalizacao AND e.ativo = 1 GROUP BY s.idServico, s.nome ORDER BY total DESC")->fetchAll(PDO::FETCH_OBJ);
         $criticidade_raw = $ligacao->query("SELECT criticidade, COUNT(*) as total FROM Equipamentos WHERE ativo = 1 GROUP BY criticidade")->fetchAll(PDO::FETCH_OBJ);
@@ -223,7 +231,7 @@ include __DIR__ . '/../includes/navbar.php';
     </div>
 
 </div>
-
+<!-- DataTable-->
 <?php if (!empty($alertas_raw)) : ?>
 <script>
     $(document).ready(function() {

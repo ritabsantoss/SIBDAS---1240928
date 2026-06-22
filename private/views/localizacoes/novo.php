@@ -131,7 +131,7 @@ include __DIR__ . '/../../includes/navbar.php';
                     </div>
                 <?php endif; ?>
 
-                <form action="#" method="post">
+                <form action="novo.php" method="post">
 
                     <h5 class="mb-3">
                         Local</h5>

@@ -119,8 +119,6 @@ try {
     </section>
 
     <!-- Serviços -->
-
-    <!-- Serviços -->
     <section class="servicos" id="servicos">
 
         <div class="servicos-titulo">
@@ -157,7 +155,7 @@ try {
         </div>
 
     </section>
-    <!-- FAQ -->
+    <!-- FAQ (acordion)-->
 
     <section class="faq-section" id="faq">
 

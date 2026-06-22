@@ -60,7 +60,7 @@ try {
         $where[] = "e.criticidade = :criticidade";
         $params[':criticidade'] = $f_criticidade;
     }
-
+    // Query base — seleciona equipamentos com categoria, localização e serviço associados
     $sql = "SELECT e.idEquipamento, e.codigo_interno, e.designacao, e.marca,
                e.modelo, e.numero_serie, c.nome AS categoria,
                e.estado_atual, e.criticidade, e.ativo,
@@ -69,15 +69,17 @@ try {
         JOIN Localizacoes l ON e.idLocalizacao = l.idLocalizacao
         JOIN Servicos s     ON l.idServico    = s.idServico
         JOIN Categorias c   ON e.idCategoria  = c.idCategoria";
-
+    // Técnico e profissional só veem equipamentos ativos
+    // Administrador vê todos (ativos e inativos)
     if ($_SESSION['perfil'] !== 'administrador') {
         $where[] = "e.ativo = 1";
     }
+    // Adicionar filtros ao WHERE se existirem (pesquisa, perfil, etc.)
     if (count($where) > 0) {
         $sql .= " WHERE " . implode(" AND ", $where);
     }
     $sql .= " ORDER BY e.ativo DESC, e.codigo_interno";
-
+    // Executar a query com os parâmetros de pesquisa
     $stmt = $ligacao->prepare($sql);
     $stmt->execute($params);
     $resultados = $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -457,6 +459,7 @@ include __DIR__ . '/../../includes/navbar.php';
 
     </main>
 </div>
+<!-- DataTables -->
 <?php if (empty($erro)) : ?>
     <script>
         $(document).ready(function() {

@@ -6,14 +6,14 @@ if ($_SESSION['perfil'] !== 'administrador') {
     header('Location: ' . BASE_URL . '/private/index.php');
     exit;
 }
-
+// Desencriptar e validar o ID recebido por GET
 $idEncriptado = $_GET['id_utilizador'] ?? null;
 $idUtilizador = aes_decrypt($idEncriptado);
 if (!$idUtilizador || !is_numeric($idUtilizador)) {
     header('Location: ' . BASE_URL . '/private/views/utilizadores/lista.php');
     exit;
 }
-
+// Reativar (ativo = 1)
 try {
     $ligacao = liga_bd();
     $stmt = $ligacao->prepare("UPDATE Utilizadores SET ativo = 1 WHERE idUtilizador = :id");

@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../includes/funcoes.php';
 redirect_if_not_logged();
 
+// Só o administrador pode gerir os conteúdos públicos
 if ($_SESSION['perfil'] !== 'administrador') {
     header('Location: ' . BASE_URL . '/private/index.php');
     exit;
@@ -11,7 +12,7 @@ $erro_sistema = '';
 $sucesso = '';
 $conteudos = [];
 
-// Carregar todos os conteúdos da BD
+// Carregar todos os conteúdos da BD para preencher o formulário
 try {
     $ligacao = liga_bd();
     $stmt = $ligacao->query("SELECT chave, valor FROM Conteudos");
@@ -22,14 +23,15 @@ try {
 } catch (PDOException $err) {
     $erro_sistema = "Erro ao carregar os conteúdos.";
 }
-
+// Processar o formulário quando submetido
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $ligacao = liga_bd();
+        // Preparar o UPDATE genérico — reutilizado para cada campo
         $stmt = $ligacao->prepare(
             "UPDATE Conteudos SET valor = :valor WHERE chave = :chave"
         );
-
+        // Lista de todas as chaves que podem ser atualizadas pelo formulário
         $campos = [
             // Hero
             'hero_titulo',
@@ -85,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'plataforma_estado',
         ];
 
-        // upload da imagem hero
+         // Tratamento do upload da imagem hero — validação de tipo e tamanho
         if (!empty($_FILES['hero_imagem_upload']['name'])) {
             $f = $_FILES['hero_imagem_upload'];
             $ext = strtolower(pathinfo($f['name'], PATHINFO_EXTENSION));
@@ -95,6 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } elseif ($f['size'] > 5 * 1024 * 1024) {
                 $erro_sistema = "A imagem excede o limite de 5 MB.";
             } else {
+                 // Gerar nome único para evitar colisões
                 $nome_img = 'hero_' . bin2hex(random_bytes(8)) . '.' . $ext;
                 if (move_uploaded_file($f['tmp_name'], __DIR__ . '/../../assets/img/' . $nome_img)) {
                     // atualizar na BD
@@ -106,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         }
-
+        // Atualizar cada campo na BD
         foreach ($campos as $chave) {
             $stmt->execute([
                 ':chave' => $chave,
@@ -115,10 +118,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         $ligacao = null;
+        // Registar o evento no log
         registar_log('EDITAR', "Conteúdos públicos editados por " . ($_SESSION['email'] ?? 'desconhecido'));
         $sucesso = 'Conteúdos atualizados com sucesso.';
 
-        // Recarregar os conteúdos atualizados
+        // Recarregar os conteúdos para refletir as alterações no formulário
         $ligacao = liga_bd();
         $stmt = $ligacao->query("SELECT chave, valor FROM Conteudos");
         foreach ($stmt->fetchAll(PDO::FETCH_OBJ) as $row) {
