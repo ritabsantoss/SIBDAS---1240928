@@ -91,9 +91,6 @@ include __DIR__ . '/../../includes/navbar.php';
 </div>
 
             
-
-        
-
         <div class="card shadow-sm border-0 rounded-4">
 
             <div class="card-body">

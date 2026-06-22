@@ -155,9 +155,9 @@ include __DIR__ . '/../../includes/navbar.php';
                                 <?php foreach ($resultados as $f) : ?>
                                     <tr <?= $f->ativo == 0 ? 'class="linha-inativa"' : '' ?>>
                                         <td><?= htmlspecialchars($f->nome_empresa) ?></td>
-                                        <td><?= htmlspecialchars($f->telefone) ?></td>
-                                        <td><?= htmlspecialchars($f->email) ?></td>
-                                        <td><?= htmlspecialchars($f->nif) ?></td>
+                                        <td><?= htmlspecialchars($f->telefone ?? '') ?></td>
+                                        <td><?= htmlspecialchars($f->email ?? '') ?></td>
+                                        <td><?= htmlspecialchars($f->nif ?? '') ?></td>
                                         <td>
                                             <div class="d-flex justify-content-center gap-1 flex-nowrap">
                                                 <a href="detalhes.php?id_fornecedor=<?= aes_encrypt($f->idFornecedor) ?>" class="btn btn-sm btn-outline-primary">
