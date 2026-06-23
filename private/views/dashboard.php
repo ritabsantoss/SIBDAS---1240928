@@ -42,7 +42,8 @@ $filtro_and_simples = $_SESSION['perfil'] === 'administrador' ? "" : "AND Equipa
     $inativos_est        = $ligacao->query("SELECT COUNT(*) FROM Equipamentos WHERE estado_atual = 'Inativo' $filtro_and_simples")->fetchColumn() ?: 0;
     // Cards de alerta
     $garantias_expiradas = $ligacao->query("SELECT COUNT(*) FROM Garantias g JOIN Equipamentos e ON g.idEquipamento = e.idEquipamento WHERE g.estado_garantia = 'Expirada' $filtro")->fetchColumn() ?: 0;
-    $sem_documentacao    = $ligacao->query("SELECT COUNT(*) FROM Equipamentos e LEFT JOIN Documentos d ON e.idEquipamento = d.idEquipamento AND d.ativo = 1 WHERE d.idEquipamento IS NULL $filtro")->fetchColumn() ?: 0;
+    /*$sem_documentacao    = $ligacao->query("SELECT COUNT(*) FROM Equipamentos e LEFT JOIN Documentos d ON e.idEquipamento = d.idEquipamento AND d.ativo = 1 WHERE d.idEquipamento IS NULL $filtro")->fetchColumn() ?: 0;*/
+    $sem_documentacao = $ligacao->query("SELECT COUNT(*) FROM Equipamentos e WHERE e.idEquipamento NOT IN (SELECT d.idEquipamento FROM Documentos d WHERE d.ativo = 1) $filtro")->fetchColumn() ?: 0;
     $garantias_30dias    = $ligacao->query("SELECT COUNT(*) FROM Garantias g JOIN Equipamentos e ON g.idEquipamento = e.idEquipamento WHERE g.data_fim BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY) $filtro")->fetchColumn() ?: 0;
     $criticidade_elevada = $ligacao->query("SELECT COUNT(*) FROM Equipamentos WHERE criticidade IN ('Alta', 'Suporte de vida') $filtro_and_simples")->fetchColumn() ?: 0;
     // Dados para o gráfico de estado (visível para admin e técnico)

@@ -1,0 +1,299 @@
+Enum "Componentes_estado_componente_enum" {
+  "Ativo"
+  "Inativo"
+  "Em manutenção"
+}
+
+Enum "Contratos_tipo_contrato_enum" {
+  "Contrato de Manutenção"
+  "Manutenção Preventiva"
+  "Contrato de Assistência Técnica"
+}
+
+Enum "Contratos_periodicidade_enum" {
+  "Mensal"
+  "Trimestral"
+  "Semestral"
+  "Anual"
+  "Bianual"
+}
+
+Enum "Documentos_tipo_documento_enum" {
+  "Manual de Utilizador"
+  "Manual de Serviço"
+  "Certificado de Calibração"
+  "Fatura ou Guia de Aquisição"
+  "Declaração de Conformidade"
+  "Relatório Técnico"
+}
+
+Enum "Documentos_estado_documento_enum" {
+  "Ativo"
+  "Prestes a Expirar"
+  "Expirado"
+  "Pendente"
+  "Anulado"
+  "Estendido"
+  "Não disponível"
+}
+
+Enum "Equipamento_Fornecedor_tipo_relacao_enum" {
+  "Fabricante"
+  "Distribuidor ou fornecedor comercial"
+  "Empresa de assistência técnica"
+  "Fornecedor de consumíveis ou acessórios"
+}
+
+Enum "Equipamentos_tipo_entrada_enum" {
+  "Compra"
+  "Doação"
+  "Aluguer"
+  "Empréstimo"
+}
+
+Enum "Equipamentos_estado_atual_enum" {
+  "Ativo"
+  "Em manutenção"
+  "Inativo"
+  "Em calibração"
+  "Em quarentena"
+  "Abatido"
+}
+
+Enum "Equipamentos_criticidade_enum" {
+  "Baixa"
+  "Média"
+  "Alta"
+  "Suporte de vida"
+}
+
+Enum "Garantias_estado_garantia_enum" {
+  "Ativa"
+  "Prestes a Expirar"
+  "Expirada"
+  "Pendente"
+  "Anulada"
+  "Estendida"
+  "Não disponível"
+}
+
+Enum "Utilizadores_perfil_enum" {
+  "administrador"
+  "tecnico"
+  "profissional"
+}
+
+Enum "Utilizadores_genero_enum" {
+  "M"
+  "F"
+}
+
+Table "Categorias" {
+  "idCategoria" int [pk, not null, increment]
+  "nome" varchar(80) [not null]
+
+  Indexes {
+    nome [unique, name: "nome"]
+  }
+}
+
+Table "Componentes" {
+  "idComponente" int [pk, not null, increment]
+  "idEquipamento" int [not null]
+  "codigo_componente" varchar(20) [not null]
+  "nome_componente" varchar(80) [not null]
+  "estado_componente" Componentes_estado_componente_enum
+
+  Indexes {
+    codigo_componente [unique, name: "codigo_componente"]
+    idEquipamento [name: "fkComponentesEquipamento"]
+  }
+}
+
+Table "Conteudos" {
+  "idConteudo" int [pk, not null, increment]
+  "seccao" varchar(100) [not null, note: 'hero, estatisticas, servicos, faq, contactos']
+  "chave" varchar(100) [not null, note: 'ex.: hero_titulo, estat_equipamentos, faq1_pergunta']
+  "valor" text
+  "ordem" int
+
+  Indexes {
+    (seccao, chave) [unique, name: "Conteudos_index_2"]
+  }
+}
+
+Table "Contratos" {
+  "idContrato" int [pk, not null, increment]
+  "idEquipamento" int [not null]
+  "idEntidade" int [note: 'Entidade responsável']
+  "codigo_contrato" varchar(20) [not null]
+  "tipo_contrato" Contratos_tipo_contrato_enum
+  "periodicidade" Contratos_periodicidade_enum
+  "ficheiro_contrato" varchar(255)
+  "observacoes" text
+
+  Indexes {
+    codigo_contrato [unique, name: "codigo_contrato"]
+    idEquipamento [name: "fkContratosEquipamento"]
+    idEntidade [name: "fkContratosEntidade"]
+  }
+}
+
+Table "Documentos" {
+  "idDocumento" int [pk, not null, increment]
+  "idEquipamento" int [not null]
+  "idFornecedor" int [note: 'Opcional']
+  "codigo_documento" varchar(20) [not null]
+  "tipo_documento" Documentos_tipo_documento_enum [not null]
+  "nome_documento" varchar(80)
+  "data_documento" date
+  "validade" date [note: 'Quando aplicável']
+  "estado_documento" Documentos_estado_documento_enum
+  "ficheiro" varchar(255) [note: 'Nome/caminho do ficheiro']
+  "observacoes" text
+  "ativo" tinyint(1) [not null, default: '1']
+
+  Indexes {
+    codigo_documento [unique, name: "codigo_documento"]
+    idEquipamento [name: "fkDocumentosEquipamento"]
+    idFornecedor [name: "fkDocumentosFornecedor"]
+  }
+}
+
+Table "Equipamento_Fornecedor" {
+  "id" int [pk, not null, increment]
+  "idEquipamento" int [not null]
+  "idFornecedor" int [not null]
+  "tipo_relacao" Equipamento_Fornecedor_tipo_relacao_enum [not null]
+
+  Indexes {
+    (idEquipamento, idFornecedor, tipo_relacao) [unique, name: "Equipamento_Fornecedor_index_1"]
+    idFornecedor [name: "fkEquipamento_Fornecedor_Fornecedor"]
+  }
+}
+
+Table "Equipamentos" {
+  "idEquipamento" int [pk, not null, increment]
+  "codigo_interno" varchar(20) [not null]
+  "designacao" varchar(80) [not null]
+  "idCategoria" int [not null]
+  "idLocalizacao" int [not null]
+  "marca" varchar(80)
+  "modelo" varchar(80)
+  "numero_serie" varchar(50)
+  "fabricante" varchar(80)
+  "data_aquisicao" date
+  "ano_fabrico" int
+  "custo" decimal(10,2)
+  "tipo_entrada" Equipamentos_tipo_entrada_enum
+  "estado_atual" Equipamentos_estado_atual_enum [not null]
+  "criticidade" Equipamentos_criticidade_enum [not null]
+  "observacoes" text
+  "ativo" tinyint(1) [not null, default: '1']
+
+  Indexes {
+    codigo_interno [unique, name: "codigo_interno"]
+    (marca, modelo, numero_serie) [unique, name: "Equipamentos_index_0"]
+    idCategoria [name: "fkEquipamentosCategoria"]
+    idLocalizacao [name: "fkEquipamentosLocalizacao"]
+  }
+}
+
+Table "Fornecedores" {
+  "idFornecedor" int [pk, not null, increment]
+  "nome_empresa" varchar(80) [not null]
+  "nif" varchar(20)
+  "telefone" varchar(20)
+  "email" varchar(100)
+  "website" varchar(100)
+  "morada" varchar(100)
+  "pessoa_contacto" varchar(80)
+  "telefone_contacto" varchar(20)
+  "observacoes" text
+  "ativo" tinyint(1) [not null, default: '1']
+
+  Indexes {
+    nif [unique, name: "nif"]
+  }
+}
+
+Table "Garantias" {
+  "idGarantia" int [pk, not null, increment]
+  "idEquipamento" int [not null]
+  "idEntidade" int [note: 'Entidade responsável']
+  "codigo_garantia" varchar(20) [not null]
+  "data_inicio" date
+  "data_fim" date
+  "estado_garantia" Garantias_estado_garantia_enum
+  "ficheiro_garantia" varchar(255)
+  "observacoes" text
+
+  Indexes {
+    codigo_garantia [unique, name: "codigo_garantia"]
+    idEquipamento [name: "fkGarantiasEquipamento"]
+    idEntidade [name: "fkGarantiasEntidade"]
+  }
+}
+
+Table "Localizacoes" {
+  "idLocalizacao" int [pk, not null, increment]
+  "edificio" varchar(80)
+  "piso" varchar(10)
+  "idServico" int [not null]
+  "sala" varchar(80)
+  "observacoes" text
+  "ativo" tinyint(1) [not null, default: '1']
+
+  Indexes {
+    idServico [name: "fkLocalizacoesServico"]
+  }
+}
+
+Table "Servicos" {
+  "idServico" int [pk, not null, increment]
+  "nome" varchar(80) [not null]
+
+  Indexes {
+    nome [unique, name: "nome"]
+  }
+}
+
+Table "Utilizadores" {
+  "idUtilizador" int [pk, not null, increment]
+  "nome" varchar(80) [not null]
+  "email" varchar(100) [not null]
+  "password_hash" varchar(255) [not null]
+  "perfil" Utilizadores_perfil_enum [not null, default: 'profissional']
+  "last_login" datetime
+  "created_at" datetime [default: `CURRENT_TIMESTAMP`]
+  "genero" Utilizadores_genero_enum
+  "ativo" tinyint [not null, default: '1']
+
+  Indexes {
+    email [unique, name: "email"]
+  }
+}
+
+Ref "fkComponentesEquipamento":"Equipamentos"."idEquipamento" < "Componentes"."idEquipamento" [delete: cascade]
+
+Ref "fkContratosEntidade":"Fornecedores"."idFornecedor" < "Contratos"."idEntidade" [delete: set null]
+
+Ref "fkContratosEquipamento":"Equipamentos"."idEquipamento" < "Contratos"."idEquipamento" [delete: cascade]
+
+Ref "fkDocumentosEquipamento":"Equipamentos"."idEquipamento" < "Documentos"."idEquipamento" [delete: cascade]
+
+Ref "fkDocumentosFornecedor":"Fornecedores"."idFornecedor" < "Documentos"."idFornecedor" [delete: set null]
+
+Ref "fkEquipamento_Fornecedor_Equipamento":"Equipamentos"."idEquipamento" < "Equipamento_Fornecedor"."idEquipamento" [delete: cascade]
+
+Ref "fkEquipamento_Fornecedor_Fornecedor":"Fornecedores"."idFornecedor" < "Equipamento_Fornecedor"."idFornecedor" [delete: cascade]
+
+Ref "fkEquipamentosCategoria":"Categorias"."idCategoria" < "Equipamentos"."idCategoria" [delete: restrict]
+
+Ref "fkEquipamentosLocalizacao":"Localizacoes"."idLocalizacao" < "Equipamentos"."idLocalizacao" [delete: restrict]
+
+Ref "fkGarantiasEntidade":"Fornecedores"."idFornecedor" < "Garantias"."idEntidade" [delete: set null]
+
+Ref "fkGarantiasEquipamento":"Equipamentos"."idEquipamento" < "Garantias"."idEquipamento" [delete: cascade]
+
+Ref "fkLocalizacoesServico":"Servicos"."idServico" < "Localizacoes"."idServico" [delete: restrict]
