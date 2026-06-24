@@ -824,3 +824,8 @@ body {
     opacity: 0.45;
     filter: grayscale(100%);
 }
+
+.obrigatorio::after {
+    content: " *";
+    color: red;
+}

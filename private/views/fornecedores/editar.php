@@ -165,7 +165,7 @@ include __DIR__ . '/../../includes/navbar.php';
                     <div class="row mb-3">
 
                         <div class="col-md-6">
-                            <label for="nome_empresa" class="form-label">Nome da empresa</label>
+                            <label for="nome_empresa" class="form-label obrigatorio">Nome da empresa</label>
                             <input type="text" class="form-control" id="nome_empresa" name="nome_empresa"
                                 value="<?= htmlspecialchars($_POST['nome_empresa'] ?? $fornecedor->nome_empresa ?? '') ?>">
                         </div>

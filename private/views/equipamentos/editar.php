@@ -498,15 +498,15 @@ include __DIR__ . '/../../includes/navbar.php';
                             <h5 class="mb-3">Identificação</h5>
                             <div class="row mb-3">
                                 <div class="col-md-3">
-                                    <label for="codigo_interno" class="form-label">Código interno</label>
+                                    <label for="codigo_interno" class="form-label obrigatorio">Código interno</label>
                                     <input type="text" class="form-control" id="codigo_interno" name="codigo_interno" value="<?= htmlspecialchars($_POST['codigo_interno'] ?? $equipamento?->codigo_interno ?? '') ?>">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="designacao" class="form-label">Designação do equipamento</label>
+                                    <label for="designacao" class="form-label obrigatorio">Designação do equipamento</label>
                                     <input type="text" class="form-control" id="designacao" name="designacao" value="<?= htmlspecialchars($_POST['designacao'] ?? $equipamento?->designacao ?? '') ?>">
                                 </div>
                                 <div class="col-md-3">
-                                    <label for="categoria" class="form-label">Categoria</label>
+                                    <label for="categoria" class="form-label obrigatorio">Categoria</label>
                                     <select class="form-select" id="categoria" name="categoria">
                                         <option value="" disabled <?= empty($_POST['categoria'] ?? $equipamento?->idCategoria) ? 'selected' : '' ?>>Escolha...</option>
                                         <?php foreach ($lista_categorias as $cat) : ?>
@@ -607,7 +607,7 @@ include __DIR__ . '/../../includes/navbar.php';
                             <h5 class="mb-3">Estado | Criticidade</h5>
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="estado_atual" class="form-label">Estado atual</label>
+                                    <label for="estado_atual" class="form-label obrigatorio">Estado atual</label>
                                     <select class="form-select" id="estado_atual" name="estado_atual">
                                         <option value="" disabled <?= empty($_POST['estado_atual'] ?? $equipamento?->estado_atual) ? 'selected' : '' ?>>Escolha...</option>
                                         <?php foreach (['Ativo', 'Em manutenção', 'Inativo', 'Em calibração', 'Em quarentena', 'Abatido'] as $op) : ?>
@@ -616,7 +616,7 @@ include __DIR__ . '/../../includes/navbar.php';
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="criticidade" class="form-label">Criticidade</label>
+                                    <label for="criticidade" class="form-label obrigatorio">Criticidade</label>
                                     <select class="form-select" id="criticidade" name="criticidade">
                                         <option value="" disabled <?= empty($_POST['criticidade'] ?? $equipamento?->criticidade) ? 'selected' : '' ?>>Escolha...</option>
                                         <?php foreach (['Baixa', 'Média', 'Alta', 'Suporte de vida'] as $op) : ?>
@@ -651,7 +651,7 @@ include __DIR__ . '/../../includes/navbar.php';
                                     <div class="fornecedor-bloco border rounded-4 p-3 mb-3">
                                         <div class="row align-items-end mb-3">
                                             <div class="col-md-5">
-                                                <label class="form-label">Fornecedor</label>
+                                                <label class="form-label obrigatorio">Fornecedor</label>
                                                 <select class="form-select" name="fornecedores[<?= $fi ?>][id_fornecedor]">
                                                     <option value="" disabled <?= $fid === '' ? 'selected' : '' ?>>Escolha...</option>
                                                     <?php foreach ($lista_fornecedores as $forn) : ?>
@@ -664,7 +664,7 @@ include __DIR__ . '/../../includes/navbar.php';
                                                 </select>
                                             </div>
                                             <div class="col-md-5">
-                                                <label class="form-label">Tipo de relação</label>
+                                                <label class="form-label obrigatorio">Tipo de relação</label>
                                                 <select class="form-select" name="fornecedores[<?= $fi ?>][tipo_relacao]">
                                                     <option value="" disabled <?= $ftipo === '' ? 'selected' : '' ?>>Escolha...</option>
                                                     <?php foreach (['Fabricante', 'Distribuidor ou fornecedor comercial', 'Empresa de assistência técnica', 'Fornecedor de consumíveis ou acessórios'] as $opt) : ?>
@@ -701,7 +701,7 @@ include __DIR__ . '/../../includes/navbar.php';
                         <div class="tab-pane fade" id="passo-localizacao">
                             <h5 class="mb-3"><i class="fa-solid fa-location-dot me-2"></i>Localização Associada</h5>
                             <div class="mb-3">
-                                <label for="localizacao_associada" class="form-label">Selecionar localização</label>
+                                <label for="localizacao_associada" class="form-label obrigatorio">Selecionar localização</label>
                                 <select class="form-select" id="localizacao_associada" name="localizacao_associada">
                                     <option value="" disabled <?= empty($loc_sel_id) ? 'selected' : '' ?>>Escolha...</option>
                                     <?php foreach ($lista_localizacoes as $loc) : ?>

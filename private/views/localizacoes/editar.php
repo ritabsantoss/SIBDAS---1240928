@@ -165,7 +165,7 @@ include __DIR__ . '/../../includes/navbar.php';
                         </div>
 
                         <div class="col-md-6">
-                            <label for="departamento" class="form-label">Serviço | Departamento</label>
+                            <label for="departamento" class="form-label obrigatorio">Serviço | Departamento</label>
                             <select class="form-select" id="idServico" name="idServico">
                                 <option value="" disabled <?= empty($_POST['idServico'] ?? $localizacao?->idServico) ? 'selected' : '' ?>>Escolha...</option>
                                 <?php foreach ($lista_servicos as $s) : ?>

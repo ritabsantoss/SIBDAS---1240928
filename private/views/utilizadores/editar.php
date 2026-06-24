@@ -152,12 +152,12 @@ include __DIR__ . '/../../includes/navbar.php';
 
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="nome" class="form-label">Nome completo</label>
+                            <label for="nome" class="form-label obrigatorio">Nome completo</label>
                             <input type="text" class="form-control" id="nome" name="nome"
                                 value="<?= htmlspecialchars($_POST['nome'] ?? $utilizador?->nome ?? '') ?>">
                         </div>
                         <div class="col-md-6">
-                            <label for="email" class="form-label">Email</label>
+                            <label for="email" class="form-label obrigatorio">Email</label>
                             <input type="email" class="form-control" id="email" name="email"
                                 value="<?= htmlspecialchars($_POST['email'] ?? $utilizador?->email ?? '') ?>">
                         </div>
@@ -165,7 +165,7 @@ include __DIR__ . '/../../includes/navbar.php';
 
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="perfil" class="form-label">Perfil</label>
+                            <label for="perfil" class="form-label obrigatorio">Perfil</label>
                             <select class="form-select" id="perfil" name="perfil">
                                 <option value="" disabled <?= empty($_POST['perfil'] ?? $utilizador?->perfil) ? 'selected' : '' ?>>Escolha...</option>
                                 <?php foreach (['administrador', 'tecnico', 'profissional'] as $op) : ?>
@@ -177,7 +177,7 @@ include __DIR__ . '/../../includes/navbar.php';
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <label for="genero" class="form-label">Género</label>
+                            <label for="genero" class="form-label obrigatorio">Género</label>
                             <select class="form-select" id="genero" name="genero">
                                 <option value="" disabled <?= empty($_POST['genero'] ?? $utilizador?->genero) ? 'selected' : '' ?>>Escolha...</option>
                                 <option value="M" <?= (($_POST['genero'] ?? $utilizador?->genero ?? '') === 'M') ? 'selected' : '' ?>>Masculino</option>

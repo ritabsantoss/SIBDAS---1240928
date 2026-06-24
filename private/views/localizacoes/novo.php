@@ -149,7 +149,7 @@ include __DIR__ . '/../../includes/navbar.php';
                         </div>
 
                         <div class="col-md-6">
-                            <label for="idServico" class="form-label">Serviço | Departamento</label>
+                            <label for="idServico" class="form-label obrigatorio">Serviço | Departamento</label>
                             <select class="form-select" id="idServico" name="idServico">
                                 <option value="" selected disabled>Escolha...</option>
                                 <?php foreach ($lista_servicos as $s) : ?>

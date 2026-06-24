@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <form action="password.php" method="post">
 
                         <div class="mb-3">
-                            <label for="password_atual" class="form-label">
+                            <label for="password_atual" class="form-label obrigatorio">
                                 Password atual
                             </label>
                             <input type="password"
@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
 
                         <div class="mb-3">
-                            <label for="nova_password" class="form-label">
+                            <label for="nova_password" class="form-label obrigatorio">
                                 Nova password
                             </label>
                             <input type="password"
@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
 
                         <div class="mb-3">
-                            <label for="confirmar_password" class="form-label">
+                            <label for="confirmar_password" class="form-label obrigatorio">
                                 Confirmar nova password
                             </label>
                             <input type="password"

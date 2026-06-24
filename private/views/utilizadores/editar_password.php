@@ -119,11 +119,11 @@ include __DIR__ . '/../../includes/navbar.php';
 
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="nova_password" class="form-label">Nova password</label>
+                            <label for="nova_password" class="form-label obrigatorio">Nova password</label>
                             <input type="password" class="form-control" id="nova_password" name="nova_password">
                         </div>
                         <div class="col-md-6">
-                            <label for="confirmar_password" class="form-label">Confirmar nova password</label>
+                            <label for="confirmar_password" class="form-label obrigatorio">Confirmar nova password</label>
                             <input type="password" class="form-control" id="confirmar_password" name="confirmar_password">
                         </div>
                     </div>

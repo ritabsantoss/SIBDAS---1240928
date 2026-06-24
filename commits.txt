@@ -1,0 +1,90 @@
+66674f0 - Rita Santos - 2026-06-23 10:57:48 +0100 - Subconsulta para contagem de equipamentos sem documentação no dashboard
+5b1c95f - Rita Santos - 2026-06-22 22:24:22 +0100 - Atualizações
+b706856 - Rita Santos - 2026-06-22 19:19:47 +0100 - Permitir remover documentos, garantias e contratos no editar de equipamentos
+dbbaaac - Rita Santos - 2026-06-22 17:04:00 +0100 - Correção de erro de varíavel nula na lista
+7c9e321 - Rita Santos - 2026-06-22 16:38:27 +0100 - Exportação de dados para CSV, JSON e PDF
+7e152ff - Rita Santos - 2026-06-22 15:21:40 +0100 - Registo de Eventos (Log Files)
+5fa855a - Rita Santos - 2026-06-22 13:13:01 +0100 - Implementação de mensagens de sucesso
+9cb1791 - Rita Santos - 2026-06-22 11:50:43 +0100 - Dashboard desenvolvida com valores verdadeiros
+a657b02 - Rita Santos - 2026-06-22 10:14:59 +0100 - Finalização página de gestão de conteúdos
+b4d1bb5 - Rita Santos - 2026-06-21 22:32:09 +0100 - Carregar conteúdos do formulário + Substituir todos os valores fixos
+2c75eca - Rita Santos - 2026-06-21 21:56:41 +0100 - Criação de toda a estrutura de gestão de utilizadores: ficheiros PHP lista, novo, editar, editar_password, confirmar_apagar e reativar
+48175e4 - Rita Santos - 2026-06-21 17:02:13 +0100 - Alterar password funcional
+f676f96 - Rita Santos - 2026-06-21 13:12:58 +0100 - Distribuição de acessos de cada utilizador
+88e2d97 - Rita Santos - 2026-06-21 12:30:42 +0100 - Sidebar - permissões de cada utilizador
+5631b00 - Rita Santos - 2026-06-21 11:54:13 +0100 - Criação de agentes para login
+17969ef - Rita Santos - 2026-06-20 19:37:00 +0100 - Badges Ativo/Inativo no detalhes de todos os módulos
+e57a7a8 - Rita Santos - 2026-06-20 19:23:33 +0100 - Botão de eliminar dinâmico para equipamentos
+e663d88 - Rita Santos - 2026-06-20 19:03:38 +0100 - Botão de eliminar dinâmico em localizações e documentos
+5e3f35c - Rita Santos - 2026-06-20 18:33:31 +0100 - Botão eliminar funcional
+f2c5470 - Rita Santos - 2026-06-20 16:36:03 +0100 - Consulta de dados de documentação
+a7c019e - Rita Santos - 2026-06-20 16:09:49 +0100 - Consulta de dados de equipamentos
+1d419ee - Rita Santos - 2026-06-20 15:40:29 +0100 - Consula de dados de localizações
+84ac0ee - Rita Santos - 2026-06-20 14:38:32 +0100 - Consulta de dados dos fornecedores
+f194b8c - Rita Santos - 2026-06-20 13:17:53 +0100 - Uploads reais para documentos. Edições em editar para mostrar os uploads atuais
+190dbf7 - Rita Santos - 2026-06-17 01:10:30 +0100 - Envio de dados por GET para todo o ficheiro de Equipamentos e alterações em JS
+5689508 - Rita Santos - 2026-06-15 00:43:22 +0100 - Envio de dados por GET em Fornecedores e Localizações
+ac9765e - Rita Santos - 2026-06-13 18:37:03 +0100 - Melhorias em novo de equipamentos. Envio de Dados por POST - Inserir novo fornecedor e localização
+8af6bda - Rita Santos - 2026-06-12 01:13:26 +0100 - Envio de Dados por POST - Inserir novo equipamento
+c77bd8c - Rita Santos - 2026-06-11 16:15:46 +0100 - Listagem dinâmica + filtros de Documentos, Fornecedores e Localizações
+3b1c066 - Rita Santos - 2026-06-11 00:22:47 +0100 - Ligação da BD + Listagem dinâmica de equipamentos + Criação .gitignore para esconder config
+18e3590 - Rita Santos - 2026-06-10 13:39:01 +0100 - Implementa listagem dinâmica de equipamentos
+ee29600 - Rita Santos - 2026-06-10 12:41:08 +0100 - Uniformizar includes com __DIR__ nas páginas privadas
+390dc0c - Rita Santos - 2026-06-06 21:04:39 +0100 - Sessões, logout e protecão das páginas privadas
+7e3567b - Rita Santos - 2026-06-06 16:53:36 +0100 - Validação do login com mensagens de erro via sessões
+d697cc9 - Rita Santos - 2026-06-06 16:01:29 +0100 - Conversão de Conteúdos, Dashboard, Login e Password para PHP
+7d2f55a - Rita Santos - 2026-06-06 12:32:33 +0100 - Conversão dos módulos para PHP com includes
+20af064 - Rita Santos - 2026-06-06 00:17:24 +0100 - Includes reutilizáveis da área privada + index privado em PHP
+c1f2cfa - Rita Santos - 2026-06-05 19:45:19 +0100 - Configuração inicial PHP: criação do config.php e conversão da página pública
+3db5897 - Rita Santos - 2026-06-05 11:56:54 +0100 - Alteração de bootstrap para o formato mais recente
+de435b1 - Rita Santos - 2026-06-04 18:15:00 +0100 - Criação da página password.html e atualização caminhos
+7987a01 - Rita Santos - 2026-06-04 17:50:38 +0100 - Alterações de caminhos para ter tudo acessível sem recorrer a Internet
+3104e5f - Rita Santos - 2026-06-04 13:41:49 +0100 - Alterações de estrutura e melhorias para preparação do funcionamento do módulo Equipamentos, essencialmente
+5feddd0 - Rita Santos - 2026-05-31 02:24:16 +0100 - Correção da nomenclatura dos campos
+cd0f586 - Rita Santos - 2026-05-31 01:39:15 +0100 - Colocar botões rosa
+95e2bf5 - Rita Santos - 2026-05-31 01:30:10 +0100 - Criação da página de gestão de conteúdos
+ac24fa2 - Rita Santos - 2026-05-30 23:45:04 +0100 - Colocação de modal dinâmico com JavaScript no botão eliminar
+cabd957 - Rita Santos - 2026-05-30 22:52:29 +0100 - Implementação da Dashboard com JavaScript
+0309ba8 - Rita Santos - 2026-05-30 19:40:36 +0100 - Implementação de filtros em lista.html
+c466d8c - Rita Santos - 2026-05-30 17:33:22 +0100 - Anterior era novo.html. Agora, divisão de editar.html em separadores
+4a0f1a7 - Rita Santos - 2026-05-30 16:51:46 +0100 - Divisão de editar.html de Equipamentos em vários separadores
+a0c6118 - Rita Santos - 2026-05-30 00:38:28 +0100 - Divisão de detalhes.html de Equipamentos em vários separadores. Correção caminhos
+3b05676 - Rita Santos - 2026-05-29 15:18:32 +0100 - Desenvolvimento da página detalhes.html de Garantias
+e7b0330 - Rita Santos - 2026-05-29 14:44:05 +0100 - Desenvolvimento da página editar.html de Garantias
+383dfb1 - Rita Santos - 2026-05-29 12:22:22 +0100 - Desenvolvimento da página novo.html de Garantias
+3329d44 - Rita Santos - 2026-05-29 11:42:00 +0100 - Desenvolvimento da página lista.html de Garantias
+93c54d2 - Rita Santos - 2026-05-29 10:43:20 +0100 - Desenvolvimento da página detalhes.html de Documentos
+d3122fa - Rita Santos - 2026-05-29 01:55:55 +0100 - Desenvolvimento da página editar.html de Documentos
+ad8f38b - Rita Santos - 2026-05-29 00:08:02 +0100 - Desenvolvimento da página novo.html de Documentos
+d321a37 - Rita Santos - 2026-05-28 17:36:16 +0100 - Implementação da base das páginas novo, lista, detalhes e editar da secção Garantias. Correção dos caminhos entre páginas
+e53a88d - Rita Santos - 2026-05-28 17:21:39 +0100 - Desenvolvimento da página lista.html de Documentos
+7217391 - Rita Santos - 2026-05-28 16:49:00 +0100 - Implementação da base das páginas novo, lista, detalhes e editar da secção Documentação
+74a9f0d - Rita Santos - 2026-05-23 01:03:45 +0100 - Desenvolvimento da página detalhes.html de Locallizações
+3b05de0 - Rita Santos - 2026-05-22 19:21:15 +0100 - Desenvolvimento da página editar.html de Locallizações
+1cc5f79 - Rita Santos - 2026-05-22 19:04:04 +0100 - Desenvolvimento da página novo.html de Localizações
+ecb62c6 - Rita Santos - 2026-05-22 18:30:14 +0100 - Desenvolvimento da página lista.html de Localizações
+3c57928 - Rita Santos - 2026-05-22 17:57:15 +0100 - Desenvolvimento da página detalhes.html de Fornecedores
+7916def - Rita Santos - 2026-05-22 15:22:57 +0100 - Desenvolvimento da página editar.html de Fornecedores
+e9d28c4 - Rita Santos - 2026-05-22 15:03:31 +0100 - Desenvolvimento da página novo.html de Fornecedores
+d85351e - Rita Santos - 2026-05-22 14:34:59 +0100 - Desenvolvimento da página lista.html de Fornecedores
+5ebfacf - Rita Santos - 2026-05-22 14:03:56 +0100 - Implementação da base das páginas novo, lista, detalhes e editar da secção localizações
+5a303d1 - Rita Santos - 2026-05-22 13:56:07 +0100 - Implementação da base das páginas novo, lista, detalhes e editar da secção fornecedores
+f6cd61e - Rita Santos - 2026-05-22 12:24:47 +0100 - Desenvolvimento da página detalhes.html de Equipamentos
+a042372 - Rita Santos - 2026-05-22 11:17:50 +0100 - Desenvolvimento da página editar.html de Equipamentos
+8bd03e1 - Rita Santos - 2026-05-22 10:37:23 +0100 - Desenvolvimento da página novo.html de Equipamentos
+014d2eb - Rita Santos - 2026-05-22 00:07:44 +0100 - Desenvolvimento da página lista.html de Equipamentos
+a9c53a9 - Rita Santos - 2026-05-21 17:57:51 +0100 - Implementação da base das páginas novo, lista, detalhes e editar da secção equipamentos
+d68a633 - Rita Santos - 2026-05-21 17:05:42 +0100 - Construção da parte principal da página inicial reservada. Melhorias ficheiro CSS
+60ff181 - Rita Santos - 2026-05-20 01:31:36 +0100 - Criação da sidebar da página privada inicial
+1d337ef - Rita Santos - 2026-05-20 01:22:43 +0100 - Implementação da navbar + footer da página privada inicial
+3515ce0 - Rita Santos - 2026-05-20 00:59:27 +0100 - Configuração do head da página privada inicial
+6efb7bb - Rita Santos - 2026-05-19 15:29:40 +0100 - Finalização da página de login (HTML + CSS)
+0d2edd1 - Rita Santos - 2026-05-19 12:07:51 +0100 - Troca da secção Sobre pela secção Serviços. Design responsivo
+6742971 - Rita Santos - 2026-05-18 22:51:13 +0100 - Implementação da secção FAQ
+335c9f2 - Rita Santos - 2026-05-18 21:47:02 +0100 - Criação da secção footer
+8ec636e - Rita Santos - 2026-05-18 16:00:11 +0100 - Criação das secções estatísticas + sobre da página principal
+46f60f5 - Rita Santos - 2026-05-18 15:24:04 +0100 - Implementação da hero section da página principal
+93ff366 - Rita Santos - 2026-05-18 15:08:27 +0100 - Implementação da navbar da página principal
+f0adfbe - Rita Santos - 2026-05-18 14:58:34 +0100 - Configuração do head da página principal
+0425087 - Rita Santos - 2026-05-18 14:47:41 +0100 - Estrutura inicial base do projeto
+a3fdcdf - Rita Santos - 2026-05-18 14:29:05 +0100 - Criação do ficheiro README.md
